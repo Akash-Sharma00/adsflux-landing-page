@@ -18,6 +18,7 @@ self-hosted fonts at stable /fonts/ URLs (Instrument Serif, Space Grotesk, DM Sa
 | `npm run check` | Typecheck + lint — **must pass with zero warnings before you finish** |
 | `npm run build` | Typecheck + production build; prints gzip sizes (initial JS budget ≤ 120 KB, currently ~118 KB — near the limit; code-split anything new) |
 | `npm run preview` | Serve the build |
+| Deploy | Push to `main` — Vercel builds and deploys (config in `vercel.json`, see README → Deploy) |
 | `npm run assets` | Regenerate optimized image variants + `src/assets/generated/imageManifest.ts` from `assets/originals/` |
 | `npm run videos` | Cut the showcase reels (12 s muted 720×1280 H.264, ≤ 4 MB each, HDR → SDR) from `assets/originals/video/` into `public/assets/video/` + poster frames; then `npm run assets` for the posters. Needs ffmpeg |
 | `python3 scripts/derive-hero-cutout.py` | Regenerate `assets/derived/adsflux-services-cutout.png` + per-piece clip outlines from the collage original (needs numpy, opencv-python-headless, pillow); then `npm run assets` |
@@ -77,4 +78,4 @@ docs/brand/         brand guidelines, design system, logo guidelines
 
 ## Before launch
 
-Set `siteConfig.url` (turns on canonical URLs, `og:image`, JSON-LD URLs and `sitemap.xml` — the build warns while it is empty), `siteConfig.email` and social URLs in `src/config/site.ts`; confirm Scalvo ships a dark theme (the Scalvo mock-up's dark layers are rendered from Scalvo's CSS tokens, `src/assets/scalvoImages.ts`); set `VITE_CONTACT_ENDPOINT`; replace all SAMPLE content with approved work; make sure the host serves `dist/<route>/index.html` per route and `dist/404.html` for unknown URLs.
+Set `siteConfig.url` (turns on canonical URLs, `og:image`, JSON-LD URLs and `sitemap.xml` — the build warns while it is empty), `siteConfig.email` and social URLs in `src/config/site.ts`; confirm Scalvo ships a dark theme (the Scalvo mock-up's dark layers are rendered from Scalvo's CSS tokens, `src/assets/scalvoImages.ts`); set `VITE_CONTACT_ENDPOINT`; replace all SAMPLE content with approved work; hosting is Vercel (`vercel.json`): it serves `dist/<route>/index.html` per route and `dist/404.html` for unknown URLs — keep it that way (no SPA catch-all rewrite).

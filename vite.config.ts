@@ -10,6 +10,20 @@ export default defineConfig({
       '@': fileURLToPath(new URL('./src', import.meta.url)),
     },
   },
+  build: {
+    rolldownOptions: {
+      output: {
+        codeSplitting: {
+          /**
+           * Everything the first page statically needs ships as one chunk. Without this, code shared with
+           * several lazy routes (UI primitives, config, motion) is split into many small initial chunks,
+           * each costing its own request and gzip overhead.
+           */
+          groups: [{ name: 'app', tags: ['$initial'] }],
+        },
+      },
+    },
+  },
   css: {
     modules: {
       localsConvention: 'camelCaseOnly',

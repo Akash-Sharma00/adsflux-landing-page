@@ -1,0 +1,50 @@
+.list {
+  display: grid;
+  gap: var(--space-10) var(--grid-gap);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.point {
+  display: grid;
+  gap: var(--space-3);
+  align-content: start;
+  padding-top: var(--space-5);
+  border-top: 1px solid var(--color-border-strong);
+}
+
+.title {
+  font-size: var(--text-2xl);
+  font-weight: var(--weight-medium);
+}
+
+.description {
+  max-width: 44ch;
+  color: var(--color-text-muted);
+}
+
+@media (min-width: 768px) {
+  .list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/*
+ * Offset the right column so the list reads as a staggered spread, not a grid of boxes.
+ * Margin, not transform: the stagger entrance animates the item's transform inline.
+ */
+@media (min-width: 1024px) {
+  .list {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+  }
+
+  .point:nth-child(odd) {
+    grid-column: 1 / span 5;
+  }
+
+  .point:nth-child(even) {
+    grid-column: 7 / span 5;
+    margin-top: var(--space-12);
+  }
+}

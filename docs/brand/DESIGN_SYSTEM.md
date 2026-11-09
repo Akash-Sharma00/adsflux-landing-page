@@ -341,7 +341,7 @@ Data for nav and footer comes from `@/config/navigation` (`mainNav`, `primaryCta
 - **`ImageReveal` observes the outer, unclipped element.** The clip layer starts at `inset(100% …)` (fully clipped), so the `whileInView` sits on the outer `m.div` and the clip and zoom layers follow via variants. Keep that structure. The clip layer also needs `overflow: hidden`, because `clip-path` doesn't clip the zoomed layer's scrollable overflow.
 - `clip-path` animations are not transforms, so `reducedMotion="user"` does not skip them. `ImageReveal` therefore renders the image directly under reduced motion, and `MobileMenu` swaps its clip-path wipe for a plain fade. Do the same for any new clip-path animation.
 
-**Budget.** Initial JS ≤ 120 KB gzip (currently ~119 KB). The motion engine and GSAP load on demand; check `npm run build` after adding any animation dependency.
+**Budget.** Initial JS ≤ 120 KB gzip (currently ~122 KB — over). The motion engine and GSAP load on demand; check `npm run build` after adding any animation dependency.
 
 ## 6. Accessibility
 
@@ -357,7 +357,7 @@ Data for nav and footer comes from `@/config/navigation` (`mainNav`, `primaryCta
 
 ## 7. Performance
 
-- **Budget:** initial JS ≤ 120 KB gzip; currently ~119 KB (React + react-router declarative + motion core + the ~0.6 KB theme store and toggle). The theme bootstrap is an inline script in `index.html`, outside the bundle.
+- **Budget:** initial JS ≤ 120 KB gzip; currently ~122 KB (React + react-router declarative + motion core + the ~0.6 KB theme store and toggle). The theme bootstrap is an inline script in `index.html`, outside the bundle.
 - Routes other than home use `React.lazy`. GSAP and the motion feature bundle load on demand.
 - Fonts: latin + latin-ext woff2 served from stable `/fonts/` URLs (`npm run fonts` → `public/fonts/` + `src/styles/fonts.css`). The three above-the-fold faces (Instrument Serif roman + italic, Space Grotesk) are preloaded in `index.html`, which took mobile CLS from 0.145 to 0.
 - Routing uses declarative `BrowserRouter` on purpose (~13 KB vs ~31 KB for the data router). Revisit only if routes need loaders.

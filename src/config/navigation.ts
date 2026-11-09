@@ -1,6 +1,6 @@
-import { homeAnchor, routes } from './routes'
+import { homeAnchor, routes, servicePath } from './routes'
 import { scalvoLinks } from './scalvo'
-import { serviceAnchorId, services } from './services'
+import { services } from './services'
 
 export type NavLink = {
   label: string
@@ -15,7 +15,7 @@ export type NavItem = NavLink & {
 
 const serviceLinks: readonly NavLink[] = services.map((service) => ({
   label: service.title,
-  href: `${routes.home}#${serviceAnchorId(service.slug)}`,
+  href: servicePath(service.slug),
   description: service.summary,
 }))
 

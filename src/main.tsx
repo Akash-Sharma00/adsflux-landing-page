@@ -1,5 +1,5 @@
 import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
+import { createRoot, hydrateRoot } from 'react-dom/client'
 import { App } from '@/app/App'
 import { protectMedia } from '@/lib/protectMedia'
 import '@/styles/fonts'
@@ -13,8 +13,12 @@ if (!rootElement) {
   throw new Error('Root element #root not found in index.html')
 }
 
-createRoot(rootElement).render(
+const app = (
   <StrictMode>
     <App />
-  </StrictMode>,
+  </StrictMode>
 )
+
+// Built pages arrive prerendered (src/entry-server.tsx) and are hydrated; the dev server serves an empty root.
+if (rootElement.hasChildNodes()) hydrateRoot(rootElement, app)
+else createRoot(rootElement).render(app)

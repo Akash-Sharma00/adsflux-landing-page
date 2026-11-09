@@ -13,7 +13,7 @@ appears — this file says what to reach for when it does.
 
 | Metric (mobile, 4G)            | Budget        |
 | ------------------------------ | ------------- |
-| Initial JS (gzip)              | ≤ 120 KB (currently ~118 KB) |
+| Initial JS (gzip)              | ≤ 120 KB (currently ~122 KB in one `index` chunk — over; trim before adding more) |
 | Initial CSS (gzip)             | ≤ 20 KB       |
 | LCP                            | ≤ 2.5 s       |
 | CLS                            | ≤ 0.1         |
@@ -42,7 +42,8 @@ Prefer small, focused libraries. Never add a second library for something alread
   `RootLayout` already wraps the `<Outlet>` in `<Suspense>`.
 - Scroll on navigation is handled by `components/layout/ScrollManager` (top on new page, hash targets otherwise).
 - Keep route paths in `src/config/routes.ts` and reference them by constant, not string literals.
-- If SEO across many pages becomes important, consider static prerendering before there are dozens of pages.
+- Every route is prerendered at build (`src/entry-server.tsx` via `scripts/vite-plugin-seo.ts`) and hydrated by `main.tsx`.
+  A new route must render in Node: browser APIs only in effects, `useSyncExternalStore` with a server snapshot.
 
 ## Code splitting
 
@@ -101,8 +102,9 @@ Escalate only as far as needed:
 - Each page renders `<PageHead page="…" />`. Never render `<title>`/`<meta>` directly — React 19 hoisting would
   duplicate the static tags instead of replacing them. `PageHead` loads the metadata lazily (it only matters after
   client-side navigation), keeping it off the initial-JS budget.
-- `scripts/vite-plugin-seo.ts` (build) writes `dist/<route>/index.html` per page with its own `<head>` (bots that
-  don't run JS read this), `dist/404.html` (noindex, real 404 status on static hosts), `robots.txt` and
+- `scripts/vite-plugin-seo.ts` (build) server-renders every page and writes `dist/<route>/index.html` with its full
+  content and its own `<head>` (bots that don't run JS read this; the build fails if content is left behind a
+  Suspense fallback), `dist/404.html` (noindex, real 404 status on static hosts), `robots.txt` and
   `sitemap.xml`. Home-only preloads in `index.html` sit between `<!-- home-only:start/end -->` and are stripped
   from other routes.
 - Canonical URLs, `og:url`, `og:image` and the sitemap need absolute URLs, so they appear only once `siteConfig.url`

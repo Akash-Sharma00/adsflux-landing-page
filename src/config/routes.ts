@@ -4,6 +4,9 @@ export const routes = {
   brand: '/brand',
 } as const
 
+/** A service page, one per entry in the services catalogue. */
+export const servicePath = (slug: string) => `/services/${slug}`
+
 export const homeSections = {
   services: 'services',
   scalvo: 'scalvo',

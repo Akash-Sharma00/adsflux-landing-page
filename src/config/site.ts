@@ -8,8 +8,8 @@ export const siteConfig = {
   description:
     'Adsflux is a creative and growth agency for ambitious brands in India and worldwide — strategy, performance, creative production, UGC, branding, social, SEO and AI-powered creative.',
   markets: 'India & worldwide',
-  /** Public site URL, e.g. https://adsflux.in — set before launch (canonical + OG tags). */
-  url: '',
+  /** Public site URL (canonical host — the apex domain should redirect here). Drives canonical, OG and sitemap URLs. */
+  url: 'https://www.adsflux.in',
   /** Public contact email — set before launch. Rendered only when present. */
   email: '',
   /** Social profiles. Leave href empty until the profile exists — empty ones render as "soon". */

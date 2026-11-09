@@ -88,7 +88,7 @@ Import from `@/components/ui`, `@/components/motion`, `@/components/sections`, a
 - No Lenis (deliberate). No scroll-jacking.
 - **Respect reduced motion:** `MotionConfig reducedMotion="user"` handles `m.*` transforms; GSAP components check `usePrefersReducedMotion()` and render static; CSS loops (`Marquee`, `Stamp`, `Burst spin`) must stop in a `prefers-reduced-motion` block; videos don't autoplay (their play/sound controls stay).
 - **Gotchas:** never put `whileInView` on an element that starts fully clipped (inside an `overflow: hidden` mask or `clip-path: inset(100%…)`): observe the visible parent and drive children via variants (see `TextReveal` and `ImageReveal`, whose observer is the outer unclipped element).
-- Budget: initial JS ≤ 120 KB gzip (currently ~119 KB). Don't add animation libraries.
+- Budget: initial JS ≤ 120 KB gzip (currently ~122 KB — over). Don't add animation libraries.
 
 ## 8. Responsive & accessibility
 

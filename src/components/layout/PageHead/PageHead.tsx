@@ -28,9 +28,9 @@ export function PageHead({ page }: PageHeadProps) {
   useEffect(() => {
     let isCurrent = true
     import('@/config/seo')
-      .then(({ buildHeadTags, pageSeo }) => {
+      .then(({ buildHeadTags, getPageSeo }) => {
         if (!isCurrent) return
-        document.title = pageSeo[page].title
+        document.title = getPageSeo(page).title
         for (const element of document.head.querySelectorAll(`[${MANAGED_ATTRIBUTE}]:not(title)`)) element.remove()
         document.head.append(...buildHeadTags(page).map(createElement))
       })

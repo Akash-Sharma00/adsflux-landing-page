@@ -16,7 +16,7 @@ self-hosted fonts at stable /fonts/ URLs (Instrument Serif, Space Grotesk, DM Sa
 |---|---|
 | `npm run dev` | Dev server (`/` home, `/brand` live brand reference) |
 | `npm run check` | Typecheck + lint — **must pass with zero warnings before you finish** |
-| `npm run build` | Typecheck + production build; prints gzip sizes (initial JS budget ≤ 120 KB, currently ~118 KB — near the limit; code-split anything new) |
+| `npm run build` | Typecheck + production build; prints gzip sizes (initial JS budget ≤ 120 KB; currently ~122 KB as a single `index` chunk — already over, so code-split anything new and trim before adding) |
 | `npm run preview` | Serve the build |
 | Deploy | Push to `main` — Vercel builds and deploys (config in `vercel.json`, see README → Deploy) |
 | `npm run assets` | Regenerate optimized image variants + `src/assets/generated/imageManifest.ts` from `assets/originals/` |
@@ -53,13 +53,14 @@ Visual reference of everything: run the app and open **`/brand`**.
 
 ## SEO
 
-Every page renders `<PageHead page="…" />` (from `@/components/layout`); its metadata lives in `src/config/seo.ts`. A new route needs an entry in `pageSeo` — the build plugin then writes its static HTML (correct `<head>` for crawlers and link-preview bots) and adds it to the sitemap if indexable. Don't render `<title>`/`<meta>` in components.
+Every page renders `<PageHead page="…" />` (from `@/components/layout`); its metadata lives in `src/config/seo.ts` (`getPageSeo`). A new static route needs an entry in `staticPageSeo`; service pages are generated from `src/config/services.ts` (`slug` = URL, `seo.keyword` = `<title>` + `<h1>` lead, `seo.description`). At build, `scripts/vite-plugin-seo.ts` server-renders every page (`src/entry-server.tsx`) into its own HTML file — full content + `<head>` for crawlers and link-preview bots; `main.tsx` hydrates it — and lists indexable pages in `sitemap.xml`. The build fails if a page's content would sit behind a Suspense fallback. Keep components render-pure and SSR-safe (browser APIs only in effects; `useSyncExternalStore` with a server snapshot). Don't render `<title>`/`<meta>` in components. Canonical host: `https://www.adsflux.in` (`siteConfig.url`). `npm run preview` falls back to `index.html` for some routes and can log hydration errors that production (Vercel) won't.
 
 ## Repo layout
 
 ```
 src/app/            App (MotionProvider + BrowserRouter), AppRoutes (React.lazy routes)
-src/pages/<route>/  home (HomePage + sections/) · brand (/brand reference) · not-found
+src/pages/<route>/  home (HomePage + sections/) · service (/services/<slug>, one per service + serviceContent.ts) · brand (/brand reference) · not-found
+src/entry-server.tsx build-time renderer used by the SEO plugin (mirrors App with a StaticRouter)
 src/features/       services · showcase · work · testimonials · pricing · contact
 src/components/     ui/ (primitives) · motion/ · sections/ (CtaSection) · layout/ (header, mobile menu, footer)
 src/config/         site copy, services catalogue, navigation, routes, env, seo (per-page <head> metadata)
@@ -78,4 +79,4 @@ docs/brand/         brand guidelines, design system, logo guidelines
 
 ## Before launch
 
-Set `siteConfig.url` (turns on canonical URLs, `og:image`, JSON-LD URLs and `sitemap.xml` — the build warns while it is empty), `siteConfig.email` and social URLs in `src/config/site.ts`; confirm Scalvo ships a dark theme (the Scalvo mock-up's dark layers are rendered from Scalvo's CSS tokens, `src/assets/scalvoImages.ts`); set `VITE_CONTACT_ENDPOINT`; replace all SAMPLE content with approved work; hosting is Vercel (`vercel.json`): it serves `dist/<route>/index.html` per route and `dist/404.html` for unknown URLs — keep it that way (no SPA catch-all rewrite).
+Review the service-page copy (`src/pages/service/serviceContent.ts`); redirect the apex domain to `www.adsflux.in` in Vercel; verify the domain in Google Search Console and submit `/sitemap.xml`; set `siteConfig.email` and social URLs in `src/config/site.ts`; confirm Scalvo ships a dark theme (the Scalvo mock-up's dark layers are rendered from Scalvo's CSS tokens, `src/assets/scalvoImages.ts`); set `VITE_CONTACT_ENDPOINT`; replace all SAMPLE content with approved work; hosting is Vercel (`vercel.json`): it serves `dist/<route>/index.html` per route and `dist/404.html` for unknown URLs — keep it that way (no SPA catch-all rewrite).

@@ -39,7 +39,7 @@ Start with [AGENTS.md](AGENTS.md). The brand skill is at [.agents/skills/adsflux
 ## Deploy (Vercel)
 
 Configured in [vercel.json](vercel.json): Vite preset, `npm ci` → `npm run build` → `dist/`, Node ≥ 22.12 (`engines`).
-Every route is pre-rendered (`dist/index.html`, `dist/brand/index.html`), unknown URLs get `dist/404.html` with a
+Every route is pre-rendered with its full content (`dist/index.html`, `dist/services/<slug>/index.html`, `dist/brand/index.html`), unknown URLs get `dist/404.html` with a
 real 404 status (no SPA catch-all rewrite), clean URLs without trailing slashes, immutable caching for hashed
 `/assets/*.js|css`, shorter caching for media and fonts, and baseline security headers.
 Campaign media (`/assets/campaigns|hero|scalvo|video/`) can't be opened directly in a tab or hotlinked from other
@@ -49,10 +49,11 @@ sites (redirects to `/`); in the page, right-click/long-press save and drag-out 
 1. Import the GitHub repo at [vercel.com/new](https://vercel.com/new) (settings are read from `vercel.json`; no changes needed).
 2. Add `VITE_CONTACT_ENDPOINT` under Project → Settings → Environment Variables when the form endpoint exists.
 3. Every push to `main` deploys to production; other branches and PRs get preview URLs.
-4. Once the domain is final, set `siteConfig.url` in `src/config/site.ts` to it and push.
+4. Add `www.adsflux.in` and `adsflux.in` under Project → Settings → Domains, with the apex redirecting to `www` (the canonical host in `siteConfig.url`).
 
 ## Before launch
 
 - Replace the **sample** showcase, case studies, testimonials and pricing (`src/features/*/content.ts`) with real, approved content. Real campaign creatives are already placed (hero + showcase); see [docs/assets/ASSET_INVENTORY.md](docs/assets/ASSET_INVENTORY.md) for the workflow, open attribution questions and two copy errors baked into supplied creatives.
-- Set `siteConfig.url`, `siteConfig.email` and the social URLs in `src/config/site.ts` (socials show "soon" until set), and set `VITE_CONTACT_ENDPOINT`.
-- SEO is built in (`src/config/seo.ts`, see AGENTS.md → SEO). Setting `siteConfig.url` turns on canonical URLs, the OG image, JSON-LD URLs and `sitemap.xml`. Hosting: `vercel.json` already serves `dist/<route>/index.html` per route and `dist/404.html` for unknown URLs.
+- Set `siteConfig.email` and the social URLs in `src/config/site.ts` (socials show "soon" until set; they also feed the Organization `sameAs` in structured data), and set `VITE_CONTACT_ENDPOINT`.
+- SEO is built in (`src/config/seo.ts`, see AGENTS.md → SEO): pre-rendered pages, one keyword-targeted page per service under `/services/`, canonical URLs on `https://www.adsflux.in`, Open Graph, JSON-LD (Organization, WebSite, Service, BreadcrumbList), `sitemap.xml` and `robots.txt`. Review the service-page copy in `src/pages/service/serviceContent.ts`.
+- After the first deploy: verify the domain in [Google Search Console](https://search.google.com/search-console) (DNS, Domain property), submit `https://www.adsflux.in/sitemap.xml`, and request indexing for the home and service pages.

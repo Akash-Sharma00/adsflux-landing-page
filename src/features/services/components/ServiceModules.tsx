@@ -1,5 +1,6 @@
 import { Stagger, StaggerItem } from '@/components/motion'
 import { AppLink, MediaFrame } from '@/components/ui'
+import { servicePath } from '@/config/routes'
 import { scalvoLinks } from '@/config/scalvo'
 import { serviceAnchorId, type Service } from '@/config/services'
 import { cn } from '@/lib/cn'
@@ -37,7 +38,11 @@ export function ServiceModules({ services }: ServiceModulesProps) {
                 artTone={look.artTone}
               />
               <div className={styles.body}>
-                <h3 className={styles.title}>{service.title}</h3>
+                <h3 className={styles.title}>
+                  <AppLink href={servicePath(service.slug)} className={styles.titleLink}>
+                    {service.title}
+                  </AppLink>
+                </h3>
                 <p className={styles.summary}>{service.summary}</p>
                 <ul className={styles.capabilities} aria-label={`${service.title} capabilities`}>
                   {service.capabilities.map((capability) => (

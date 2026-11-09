@@ -1,0 +1,89 @@
+.inner {
+  display: grid;
+}
+
+.heading {
+  margin-bottom: var(--space-10);
+}
+
+.list {
+  border-bottom: 1px solid var(--color-border-strong);
+}
+
+.item {
+  border-top: 1px solid var(--color-border-strong);
+}
+
+.question {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-6);
+  min-height: 2.75rem;
+  padding-block: var(--space-5);
+  cursor: pointer;
+  list-style: none;
+}
+
+.question::-webkit-details-marker {
+  display: none;
+}
+
+.questionText {
+  font-size: var(--text-xl);
+  font-weight: var(--weight-medium);
+}
+
+.question:hover .questionText {
+  color: var(--color-accent-ink);
+}
+
+/* A plus drawn with two hairlines; the vertical one folds away when open. */
+.marker {
+  position: relative;
+  flex: none;
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.marker::before,
+.marker::after {
+  content: '';
+  position: absolute;
+  inset: 50% 0 auto;
+  height: 2px;
+  margin-top: -1px;
+  background: currentColor;
+  transition: transform var(--duration-base) var(--ease-out-expo);
+}
+
+.marker::after {
+  transform: rotate(90deg);
+}
+
+.item[open] .marker::after {
+  transform: rotate(0deg);
+}
+
+.answer {
+  max-width: 60ch;
+  padding-bottom: var(--space-6);
+  font-size: var(--text-lg);
+  color: var(--color-text-muted);
+}
+
+@media (min-width: 1024px) {
+  .inner {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: var(--grid-gap);
+  }
+
+  .heading {
+    grid-column: 1 / span 4;
+    align-self: start;
+  }
+
+  .list {
+    grid-column: 5 / -1;
+  }
+}

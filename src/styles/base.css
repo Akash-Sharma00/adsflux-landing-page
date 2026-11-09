@@ -23,6 +23,14 @@
     color: var(--color-text);
   }
 
+  /* Campaign media can't be dragged out, selected, or long-pressed to save (iOS). See src/lib/protectMedia.ts. */
+  img,
+  video {
+    -webkit-user-drag: none;
+    -webkit-touch-callout: none;
+    user-select: none;
+  }
+
   /* Any toned scope paints its own background and text color. */
   [data-theme] {
     background-color: var(--color-bg);

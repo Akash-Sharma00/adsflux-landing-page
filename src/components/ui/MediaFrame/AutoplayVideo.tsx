@@ -106,6 +106,10 @@ export function AutoplayVideo({ src, label, className }: AutoplayVideoProps) {
         loop
         playsInline
         preload="none"
+        // No download / picture-in-picture / casting entry points (see src/lib/protectMedia.ts).
+        controlsList="nodownload noplaybackrate noremoteplayback"
+        disablePictureInPicture
+        disableRemotePlayback
       />
       <div className={styles.controls} role="group" aria-label="Video controls">
         <button

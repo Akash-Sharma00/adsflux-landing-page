@@ -1,8 +1,11 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { App } from '@/app/App'
+import { protectMedia } from '@/lib/protectMedia'
 import '@/styles/fonts'
 import '@/styles/index.css'
+
+protectMedia()
 
 const rootElement = document.getElementById('root')
 

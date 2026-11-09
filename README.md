@@ -42,6 +42,9 @@ Configured in [vercel.json](vercel.json): Vite preset, `npm ci` → `npm run bui
 Every route is pre-rendered (`dist/index.html`, `dist/brand/index.html`), unknown URLs get `dist/404.html` with a
 real 404 status (no SPA catch-all rewrite), clean URLs without trailing slashes, immutable caching for hashed
 `/assets/*.js|css`, shorter caching for media and fonts, and baseline security headers.
+Campaign media (`/assets/campaigns|hero|scalvo|video/`) can't be opened directly in a tab or hotlinked from other
+sites (redirects to `/`); in the page, right-click/long-press save and drag-out are disabled on images and videos
+(`src/lib/protectMedia.ts`). These deter casual saving only — anything a browser shows can still be captured.
 
 1. Import the GitHub repo at [vercel.com/new](https://vercel.com/new) (settings are read from `vercel.json`; no changes needed).
 2. Add `VITE_CONTACT_ENDPOINT` under Project → Settings → Environment Variables when the form endpoint exists.

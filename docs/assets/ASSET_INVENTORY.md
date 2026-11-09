@@ -94,7 +94,9 @@ Supplied 2026-11-09 as a Google Drive download (4 vertical 9:16 files, 608 MB). 
 | `prathaa-black-jumpsuit-outfit-reel.mov` | `Prathaa (2).mov` (2160×3840, 43 s, 292 MB) | Black jumpsuit outfit reel in a garden | Social creatives · reels row 3 | 8.3–20.3 s, 3.2 MB |
 | `eau-so-haute-champagne-mist-creator-review.mp4` | `IMG_5574 (1) (1) (1).MP4` (HEVC, 1440×2560, 32 s, 63 MB) | Creator reviews a body mist to camera | UGC video · reels row 4 | 8–19.2 s, 2.9 MB |
 
-**Performance:** nothing video-related downloads at page load. The showcase collage is code-split (`ShowcaseGallery`), posters are lazy `<picture>`s (not an eager `poster=` attribute), each video uses `preload="none"` and starts downloading only when it scrolls into view, and pauses off screen. Every video has play/pause and sound controls; they autoplay muted, sound is opt-in, and only one is audible at a time. To change a segment, edit `start`/`duration` in `scripts/optimize-videos.mjs` and rerun `npm run videos && npm run assets`.
+**Performance:** nothing video-related downloads at page load. The showcase collage is code-split (`ShowcaseGallery`), posters are lazy `<picture>`s (not an eager `poster=` attribute), each video uses `preload="none"` and starts downloading only when it scrolls into view, and pauses off screen. Every video has play/pause and sound controls; they autoplay muted, sound is opt-in, and only one is audible at a time.
+
+**Download deterrents:** no context menu or drag-out on images/videos (`src/lib/protectMedia.ts` + `base.css`), videos carry `controlsList="nodownload"` with picture-in-picture and casting off, and on Vercel, media URLs opened directly in a tab or requested from another site redirect to `/` (`vercel.json`). Deterrents only: anything displayed can still be screen-recorded or pulled from dev tools. To change a segment, edit `start`/`duration` in `scripts/optimize-videos.mjs` and rerun `npm run videos && npm run assets`.
 
 ## Action needed before launch
 

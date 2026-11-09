@@ -1,0 +1,62 @@
+.wordmark {
+  display: block;
+  height: 2rem;
+  width: auto;
+  overflow: visible;
+}
+
+.mark {
+  fill: var(--color-logo-mark);
+}
+
+.burst {
+  fill: var(--color-logo-burst);
+  transform-box: fill-box;
+  transform-origin: center;
+  transition: transform var(--duration-slow) var(--ease-out-expo);
+}
+
+/* The burst turns when the logo is hovered inside a link — a small signature interaction. */
+a:hover > .wordmark .burst {
+  transform: rotate(45deg);
+}
+
+.monogram {
+  display: block;
+  width: 2.5rem;
+  height: auto;
+}
+
+/* Monogram colors are fixed per variant (documented exception: reads --brand-* directly). */
+.cobalt .tile {
+  fill: var(--brand-cobalt);
+}
+
+.cobalt .letter {
+  fill: var(--brand-cream);
+}
+
+.cobalt .monogramBurst {
+  fill: var(--brand-orange);
+}
+
+.cream .tile {
+  fill: var(--brand-cream);
+}
+
+.cream .letter {
+  fill: var(--brand-ink);
+}
+
+.cream .monogramBurst {
+  fill: var(--brand-orange);
+}
+
+.orange .tile {
+  fill: var(--brand-orange);
+}
+
+.orange .letter,
+.orange .monogramBurst {
+  fill: var(--brand-ink);
+}

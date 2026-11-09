@@ -1,0 +1,212 @@
+/* Which mode the swatches, tints and contrast table describe. */
+.mode {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-3);
+  margin-bottom: var(--space-6);
+  font-family: var(--font-heading);
+  font-weight: var(--weight-medium);
+}
+
+.mode .label {
+  color: var(--color-accent-ink);
+}
+
+/* ---------- Swatches: cream + cobalt large, four supporting colors below ---------- */
+.swatches {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.swatchItem:nth-child(-n + 2) {
+  grid-column: 1 / -1;
+}
+
+.swatch {
+  display: grid;
+  align-content: space-between;
+  gap: var(--space-10);
+  height: 100%;
+  min-height: 15rem;
+  padding: var(--space-5);
+  border: 1px solid var(--color-border-strong);
+}
+
+.swatchItem:nth-child(-n + 2) .swatch {
+  min-height: 20rem;
+}
+
+.swatchBody {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.swatchName {
+  font-family: var(--font-display);
+  font-size: var(--text-3xl);
+  font-weight: var(--weight-regular);
+  line-height: 0.95;
+  letter-spacing: var(--tracking-display);
+}
+
+.swatchItem:nth-child(-n + 2) .swatchName {
+  font-size: var(--text-4xl);
+}
+
+.swatchRole {
+  font-size: var(--text-sm);
+  line-height: var(--leading-snug);
+  color: var(--color-text-muted);
+  max-width: 30ch;
+}
+
+.swatchSpec {
+  display: grid;
+  gap: var(--space-1);
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-mono);
+  text-transform: uppercase;
+  overflow-wrap: anywhere;
+}
+
+.swatchSpec dd {
+  margin: 0;
+}
+
+/* ---------- Derived tints ---------- */
+.tints {
+  display: grid;
+  gap: var(--space-6) var(--grid-gap);
+  margin: var(--space-10) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.tint {
+  display: flex;
+  gap: var(--space-4);
+  align-items: flex-start;
+}
+
+.tint > span:last-child {
+  display: grid;
+  gap: var(--space-1);
+}
+
+.tintChip {
+  flex-shrink: 0;
+  width: 2.75rem;
+  aspect-ratio: 1;
+  border-radius: var(--radius-pill);
+}
+
+.tintName {
+  font-family: var(--font-heading);
+  font-weight: var(--weight-medium);
+}
+
+.tintUse {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+}
+
+/* ---------- Sub-blocks ---------- */
+.block {
+  margin-top: var(--section-space-sm);
+}
+
+/* ---------- Balance bar ---------- */
+.balance {
+  display: flex;
+  min-height: 9rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border: 1px solid var(--color-border-strong);
+}
+
+.balanceSegment {
+  display: grid;
+  align-content: space-between;
+  flex: var(--share) 1 0;
+  min-width: 0;
+  padding: var(--space-3);
+}
+
+.balanceShare {
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
+  line-height: 1;
+}
+
+.balanceName {
+  overflow: hidden;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: var(--tracking-mono);
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.balanceNote {
+  margin-top: var(--space-4);
+  color: var(--color-text-muted);
+}
+
+@media (max-width: 767px) {
+  /* Narrow segments can't hold labels: stack the bar vertically instead. */
+  .balance {
+    flex-direction: column;
+    min-height: 0;
+  }
+
+  .balanceSegment {
+    grid-template-columns: 4rem minmax(0, 1fr);
+    align-items: baseline;
+    min-height: calc(var(--share) * 0.12rem + 2.5rem);
+  }
+}
+
+@media (min-width: 768px) {
+  .tints {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .swatches {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .swatchItem:nth-child(1) {
+    grid-column: 1 / span 2;
+  }
+
+  .swatchItem:nth-child(2) {
+    grid-column: 3 / span 2;
+  }
+}
+
+@media (min-width: 1024px) {
+  .swatches {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+  }
+
+  .swatchItem:nth-child(n) {
+    grid-column: span 3;
+  }
+
+  .swatchItem:nth-child(1) {
+    grid-column: 1 / span 7;
+  }
+
+  .swatchItem:nth-child(2) {
+    grid-column: 8 / span 5;
+  }
+}

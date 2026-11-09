@@ -1,0 +1,94 @@
+.field {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.label {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-mono);
+  text-transform: uppercase;
+  color: var(--color-text);
+}
+
+.required {
+  margin-left: 0.2em;
+  color: var(--color-accent-ink);
+}
+
+/* Editorial underline inputs — large type, no boxes. */
+.control {
+  width: 100%;
+  min-height: 3.25rem;
+  padding: var(--space-2) 0;
+  border: 0;
+  border-bottom: 1px solid var(--color-border-strong);
+  border-radius: 0;
+  background: transparent;
+  font-family: var(--font-body);
+  font-size: var(--text-xl);
+  color: var(--color-text);
+  transition: border-color var(--duration-base) var(--ease-standard);
+}
+
+.control::placeholder {
+  color: var(--color-text-muted);
+  opacity: 1;
+}
+
+.control:hover {
+  border-bottom-color: var(--color-text);
+}
+
+.control:focus-visible {
+  outline: none;
+  border-bottom-color: var(--color-focus);
+  box-shadow: 0 1px 0 0 var(--color-focus);
+}
+
+.control[aria-invalid='true'] {
+  border-bottom-color: var(--color-danger);
+}
+
+.textarea {
+  min-height: 7rem;
+  resize: vertical;
+}
+
+.selectWrap {
+  position: relative;
+}
+
+.select {
+  appearance: none;
+  padding-right: var(--space-8);
+  cursor: pointer;
+}
+
+.select option {
+  background: var(--color-bg);
+  color: var(--color-text);
+}
+
+.selectWrap::after {
+  content: '';
+  position: absolute;
+  right: var(--space-2);
+  top: 50%;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-right: 1.5px solid currentColor;
+  border-bottom: 1.5px solid currentColor;
+  transform: translateY(-75%) rotate(45deg);
+  pointer-events: none;
+}
+
+.hint {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+}
+
+.error {
+  font-size: var(--text-sm);
+  color: var(--color-danger);
+}

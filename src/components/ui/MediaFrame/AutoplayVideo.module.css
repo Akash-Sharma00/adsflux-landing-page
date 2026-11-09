@@ -1,0 +1,42 @@
+/* Play/pause + sound pills, bottom-right of the frame. Solid cream-tone fills read over any footage, in both modes. */
+.controls {
+  position: absolute;
+  inset-inline-end: var(--space-3);
+  inset-block-end: var(--space-3);
+  z-index: 1;
+  display: flex;
+  gap: var(--space-2);
+}
+
+.control {
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  padding: 0;
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-pill);
+  background: var(--color-bg);
+  color: var(--color-text);
+  transition:
+    background-color var(--duration-base) var(--ease-standard),
+    color var(--duration-base) var(--ease-standard);
+}
+
+.control:hover {
+  background: var(--color-cta-bg);
+  color: var(--color-cta-text);
+}
+
+.icon {
+  width: 1.125rem;
+  height: 1.125rem;
+  fill: currentColor;
+}
+
+.stroke {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+}

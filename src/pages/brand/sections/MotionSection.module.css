@@ -1,0 +1,139 @@
+.grid {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.revealText {
+  font-family: var(--font-display);
+  font-size: var(--text-4xl);
+  line-height: 0.95;
+  letter-spacing: var(--tracking-display);
+  max-width: none;
+}
+
+.staggerList {
+  display: grid;
+  gap: var(--space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.staggerItem {
+  padding-bottom: var(--space-2);
+  border-bottom: 1px solid var(--color-border);
+  font-family: var(--font-heading);
+  font-size: var(--text-2xl);
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--tracking-tight);
+}
+
+.parallax {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-4);
+  padding-block: var(--space-12);
+  overflow: hidden;
+}
+
+.parallaxLayer {
+  display: grid;
+  gap: var(--space-2);
+}
+
+/* ---------- Scroll storytelling + ticker ---------- */
+.scrollPanel {
+  display: grid;
+  gap: var(--space-8);
+  margin-top: var(--space-3);
+  padding: clamp(var(--space-8), 6vw, var(--space-20)) clamp(var(--space-5), 5vw, var(--space-16));
+}
+
+.marqueeBand {
+  margin-top: var(--space-3);
+  border-block: 1px solid var(--color-border-strong);
+}
+
+.marquee {
+  padding-block: var(--space-4);
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
+  font-style: italic;
+  line-height: 1.1;
+}
+
+/* ---------- Tokens + reduced motion ---------- */
+.footer {
+  display: grid;
+  gap: var(--space-12) var(--grid-gap);
+  margin-top: var(--section-space-sm);
+}
+
+.tokens {
+  display: grid;
+  margin: 0;
+}
+
+.token {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: var(--space-1) var(--space-4);
+  padding-block: var(--space-3);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.token dd {
+  margin: 0;
+}
+
+.tokenValue {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  overflow-wrap: anywhere;
+}
+
+.tokenUse {
+  grid-column: 1 / -1;
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+}
+
+.rules {
+  display: grid;
+  gap: var(--space-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.rules li {
+  padding-bottom: var(--space-3);
+  border-bottom: 1px solid var(--color-border);
+  color: var(--color-text-muted);
+}
+
+@media (min-width: 1024px) {
+  .grid {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+  }
+
+  .wide {
+    grid-column: span 7;
+  }
+
+  .narrow {
+    grid-column: span 5;
+  }
+
+  .grid > :nth-child(3) {
+    grid-column: span 4;
+  }
+
+  .grid > :nth-child(4) {
+    grid-column: span 8;
+  }
+
+  .footer {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}

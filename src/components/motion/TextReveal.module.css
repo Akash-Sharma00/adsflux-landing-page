@@ -1,0 +1,13 @@
+.mask {
+  display: inline-block;
+  overflow: hidden;
+  /* Room for descenders inside the mask without changing line height. */
+  padding-bottom: 0.12em;
+  margin-bottom: -0.12em;
+  vertical-align: top;
+}
+
+.word {
+  display: inline-block;
+  will-change: transform;
+}

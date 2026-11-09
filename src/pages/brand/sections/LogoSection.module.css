@@ -1,0 +1,171 @@
+/* ---------- Wordmark on three tones: one lead tile, two stacked ---------- */
+.tiles {
+  display: grid;
+  gap: var(--grid-gap);
+}
+
+.tile {
+  display: grid;
+  align-content: space-between;
+  gap: var(--space-12);
+  height: 100%;
+  margin: 0;
+  padding: clamp(var(--space-6), 4vw, var(--space-12));
+  border: 1px solid var(--color-border-strong);
+}
+
+.tileMark {
+  width: min(100%, 22rem);
+  height: auto;
+}
+
+.tileLead .tileMark {
+  width: min(100%, 34rem);
+}
+
+.tileLead .tile {
+  align-content: center;
+}
+
+/* ---------- Mono, monogram, favicon ---------- */
+.secondary {
+  display: grid;
+  gap: var(--space-16) var(--grid-gap);
+  margin-top: var(--section-space-sm);
+}
+
+.monoTile {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 16 / 9;
+  padding: var(--space-8);
+  background: var(--color-surface);
+}
+
+/* One-color version: the burst takes the letter color. */
+.monoMark {
+  --color-logo-burst: var(--color-logo-mark);
+
+  width: min(100%, 16rem);
+  height: auto;
+}
+
+.monograms {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.monogramItem {
+  display: grid;
+  gap: var(--space-2);
+  align-content: start;
+}
+
+.monogram {
+  width: 100%;
+  margin-bottom: var(--space-2);
+  /* The cream tile would vanish on the cream page. */
+  outline: 1px solid var(--color-border);
+}
+
+.use {
+  font-size: var(--text-sm);
+  line-height: var(--leading-snug);
+  color: var(--color-text-muted);
+}
+
+.favicons {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: var(--space-6);
+  margin: 0;
+  padding: var(--space-8);
+  list-style: none;
+  background: var(--color-surface);
+}
+
+.favicon {
+  display: grid;
+  justify-items: center;
+  gap: var(--space-3);
+}
+
+.favicon img {
+  display: block;
+}
+
+/* ---------- Rules ---------- */
+.rules {
+  display: grid;
+  gap: var(--space-12) var(--grid-gap);
+  margin-top: var(--section-space-sm);
+}
+
+.ruleList {
+  display: grid;
+  gap: var(--space-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ruleList li {
+  position: relative;
+  padding-left: var(--space-6);
+  color: var(--color-text-muted);
+}
+
+.ruleList li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.55em;
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: var(--radius-pill);
+  background: var(--color-shape-2);
+}
+
+.ruleList[data-kind='dont'] li::before {
+  border-radius: var(--radius-none);
+  background: var(--color-shape-1);
+  rotate: 45deg;
+}
+
+.files {
+  display: grid;
+  gap: var(--space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  overflow-wrap: anywhere;
+}
+
+@media (min-width: 768px) {
+  .secondary,
+  .rules {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  .tiles {
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    grid-template-rows: auto auto;
+  }
+
+  .tileLead {
+    grid-row: span 2;
+  }
+
+  .tileLead .tile {
+    min-height: 22rem;
+  }
+}

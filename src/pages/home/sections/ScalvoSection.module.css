@@ -1,0 +1,9 @@
+/* clip (not hidden) keeps the preview's position: sticky working. */
+.section {
+  overflow-x: clip;
+}
+
+/* Reserves roughly the loaded height so anchors below don't jump while the chunk arrives. */
+.fallback {
+  min-height: 60rem;
+}

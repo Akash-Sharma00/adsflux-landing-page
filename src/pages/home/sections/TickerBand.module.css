@@ -1,0 +1,11 @@
+.band {
+  border-block: 1px solid var(--color-border-strong);
+}
+
+.marquee {
+  padding-block: var(--space-4);
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
+  font-style: italic;
+  line-height: 1.1;
+}

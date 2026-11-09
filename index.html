@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Title, description, canonical, Open Graph and JSON-LD per route: src/config/seo.ts via scripts/vite-plugin-seo.ts -->
+    <!-- seo:head -->
+    <meta name="theme-color" content="#F5F0E7" />
+    <!--
+      Theme bootstrap: runs before CSS and React so the first paint is already in the right mode (no flash).
+      Saved choice (localStorage "adsflux-theme") wins, else the OS setting. Keep in sync with src/lib/theme.ts.
+      The two hex values mirror --brand-cream / --brand-midnight (browser chrome colour only).
+    -->
+    <script>
+      ;(function () {
+        var root = document.documentElement
+        var theme = null
+        try {
+          theme = localStorage.getItem('adsflux-theme')
+        } catch (error) {}
+        if (theme !== 'light' && theme !== 'dark') {
+          theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+        }
+        root.setAttribute('data-theme', theme)
+        root.style.colorScheme = theme
+        if (theme === 'dark') {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#11131B')
+        }
+      })()
+    </script>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <!-- Above-the-fold fonts: preloaded so the hero headline renders in its final face (no reflow / CLS). -->
+    <link rel="preload" as="font" type="font/woff2" href="/fonts/instrument-serif-latin-400-normal.woff2" crossorigin />
+    <link rel="preload" as="font" type="font/woff2" href="/fonts/instrument-serif-latin-400-italic.woff2" crossorigin />
+    <link rel="preload" as="font" type="font/woff2" href="/fonts/space-grotesk-latin-wght-normal.woff2" crossorigin />
+    <!-- home-only:start -->
+    <!--
+      Preload the home hero photograph (LCP). It is only discovered after JS renders, so this lets the
+      browser fetch it in parallel with the bundle. Keep in sync with heroImages.servicesCollage + its `sizes` in HeroCollage.
+    -->
+    <link
+      rel="preload"
+      as="image"
+      type="image/avif"
+      imagesrcset="/assets/hero/adsflux-services-cutout-640.avif 640w, /assets/hero/adsflux-services-cutout-960.avif 960w, /assets/hero/adsflux-services-cutout-1280.avif 1280w, /assets/hero/adsflux-services-cutout-1536.avif 1536w"
+      imagesizes="(min-width: 1024px) 64vw, 100vw"
+      fetchpriority="high"
+    />
+    <!-- home-only:end -->
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

@@ -1,0 +1,34 @@
+.burst {
+  display: block;
+  width: 3rem;
+  height: auto;
+  overflow: visible;
+}
+
+.shape1 {
+  fill: var(--color-shape-1);
+}
+
+.shape2 {
+  fill: var(--color-shape-2);
+}
+
+.current {
+  fill: currentColor;
+}
+
+.spin {
+  animation: spin 24s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    rotate: 360deg;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spin {
+    animation: none;
+  }
+}

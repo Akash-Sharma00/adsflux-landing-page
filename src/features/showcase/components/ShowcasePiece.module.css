@@ -1,0 +1,44 @@
+.piece {
+  margin: 0;
+  display: grid;
+  gap: var(--space-3);
+  transition: transform var(--duration-slow) var(--ease-out-expo);
+}
+
+/* Lifted print: the frame jumps up-left and an offset block appears behind it. */
+.piece > :first-child {
+  transition: box-shadow var(--duration-slow) var(--ease-out-expo);
+}
+
+.piece:hover {
+  transform: translate(-4px, -6px);
+}
+
+.piece:hover > :first-child {
+  box-shadow: var(--shadow-offset);
+}
+
+.caption {
+  display: grid;
+  gap: var(--space-1);
+}
+
+.meta {
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  letter-spacing: var(--tracking-mono);
+  text-transform: uppercase;
+  color: var(--color-accent-ink);
+}
+
+.title {
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
+  font-style: italic;
+  line-height: 1.05;
+}
+
+.client {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+}

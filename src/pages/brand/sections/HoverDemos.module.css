@@ -1,0 +1,47 @@
+.grid {
+  display: grid;
+  gap: var(--space-3);
+  margin-top: var(--space-3);
+}
+
+.center {
+  display: grid;
+  place-items: center;
+  min-height: 9rem;
+}
+
+.logoLink {
+  display: inline-flex;
+  padding: var(--space-2);
+  text-decoration: none;
+}
+
+.wordmark {
+  height: 3.5rem;
+}
+
+/* Mirrors the showcase piece (ShowcasePiece): jumps up-left while an orange print offset appears behind it. */
+.lift {
+  display: grid;
+  gap: var(--space-3);
+  margin: 0;
+  transition: transform var(--duration-slow) var(--ease-out-expo);
+}
+
+.liftFrame {
+  transition: box-shadow var(--duration-slow) var(--ease-out-expo);
+}
+
+.lift:hover {
+  transform: translate(-4px, -6px);
+}
+
+.lift:hover .liftFrame {
+  box-shadow: 10px 12px 0 0 var(--color-shape-1);
+}
+
+@media (min-width: 768px) {
+  .grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}

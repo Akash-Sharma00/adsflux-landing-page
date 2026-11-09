@@ -1,0 +1,522 @@
+/*
+ * Adsflux design tokens — "Electric Editorial" (light) + "Midnight Editorial" (dark).
+ * Single source of truth for every visual value. Spec: docs/brand/DESIGN_SYSTEM.md
+ *
+ * Tiers:
+ *   1. Brand palette (--brand-*)    The official colours, light and dark. Referenced ONLY in this file
+ *                                   (+ documented logo exceptions).
+ *   2. Theme tokens                 The page palette for the active MODE (--background, --foreground,
+ *                                   --surface, --primary, --accent…). Switched by data-theme="light|dark"
+ *                                   on <html>. They feed the tones; components never read them directly.
+ *   3. Semantic tokens (--color-*)  What components use. Re-mapped per TONE.
+ *   4. Scales                       Type, space, radius, motion, z-index. Mode- and tone-independent.
+ *
+ * Mode vs tone — two different data-theme values, never on the same element:
+ *   <html data-theme="light|dark">  the colour mode. Set before first paint by the inline script in
+ *                                   index.html, then by src/lib/theme.ts. Light is the default.
+ *   data-theme="cream|blue|peach|cobalt|orange|ink" on ANY element below <html> re-themes everything inside
+ *   it (in React: <Section tone="cobalt">). Every tone has a light and a dark rendering; cream is the page
+ *   default in both modes.
+ */
+
+:root {
+  /* ===================================================================== */
+  /* 1a. Brand palette — light. Exact official values.                     */
+  /* ===================================================================== */
+  --brand-cobalt: #263bdb; /* Electric Cobalt — major moments, primary CTAs, hero sections */
+  --brand-orange: #ff633e; /* Signal Orange — controlled secondary accent (fills, shapes, the burst) */
+  --brand-cream: #f5f0e7; /* Paper Cream — primary background; warm ivory type in dark mode */
+  --brand-ink: #171717; /* Ink Black — typography and contrast */
+  --brand-blue: #dce5ff; /* Soft Blue — supporting compositions */
+  --brand-peach: #e8b8a5; /* Dusty Peach — supporting compositions */
+
+  /*
+   * Derived tints — mixes of brand colors, NOT new hues. Each exists for a measured contrast reason.
+   *   ink-soft:   Ink 75% over Cream. Secondary text on cream (7.41:1), blue (6.69:1), peach (4.74:1).
+   *   cream-soft: Cream 80% over Cobalt. Secondary text on cobalt (4.88:1).
+   *   cream-dim:  Cream 65% over Ink. Secondary text on ink (7.21:1).
+   */
+  --brand-ink-soft: #4f4d4b;
+  --brand-cream-soft: #cccce5;
+  --brand-cream-dim: #a7a49e;
+
+  /* ===================================================================== */
+  /* 1b. Brand palette — dark ("Midnight Editorial"). Exact official values. */
+  /* ===================================================================== */
+  --brand-midnight: #11131b; /* Midnight — dark page background (never pure black) */
+  --brand-slate: #1d2230; /* Slate — dark surfaces and supporting bands */
+  --brand-mist: #a8a9bd; /* Mist — muted text on dark (8.01:1 midnight, 6.86:1 slate) */
+  --brand-electric: #5268ff; /* Electric Cobalt, lifted — shapes, large type, shadows. 4.22:1 on midnight: never small text */
+  --brand-ember: #ff754f; /* Signal Orange, lifted — fills, bursts, accent ink on dark (6.98:1 on midnight) */
+  --brand-graphite: #353949; /* Graphite — hairline borders on dark */
+
+  /*
+   * Derived dark tints (mixes, not new hues).
+   *   electric-ink: Electric 75% over Cream. Accent TEXT on midnight (6.04:1), slate (5.17:1), ink (5.84:1).
+   *   slate-raised: Cream 5% over Slate. Panels raised above a slate band (mist 6.01:1, cream 12.26:1).
+   *   dusk:         Peach 10% over Midnight. The dark peach band (cream 13.54:1, mist 6.64:1, peach 8.66:1).
+   */
+  --brand-electric-ink: #7b8af9;
+  --brand-slate-raised: #282c39;
+  --brand-dusk: #262429;
+
+  /* Functional status (form errors only — never decorative). */
+  --status-danger-on-light: #b42318; /* 5.79:1 on cream, 5.23:1 on blue */
+  --status-danger-on-dark: #ffd2c4; /* 5.59:1 on cobalt, 13.48:1 on midnight, 11.53:1 on slate */
+
+  /* ===================================================================== */
+  /* 2. Theme tokens — LIGHT mode (default)                                */
+  /* ===================================================================== */
+  --background: var(--brand-cream);
+  --foreground: var(--brand-ink);
+  --surface: var(--brand-blue); /* the supporting band colour (blue tone) */
+  --surface-elevated: var(--brand-cream); /* panels on a surface band */
+  --muted-foreground: var(--brand-ink-soft);
+  --border: color-mix(in srgb, var(--brand-ink) 14%, transparent);
+  --border-strong: var(--brand-ink);
+  --primary: var(--brand-cobalt); /* fill + decorative shapes */
+  --primary-foreground: var(--brand-cream);
+  --primary-ink: var(--brand-cobalt); /* primary as TEXT, rules, focus — contrast-safe */
+  --accent: var(--brand-orange); /* fill only, never text on light */
+  --accent-foreground: var(--brand-ink);
+  --danger: var(--status-danger-on-light);
+  --scheme: light;
+  --grain-blend: multiply;
+  --texture-opacity-background: 0.35;
+  --texture-opacity-surface: 0.25;
+  --line-art-opacity: 0.55; /* hairline illustration (hero orbit) */
+
+
+  /* ===================================================================== */
+  /* 3. Typography                                                          */
+  /* ===================================================================== */
+  --font-display: 'Instrument Serif', 'Times New Roman', serif; /* expressive editorial display (400, roman + italic) */
+  --font-heading: 'Space Grotesk Variable', system-ui, sans-serif; /* section headings, UI (500/700) */
+  --font-body: 'DM Sans Variable', system-ui, -apple-system, 'Segoe UI', sans-serif; /* body (400/500/600) */
+  --font-mono: 'DM Mono', ui-monospace, monospace; /* labels & metadata (400/500) */
+
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+  --weight-bold: 700;
+
+  /* Fluid scale (≈360px → 1440px). Display/xl-headline sizes are serif; h2–h4 are Space Grotesk. */
+  --text-2xs: 0.6875rem; /* 11  micro mono metadata (nav index, captions) */
+  --text-xs: 0.75rem; /* 12  mono labels */
+  --text-sm: 0.875rem; /* 14  meta */
+  --text-base: 1.0625rem; /* 17  body (DM Sans reads small) */
+  --text-lg: clamp(1.125rem, 1.04rem + 0.4vw, 1.375rem); /* 18→22 lead */
+  --text-xl: clamp(1.25rem, 1.1rem + 0.6vw, 1.625rem); /* 20→26 h4 */
+  --text-2xl: clamp(1.5rem, 1.2rem + 1.3vw, 2.25rem); /* 24→36 h3 */
+  --text-3xl: clamp(2rem, 1.3rem + 2.9vw, 3.75rem); /* 32→60 h2 */
+  --text-4xl: clamp(2.75rem, 1.5rem + 5.4vw, 6.25rem); /* 44→100 serif headlines */
+  --text-display: clamp(3.25rem, 0.9rem + 9.6vw, 11rem); /* 52→176 serif hero */
+  --text-mega: clamp(3.25rem, 0.5rem + 11vw, 13rem); /* 52→208 manifesto lines, oversized marks */
+  --text-numeral: clamp(4rem, 2.8rem + 5.5vw, 9rem); /* 64→144 oversized serif numbers */
+
+  --leading-display: 0.9;
+  --leading-tight: 1.02;
+  --leading-snug: 1.2;
+  --leading-normal: 1.6;
+
+  --tracking-display: -0.025em; /* serif display */
+  --tracking-tight: -0.025em; /* grotesk headings */
+  --tracking-mono: 0.06em; /* uppercase mono labels */
+
+  --measure: 60ch;
+
+  /* ===================================================================== */
+  /* 4. Space, layout, shape                                                */
+  /* ===================================================================== */
+  --space-0: 0;
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-20: 5rem;
+  --space-24: 6rem;
+  --space-32: 8rem;
+
+  --section-space-sm: clamp(3rem, 2rem + 4vw, 5rem);
+  --section-space-md: clamp(4.5rem, 2.75rem + 6.5vw, 8.5rem);
+  --section-space-lg: clamp(5.5rem, 3rem + 9vw, 11rem);
+
+  --container-sm: 42rem;
+  --container-md: 64rem;
+  --container-lg: 80rem;
+  --container-xl: 96rem;
+  --gutter: clamp(1.25rem, 4vw, 3rem);
+  --grid-gap: clamp(1rem, 0.6rem + 1.6vw, 2rem);
+  --header-height: 4.75rem;
+
+  /*
+   * Shape language: SHARP frames (images, modules, panels) + PILL controls (buttons, tags).
+   * No rounded cards — ever.
+   */
+  --radius-none: 0;
+  --radius-xs: 2px; /* inputs, focus rings */
+  --radius-pill: 9999px; /* buttons, tags, chips, dots */
+
+  --shadow-overlay: 0 18px 40px -16px rgb(23 23 23 / 0.28), 0 0 0 1px var(--color-border-strong);
+  /* Editorial "offset print" shadow for lifted images. */
+  --shadow-offset: 10px 10px 0 0 var(--color-shape-2);
+
+  /* ===================================================================== */
+  /* 5. Motion — mirrored in src/lib/motion.ts                              */
+  /* ===================================================================== */
+  --duration-fast: 150ms;
+  --duration-base: 280ms;
+  --duration-slow: 600ms;
+  --duration-reveal: 1000ms;
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+
+  /* ===================================================================== */
+  /* 6. Layering & texture                                                  */
+  /* ===================================================================== */
+  --z-base: 0;
+  --z-raised: 10;
+  --z-dropdown: 100;
+  --z-sticky: 200;
+  --z-overlay: 300;
+  --z-modal: 400;
+  --z-toast: 500;
+
+  /* Paper fibre texture. Multiplied into light tones, screened out of dark ones (--texture-blend). Subtle by design. */
+  --texture-paper: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.45 0 0 0 0 0.4 0 0 0 0 0.33 0 0 0 0.55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23p)'/%3E%3C/svg%3E");
+}
+
+/* ======================================================================= */
+/* Theme tokens — DARK mode ("Midnight Editorial").                         */
+/* Cinematic, not black: midnight page, slate surfaces, ivory type.         */
+/* ======================================================================= */
+:root[data-theme='dark'] {
+  --background: var(--brand-midnight);
+  --foreground: var(--brand-cream); /* 16.33:1 */
+  --surface: var(--brand-slate);
+  --surface-elevated: var(--brand-slate-raised);
+  --muted-foreground: var(--brand-mist);
+  --border: var(--brand-graphite);
+  --border-strong: var(--brand-mist); /* control outlines and editorial rules, 8.01:1 */
+  --primary: var(--brand-electric);
+  --primary-foreground: var(--brand-midnight); /* 4.22:1 — large text only; buttons use --color-cta-* */
+  --primary-ink: var(--brand-electric-ink);
+  --accent: var(--brand-ember);
+  --accent-foreground: var(--brand-midnight); /* 6.98:1 */
+  --danger: var(--status-danger-on-dark);
+  --scheme: dark;
+  --grain-blend: screen; /* grain lifts out of the dark instead of multiplying into it */
+  --texture-opacity-background: 0.1;
+  --texture-opacity-surface: 0.1;
+  --line-art-opacity: 0.8;
+}
+
+/* ======================================================================= */
+/* Tones. Scoped: work on any element below <html>.                         */
+/*                                                                          */
+/* cream + blue are the page palette: one block each, driven by the theme   */
+/* tokens, so they follow the mode automatically.                           */
+/* peach, cobalt, orange, ink are fixed-hue tones: a light block plus a     */
+/* :root[data-theme='dark'] block.                                          */
+/* New semantic colour → add it to every block (cream, blue, 4 × 2 fixed).  */
+/* ======================================================================= */
+
+/* Cream — the page default. Light: Paper Cream. Dark: Midnight. */
+:root,
+[data-theme='cream'] {
+  --color-bg: var(--background);
+  --color-surface: color-mix(in srgb, var(--foreground) 4%, var(--background));
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+
+  --color-text: var(--foreground);
+  --color-text-muted: var(--muted-foreground);
+
+  /* Accent: cobalt. As a FILL behind --color-on-accent (6.77:1 both modes); as INK for text/rules. */
+  --color-accent: var(--brand-cobalt);
+  --color-on-accent: var(--brand-cream);
+  --color-accent-ink: var(--primary-ink); /* cobalt 6.77:1 on cream · electric-ink 6.04:1 on midnight */
+
+  /* Highlight: orange/ember. FILL only on light (orange text fails on cream, 2.60:1). */
+  --color-highlight: var(--accent);
+  --color-on-highlight: var(--accent-foreground);
+
+  /* Decorative shapes (non-text graphics). */
+  --color-shape-1: var(--accent);
+  --color-shape-2: var(--primary);
+
+  --color-focus: var(--primary-ink);
+
+  --color-cta-bg: var(--brand-cobalt);
+  --color-cta-text: var(--brand-cream);
+  --color-cta-bg-hover: var(--accent);
+  --color-cta-text-hover: var(--accent-foreground);
+
+  --color-logo-mark: var(--foreground);
+  --color-logo-burst: var(--accent);
+
+  --color-danger: var(--danger);
+
+  --texture-blend: var(--grain-blend);
+  --texture-opacity: var(--texture-opacity-background);
+  color-scheme: var(--scheme);
+}
+
+/* Blue — supporting band. Light: Soft Blue (cobalt ink 6.11:1). Dark: Slate (electric-ink 5.17:1). */
+[data-theme='blue'] {
+  --color-bg: var(--surface);
+  --color-surface: var(--surface-elevated);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-text: var(--foreground);
+  --color-text-muted: var(--muted-foreground);
+  --color-accent: var(--brand-cobalt);
+  --color-on-accent: var(--brand-cream);
+  --color-accent-ink: var(--primary-ink);
+  --color-highlight: var(--accent);
+  --color-on-highlight: var(--accent-foreground);
+  --color-shape-1: var(--accent);
+  --color-shape-2: var(--primary);
+  --color-focus: var(--primary-ink);
+  --color-cta-bg: var(--brand-cobalt);
+  --color-cta-text: var(--brand-cream);
+  --color-cta-bg-hover: var(--foreground); /* ink pill on blue · ivory pill on slate */
+  --color-cta-text-hover: var(--background);
+  --color-logo-mark: var(--foreground);
+  --color-logo-burst: var(--accent);
+  --color-danger: var(--danger);
+  --texture-blend: var(--grain-blend);
+  --texture-opacity: var(--texture-opacity-surface);
+  color-scheme: var(--scheme);
+}
+
+/* Dusty Peach — supporting band. Cobalt ink is 4.33:1 here: large text / graphics only, so accent-ink is ink. */
+[data-theme='peach'] {
+  --color-bg: var(--brand-peach);
+  --color-surface: var(--brand-cream);
+  --color-border: color-mix(in srgb, var(--brand-ink) 18%, transparent);
+  --color-border-strong: var(--brand-ink);
+  --color-text: var(--brand-ink);
+  --color-text-muted: var(--brand-ink-soft);
+  --color-accent: var(--brand-cobalt);
+  --color-on-accent: var(--brand-cream);
+  --color-accent-ink: var(--brand-ink);
+  --color-highlight: var(--brand-cream);
+  --color-on-highlight: var(--brand-ink);
+  --color-shape-1: var(--brand-cobalt);
+  --color-shape-2: var(--brand-ink);
+  --color-focus: var(--brand-ink);
+  --color-cta-bg: var(--brand-ink);
+  --color-cta-text: var(--brand-cream);
+  --color-cta-bg-hover: var(--brand-cobalt);
+  --color-cta-text-hover: var(--brand-cream);
+  --color-logo-mark: var(--brand-ink);
+  --color-logo-burst: var(--brand-cobalt);
+  --color-danger: var(--brand-ink); /* #B42318 is 3.70:1 on peach — errors use ink + the message text */
+  --texture-blend: multiply;
+  --texture-opacity: 0.3;
+  color-scheme: light;
+}
+
+/* Dusk (dark peach) — warm counterpoint to midnight. Peach becomes the accent ink (8.66:1). */
+:root[data-theme='dark'] [data-theme='peach'] {
+  --color-bg: var(--brand-dusk);
+  --color-surface: color-mix(in srgb, var(--brand-cream) 5%, var(--brand-dusk));
+  --color-border: color-mix(in srgb, var(--brand-peach) 22%, transparent);
+  --color-border-strong: var(--brand-peach);
+  --color-text: var(--brand-cream);
+  --color-text-muted: var(--brand-mist); /* 6.64:1 */
+  --color-accent: var(--brand-cobalt);
+  --color-on-accent: var(--brand-cream);
+  --color-accent-ink: var(--brand-peach);
+  --color-highlight: var(--brand-peach);
+  --color-on-highlight: var(--brand-midnight);
+  --color-shape-1: var(--brand-electric);
+  --color-shape-2: var(--brand-peach);
+  --color-focus: var(--brand-peach);
+  --color-cta-bg: var(--brand-cream);
+  --color-cta-text: var(--brand-midnight);
+  --color-cta-bg-hover: var(--brand-cobalt);
+  --color-cta-text-hover: var(--brand-cream);
+  --color-logo-mark: var(--brand-cream);
+  --color-logo-burst: var(--brand-ember);
+  --color-danger: var(--status-danger-on-dark);
+  --texture-blend: screen;
+  --texture-opacity: 0.1;
+  color-scheme: dark;
+}
+
+/* Electric Cobalt — major moments. Cream text (6.77:1). Ink and orange TEXT both fail here. */
+[data-theme='cobalt'] {
+  --color-bg: var(--brand-cobalt);
+  --color-surface: color-mix(in srgb, var(--brand-ink) 18%, var(--brand-cobalt));
+  --color-border: color-mix(in srgb, var(--brand-cream) 28%, transparent);
+  --color-border-strong: var(--brand-cream);
+  --color-text: var(--brand-cream);
+  --color-text-muted: var(--brand-cream-soft);
+  --color-accent: var(--brand-cream);
+  --color-on-accent: var(--brand-ink);
+  --color-accent-ink: var(--brand-cream);
+  --color-highlight: var(--brand-orange);
+  --color-on-highlight: var(--brand-ink);
+  --color-shape-1: var(--brand-orange);
+  --color-shape-2: var(--brand-cream);
+  --color-focus: var(--brand-cream);
+  --color-cta-bg: var(--brand-cream);
+  --color-cta-text: var(--brand-ink);
+  --color-cta-bg-hover: var(--brand-orange);
+  --color-cta-text-hover: var(--brand-ink);
+  --color-logo-mark: var(--brand-cream);
+  --color-logo-burst: var(--brand-orange);
+  --color-danger: var(--status-danger-on-dark);
+  --texture-blend: multiply;
+  --texture-opacity: 0.18;
+  color-scheme: dark;
+}
+
+/* Cobalt in dark mode — still the big moment; the page around it is midnight. Ember replaces orange. */
+:root[data-theme='dark'] [data-theme='cobalt'] {
+  --color-bg: var(--brand-cobalt);
+  --color-surface: color-mix(in srgb, var(--brand-midnight) 22%, var(--brand-cobalt));
+  --color-border: color-mix(in srgb, var(--brand-cream) 28%, transparent);
+  --color-border-strong: var(--brand-cream);
+  --color-text: var(--brand-cream);
+  --color-text-muted: var(--brand-cream-soft);
+  --color-accent: var(--brand-cream);
+  --color-on-accent: var(--brand-midnight);
+  --color-accent-ink: var(--brand-cream);
+  --color-highlight: var(--brand-ember);
+  --color-on-highlight: var(--brand-midnight);
+  --color-shape-1: var(--brand-ember);
+  --color-shape-2: var(--brand-cream);
+  --color-focus: var(--brand-cream);
+  --color-cta-bg: var(--brand-cream);
+  --color-cta-text: var(--brand-midnight);
+  --color-cta-bg-hover: var(--brand-ember);
+  --color-cta-text-hover: var(--brand-midnight);
+  --color-logo-mark: var(--brand-cream);
+  --color-logo-burst: var(--brand-ember);
+  --color-danger: var(--status-danger-on-dark);
+  --texture-blend: multiply;
+  --texture-opacity: 0.18;
+  color-scheme: dark;
+}
+
+/* Signal Orange — rare, loud bands (tickers, stickers). Ink text only (6.07:1). */
+[data-theme='orange'] {
+  --color-bg: var(--brand-orange);
+  --color-surface: var(--brand-cream);
+  --color-border: color-mix(in srgb, var(--brand-ink) 22%, transparent);
+  --color-border-strong: var(--brand-ink);
+  --color-text: var(--brand-ink);
+  --color-text-muted: var(--brand-ink);
+  --color-accent: var(--brand-ink);
+  --color-on-accent: var(--brand-cream);
+  --color-accent-ink: var(--brand-ink);
+  --color-highlight: var(--brand-cream);
+  --color-on-highlight: var(--brand-ink);
+  --color-shape-1: var(--brand-ink);
+  --color-shape-2: var(--brand-cream);
+  --color-focus: var(--brand-ink);
+  --color-cta-bg: var(--brand-ink);
+  --color-cta-text: var(--brand-cream);
+  --color-cta-bg-hover: var(--brand-cobalt);
+  --color-cta-text-hover: var(--brand-cream);
+  --color-logo-mark: var(--brand-ink);
+  --color-logo-burst: var(--brand-ink);
+  --color-danger: var(--brand-ink);
+  --texture-blend: multiply;
+  --texture-opacity: 0.25;
+  color-scheme: light;
+}
+
+/* Ember (dark orange) — the loud strip stays loud. Midnight text (6.98:1). */
+:root[data-theme='dark'] [data-theme='orange'] {
+  --color-bg: var(--brand-ember);
+  --color-surface: var(--brand-cream);
+  --color-border: color-mix(in srgb, var(--brand-midnight) 22%, transparent);
+  --color-border-strong: var(--brand-midnight);
+  --color-text: var(--brand-midnight);
+  --color-text-muted: var(--brand-midnight);
+  --color-accent: var(--brand-midnight);
+  --color-on-accent: var(--brand-cream);
+  --color-accent-ink: var(--brand-midnight);
+  --color-highlight: var(--brand-cream);
+  --color-on-highlight: var(--brand-midnight);
+  --color-shape-1: var(--brand-midnight);
+  --color-shape-2: var(--brand-cream);
+  --color-focus: var(--brand-midnight);
+  --color-cta-bg: var(--brand-midnight);
+  --color-cta-text: var(--brand-cream);
+  --color-cta-bg-hover: var(--brand-cobalt);
+  --color-cta-text-hover: var(--brand-cream);
+  --color-logo-mark: var(--brand-midnight);
+  --color-logo-burst: var(--brand-midnight);
+  --color-danger: var(--brand-midnight);
+  --texture-blend: multiply;
+  --texture-opacity: 0.2;
+  color-scheme: light;
+}
+
+/* Ink — used sparingly (one band max per page). Never the page default. Orange ink is 6.07:1 here. */
+[data-theme='ink'] {
+  --color-bg: var(--brand-ink);
+  --color-surface: color-mix(in srgb, var(--brand-cream) 8%, var(--brand-ink));
+  --color-border: color-mix(in srgb, var(--brand-cream) 18%, transparent);
+  --color-border-strong: var(--brand-cream);
+  --color-text: var(--brand-cream);
+  --color-text-muted: var(--brand-cream-dim);
+  --color-accent: var(--brand-orange);
+  --color-on-accent: var(--brand-ink);
+  --color-accent-ink: var(--brand-orange);
+  --color-highlight: var(--brand-orange);
+  --color-on-highlight: var(--brand-ink);
+  --color-shape-1: var(--brand-orange);
+  --color-shape-2: var(--brand-blue);
+  --color-focus: var(--brand-orange);
+  --color-cta-bg: var(--brand-orange);
+  --color-cta-text: var(--brand-ink);
+  --color-cta-bg-hover: var(--brand-cream);
+  --color-cta-text-hover: var(--brand-ink);
+  --color-logo-mark: var(--brand-cream);
+  --color-logo-burst: var(--brand-orange);
+  --color-danger: var(--brand-orange);
+  --texture-blend: multiply;
+  --texture-opacity: 0.12;
+  color-scheme: dark;
+}
+
+/* Ink in dark mode — the gallery wall: a neutral black against the blue-black page. Ember ink 6.75:1. */
+:root[data-theme='dark'] [data-theme='ink'] {
+  --color-bg: var(--brand-ink);
+  --color-surface: color-mix(in srgb, var(--brand-cream) 6%, var(--brand-ink));
+  --color-border: var(--brand-graphite);
+  --color-border-strong: var(--brand-mist);
+  --color-text: var(--brand-cream);
+  --color-text-muted: var(--brand-mist); /* 7.75:1 */
+  --color-accent: var(--brand-ember);
+  --color-on-accent: var(--brand-ink);
+  --color-accent-ink: var(--brand-ember);
+  --color-highlight: var(--brand-ember);
+  --color-on-highlight: var(--brand-ink);
+  --color-shape-1: var(--brand-ember);
+  --color-shape-2: var(--brand-electric);
+  --color-focus: var(--brand-ember);
+  --color-cta-bg: var(--brand-ember);
+  --color-cta-text: var(--brand-ink);
+  --color-cta-bg-hover: var(--brand-cream);
+  --color-cta-text-hover: var(--brand-ink);
+  --color-logo-mark: var(--brand-cream);
+  --color-logo-burst: var(--brand-ember);
+  --color-danger: var(--brand-ember);
+  --texture-blend: screen;
+  --texture-opacity: 0.08;
+  color-scheme: dark;
+}

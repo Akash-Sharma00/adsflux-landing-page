@@ -1,0 +1,5 @@
+/* Anchor jumps clear the sticky header (html scroll-padding) AND the brand sub-nav below it. */
+.section {
+  scroll-margin-top: 3.5rem;
+  overflow-x: clip;
+}

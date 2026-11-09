@@ -1,0 +1,8 @@
+/* clip-path does not clip scrollable overflow — the zoomed layer must be contained. */
+.clip {
+  overflow: hidden;
+}
+
+.zoom {
+  transform-origin: center;
+}

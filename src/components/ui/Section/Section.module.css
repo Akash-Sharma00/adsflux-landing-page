@@ -1,0 +1,23 @@
+.section {
+  position: relative;
+}
+
+.none {
+  padding-block: 0;
+}
+
+.sm {
+  padding-block: var(--section-space-sm);
+}
+
+.md {
+  padding-block: var(--section-space-md);
+}
+
+.lg {
+  padding-block: var(--section-space-lg);
+}
+
+.divider {
+  border-top: 1px solid var(--color-border);
+}

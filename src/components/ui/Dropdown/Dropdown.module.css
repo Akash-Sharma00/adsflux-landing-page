@@ -1,0 +1,115 @@
+.root {
+  position: relative;
+}
+
+.trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 2.75rem;
+  padding: 0;
+  border: 0;
+  background: none;
+  font-family: var(--font-heading);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  color: var(--color-text);
+  transition: color var(--duration-fast) var(--ease-standard);
+}
+
+.trigger:hover,
+.trigger[aria-expanded='true'] {
+  color: var(--color-accent-ink);
+}
+
+.chevron {
+  width: 0.4rem;
+  height: 0.4rem;
+  border-right: 1.5px solid currentColor;
+  border-bottom: 1.5px solid currentColor;
+  transform: translateY(-25%) rotate(45deg);
+  transition: transform var(--duration-base) var(--ease-out-expo);
+}
+
+.trigger[aria-expanded='true'] .chevron {
+  transform: translateY(15%) rotate(-135deg);
+}
+
+.panel {
+  position: absolute;
+  top: calc(100% + var(--space-2));
+  z-index: var(--z-dropdown);
+  min-width: 20rem;
+  padding: var(--space-2);
+  border-radius: var(--radius-none);
+  background: var(--color-bg);
+  box-shadow: var(--shadow-overlay);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-6px);
+  transition:
+    opacity var(--duration-base) var(--ease-standard),
+    transform var(--duration-base) var(--ease-out-expo),
+    visibility 0s linear var(--duration-base);
+}
+
+.panel[data-open='true'] {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  transition-delay: 0s;
+}
+
+.start {
+  left: 0;
+}
+
+.end {
+  right: 0;
+}
+
+.list {
+  display: grid;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.twoColumns {
+  width: min(44rem, calc(100vw - var(--gutter) * 2));
+}
+
+.twoColumns .list {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.link {
+  display: grid;
+  gap: var(--space-1);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-none);
+  text-decoration: none;
+  transition: background-color var(--duration-fast) var(--ease-standard);
+}
+
+.link:hover {
+  background: var(--color-highlight);
+  color: var(--color-on-highlight);
+}
+
+.link:hover .linkDescription {
+  color: var(--color-on-highlight);
+}
+
+.linkLabel {
+  font-family: var(--font-heading);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  color: var(--color-text);
+}
+
+.linkDescription {
+  font-size: var(--text-xs);
+  line-height: var(--leading-snug);
+  color: var(--color-text-muted);
+}

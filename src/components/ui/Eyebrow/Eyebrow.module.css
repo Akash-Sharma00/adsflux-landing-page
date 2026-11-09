@@ -1,0 +1,16 @@
+.eyebrow {
+  display: inline-flex;
+  align-items: baseline;
+  gap: var(--space-3);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-mono);
+  line-height: 1.4;
+  text-transform: uppercase;
+  color: var(--color-text);
+}
+
+.index {
+  color: var(--color-accent-ink);
+  font-variant-numeric: tabular-nums;
+}

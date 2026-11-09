@@ -1,0 +1,89 @@
+.section {
+  overflow: hidden;
+}
+
+.headline {
+  display: grid;
+  gap: 0.05em;
+  margin-block: var(--space-10) var(--section-space-sm);
+  font-family: var(--font-display);
+  font-size: var(--text-mega);
+  font-weight: var(--weight-regular);
+  line-height: 0.92;
+  letter-spacing: var(--tracking-display);
+  white-space: nowrap;
+}
+
+.headline em {
+  font-size: 1em;
+  line-height: inherit;
+}
+
+.lineOne {
+  padding-left: var(--gutter);
+}
+
+.lineTwo {
+  justify-self: end;
+  padding-right: var(--gutter);
+}
+
+.body {
+  position: relative;
+  display: grid;
+  gap: var(--space-16);
+}
+
+.burst {
+  position: absolute;
+  top: calc(var(--space-16) * -1);
+  right: var(--gutter);
+  width: clamp(5rem, 3rem + 8vw, 11rem);
+}
+
+.creed {
+  max-width: 24ch;
+}
+
+.principles {
+  display: grid;
+  gap: var(--space-10) var(--grid-gap);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.principle {
+  display: grid;
+  gap: var(--space-3);
+  padding-top: var(--space-5);
+  border-top: 1px solid var(--color-border-strong);
+}
+
+.principleIndex {
+  font-family: var(--font-display);
+  font-size: var(--text-4xl);
+  font-style: italic;
+  line-height: 0.9;
+}
+
+.principleTitle {
+  font-size: var(--text-2xl);
+}
+
+.principleBody {
+  color: var(--color-text-muted);
+  max-width: 32ch;
+}
+
+@media (min-width: 768px) {
+  .principles {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 767px) {
+  .headline {
+    white-space: normal;
+  }
+}

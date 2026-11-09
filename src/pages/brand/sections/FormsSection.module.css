@@ -1,0 +1,49 @@
+.layout {
+  display: grid;
+  gap: var(--space-16) var(--grid-gap);
+}
+
+.aside {
+  display: grid;
+  gap: var(--space-12);
+  align-content: start;
+}
+
+.lede {
+  font-size: var(--text-lg);
+  color: var(--color-text-muted);
+}
+
+.lede code {
+  color: var(--color-text);
+}
+
+.states {
+  display: grid;
+  gap: var(--space-8);
+}
+
+.cobaltPanel {
+  display: grid;
+  gap: var(--space-6);
+  padding: clamp(var(--space-5), 3vw, var(--space-8));
+}
+
+.panelNote {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+}
+
+.form {
+  min-width: 0;
+}
+
+@media (min-width: 1024px) {
+  .layout {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 1fr) minmax(0, 6fr);
+  }
+
+  .form {
+    grid-column: 3;
+  }
+}

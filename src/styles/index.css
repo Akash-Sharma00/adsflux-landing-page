@@ -1,0 +1,10 @@
+/*
+ * Global stylesheet entry. Imported once in src/main.tsx.
+ * Layer order (lowest → highest priority). CSS Modules are unlayered, so they beat all of these.
+ */
+@layer reset, base, utilities;
+
+@import './tokens.css';
+@import './reset.css';
+@import './base.css';
+@import './utilities.css';

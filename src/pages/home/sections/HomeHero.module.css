@@ -1,0 +1,120 @@
+.hero {
+  overflow: hidden;
+  padding-block: var(--space-8) var(--space-16);
+}
+
+.inner {
+  display: grid;
+  gap: var(--space-10);
+}
+
+.masthead {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: var(--space-2) var(--space-6);
+  padding-bottom: var(--space-3);
+  border-bottom: 1px solid var(--color-border-strong);
+}
+
+/* ---------- Copy column ---------- */
+.copy {
+  display: grid;
+  gap: var(--space-8);
+  align-content: center;
+}
+
+.headline {
+  font-weight: var(--weight-medium);
+}
+
+.lead {
+  display: block;
+  font-family: var(--font-heading);
+  font-size: clamp(1.75rem, 1.1rem + 2vw, 3rem);
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--tracking-tight);
+  line-height: 1.1;
+}
+
+.punch {
+  display: block;
+  margin-top: var(--space-4);
+}
+
+/* Three stacked serif lines; the last ("care.") is cobalt italic. */
+.punchLine {
+  display: block;
+  font-family: var(--font-display);
+  font-size: clamp(3.5rem, 1.2rem + 7.2vw, 9rem);
+  font-style: normal;
+  font-weight: var(--weight-regular);
+  line-height: 0.92;
+  letter-spacing: var(--tracking-display);
+}
+
+/* Undo the global <em> sizing so all three lines share one size. */
+.headline em.punchLine {
+  font-size: clamp(3.5rem, 1.2rem + 7.2vw, 9rem);
+  line-height: 0.92;
+}
+
+.care {
+  font-style: italic;
+  color: var(--color-accent-ink);
+}
+
+.supporting {
+  max-width: 28ch;
+  font-size: var(--text-xl);
+  line-height: 1.35;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-4) var(--space-8);
+}
+
+/* ---------- Visual: transparent cut-out collage ---------- */
+.visual {
+  min-width: 0;
+  /* Cut-out art bleeds slightly past the column so its glow reads as part of the page. */
+  margin-inline: calc(var(--space-4) * -1);
+}
+
+@media (min-width: 1024px) {
+  .hero {
+    padding-block: var(--space-10) var(--space-16);
+  }
+
+  .inner {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: var(--grid-gap);
+    row-gap: var(--space-12);
+    align-items: center;
+  }
+
+  .masthead {
+    grid-column: 1 / -1;
+  }
+
+  .copy {
+    position: relative;
+    z-index: var(--z-raised);
+    grid-column: 1 / span 6;
+    grid-row: 2;
+  }
+
+  /*
+   * Wide right column: starts under the copy's last column (the image's transparent margin keeps the
+   * artwork clear of the text) and bleeds to the viewport edge, so the collage reads at full scale.
+   */
+  .visual {
+    grid-column: 6 / -1;
+    grid-row: 2;
+    margin-left: calc(var(--grid-gap) * -1);
+    margin-right: calc(var(--gutter) * -1);
+  }
+}

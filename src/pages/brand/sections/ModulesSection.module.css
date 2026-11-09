@@ -1,0 +1,13 @@
+.spacedHeading {
+  margin-top: var(--section-space-md);
+}
+
+.sampleNote {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-10);
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+}

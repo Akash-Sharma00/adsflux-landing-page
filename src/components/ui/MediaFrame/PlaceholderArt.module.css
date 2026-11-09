@@ -1,0 +1,75 @@
+.art {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  transition: transform var(--duration-reveal) var(--ease-out-expo);
+}
+
+.shape1 {
+  fill: var(--color-shape-1);
+}
+
+.shape2 {
+  fill: var(--color-shape-2);
+}
+
+.outline {
+  fill: none;
+  stroke: var(--color-text);
+  stroke-width: 2;
+}
+
+.meta {
+  position: absolute;
+  top: var(--space-4);
+  left: var(--space-4);
+  right: var(--space-4);
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  letter-spacing: var(--tracking-mono);
+  text-transform: uppercase;
+}
+
+.label {
+  position: absolute;
+  left: var(--space-4);
+  bottom: var(--space-4);
+  max-width: calc(100% - var(--space-8));
+  /* Knocked-out ground: the label never sits directly on a shape, whatever the composition. */
+  padding: 0.04em 0.18em 0.1em;
+  background: var(--color-bg);
+  font-family: var(--font-display);
+  font-size: var(--text-3xl);
+  font-style: italic;
+  line-height: 0.95;
+  letter-spacing: -0.01em;
+}
+
+/* Video slot marker: a ring with a play triangle. */
+.play {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: grid;
+  place-items: center;
+  width: 4rem;
+  height: 4rem;
+  border-radius: var(--radius-pill);
+  background: var(--color-text);
+  transform: translate(-50%, -50%);
+}
+
+.play::after {
+  content: '';
+  margin-left: 4px;
+  border-block: 0.55rem solid transparent;
+  border-left: 0.9rem solid var(--color-bg);
+}

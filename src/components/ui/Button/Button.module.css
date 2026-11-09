@@ -1,0 +1,138 @@
+/* Pill controls: the only rounded shapes in the system. */
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  border: 1px solid transparent;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-heading);
+  font-weight: var(--weight-medium);
+  line-height: 1;
+  text-decoration: none;
+  white-space: nowrap;
+  transition:
+    background-color var(--duration-base) var(--ease-standard),
+    border-color var(--duration-base) var(--ease-standard),
+    color var(--duration-base) var(--ease-standard),
+    transform var(--duration-fast) var(--ease-standard);
+}
+
+.button:active:not(:disabled) {
+  transform: scale(0.97);
+}
+
+.button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.label {
+  position: relative;
+}
+
+/* Arrow chip: an inverted circle holding ↗, which spins a quarter turn on hover. */
+.arrowWrap {
+  display: grid;
+  place-items: center;
+  width: 1.75em;
+  height: 1.75em;
+  margin-right: -0.55em;
+  border-radius: var(--radius-pill);
+  background: currentColor;
+}
+
+.arrow {
+  width: 0.85em;
+  height: 0.85em;
+  color: var(--arrow-ink, var(--color-cta-bg));
+  transition: transform var(--duration-slow) var(--ease-out-expo);
+}
+
+.button:hover:not(:disabled) .arrow {
+  transform: rotate(45deg);
+}
+
+/* ---------- Variants ---------- */
+.primary {
+  --arrow-ink: var(--color-cta-bg);
+
+  background: var(--color-cta-bg);
+  color: var(--color-cta-text);
+}
+
+.primary:hover:not(:disabled) {
+  --arrow-ink: var(--color-cta-bg-hover);
+
+  background: var(--color-cta-bg-hover);
+  color: var(--color-cta-text-hover);
+}
+
+.secondary {
+  --arrow-ink: var(--color-bg);
+
+  background: transparent;
+  border-color: var(--color-border-strong);
+  color: var(--color-text);
+}
+
+.secondary:hover:not(:disabled) {
+  --arrow-ink: var(--color-text);
+
+  background: var(--color-text);
+  color: var(--color-bg);
+}
+
+.ghost {
+  --arrow-ink: var(--color-bg);
+
+  background: transparent;
+  color: var(--color-text);
+  text-decoration-line: underline;
+  text-decoration-color: var(--color-accent-ink);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.35em;
+}
+
+.ghost:hover:not(:disabled) {
+  text-decoration-thickness: 2px;
+}
+
+/* Ghost arrows are plain ↗ — no filled chip. */
+.ghost .arrowWrap {
+  width: 1em;
+  margin-right: 0;
+  background: transparent;
+}
+
+.ghost .arrow {
+  width: 1em;
+  height: 1em;
+  color: currentColor;
+}
+
+/* ---------- Sizes (md and lg meet the 44px touch target) ---------- */
+.sm {
+  min-height: 2.25rem;
+  padding-inline: var(--space-4);
+  font-size: var(--text-sm);
+}
+
+.md {
+  min-height: 2.875rem;
+  padding-inline: var(--space-6);
+  font-size: var(--text-base);
+}
+
+.lg {
+  min-height: 3.75rem;
+  padding-inline: var(--space-8);
+  font-size: var(--text-lg);
+}
+
+/* Ghost keeps text-like padding at every size (compound selector beats size classes). */
+.ghost.sm,
+.ghost.md,
+.ghost.lg {
+  padding-inline: var(--space-1);
+}

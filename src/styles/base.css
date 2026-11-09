@@ -1,0 +1,133 @@
+/* Element defaults built on tokens. Component styles (CSS Modules, unlayered) override these. */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: calc(var(--header-height) + var(--space-4));
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+
+  body {
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    font-weight: var(--weight-regular);
+    line-height: var(--leading-normal);
+    font-optical-sizing: auto;
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    background-color: var(--color-bg);
+    color: var(--color-text);
+  }
+
+  /* Any toned scope paints its own background and text color. */
+  [data-theme] {
+    background-color: var(--color-bg);
+    color: var(--color-text);
+  }
+
+  /* Section headings: Space Grotesk. Expressive display moments use the serif via .display or <em>. */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-heading);
+    font-weight: var(--weight-medium);
+    line-height: var(--leading-tight);
+    letter-spacing: var(--tracking-tight);
+  }
+
+  h1 {
+    font-size: var(--text-4xl);
+  }
+
+  h2 {
+    font-size: var(--text-3xl);
+  }
+
+  h3 {
+    font-size: var(--text-2xl);
+    line-height: var(--leading-snug);
+  }
+
+  h4 {
+    font-size: var(--text-xl);
+    line-height: var(--leading-snug);
+  }
+
+  /*
+   * The Electric Editorial signature: inside any heading, <em> switches to Instrument Serif italic.
+   * "Everything a brand needs, <em>under one roof.</em>"
+   */
+  :is(h1, h2, h3, h4, p, blockquote) em {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: var(--weight-regular);
+    letter-spacing: -0.01em;
+  }
+
+  :is(h1, h2, h3, h4) em {
+    /* Serif optically reads smaller than grotesk at the same size. */
+    font-size: 1.08em;
+    line-height: 0.9;
+  }
+
+  p {
+    max-width: var(--measure);
+  }
+
+  a {
+    color: inherit;
+    text-decoration-line: underline;
+    text-decoration-color: var(--color-accent-ink);
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.22em;
+    transition: text-decoration-thickness var(--duration-fast) var(--ease-standard);
+  }
+
+  a:hover {
+    text-decoration-thickness: 2px;
+  }
+
+  strong {
+    font-weight: var(--weight-semibold);
+  }
+
+  code,
+  kbd,
+  pre {
+    font-family: var(--font-mono);
+    font-size: 0.9em;
+  }
+
+  hr {
+    border: 0;
+    border-top: 1px solid var(--color-border);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-focus);
+    outline-offset: 3px;
+    border-radius: var(--radius-xs);
+  }
+
+  /*
+   * Light/dark switch: a short cross-fade of the whole page (View Transitions API, see src/lib/theme.ts).
+   * Restrained on purpose — no wipes or reveals. Skipped entirely under reduced motion (theme.ts never starts it).
+   */
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation-duration: var(--duration-base);
+    animation-timing-function: var(--ease-standard);
+  }
+
+  ::selection {
+    background: var(--color-highlight);
+    color: var(--color-on-highlight);
+  }
+}

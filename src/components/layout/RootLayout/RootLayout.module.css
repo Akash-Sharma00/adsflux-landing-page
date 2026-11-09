@@ -1,0 +1,33 @@
+.shell {
+  display: flex;
+  flex-direction: column;
+  min-height: 100svh;
+}
+
+.main {
+  flex: 1;
+}
+
+.loading {
+  min-height: 100svh;
+}
+
+.skipLink {
+  position: absolute;
+  top: var(--space-2);
+  left: var(--space-2);
+  z-index: var(--z-toast);
+  padding: var(--space-3) var(--space-5);
+  border-radius: var(--radius-pill);
+  background: var(--color-cta-bg);
+  color: var(--color-cta-text);
+  font-family: var(--font-heading);
+  font-weight: var(--weight-medium);
+  text-decoration: none;
+  transform: translateY(-200%);
+  transition: transform var(--duration-base) var(--ease-out-expo);
+}
+
+.skipLink:focus-visible {
+  transform: translateY(0);
+}

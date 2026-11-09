@@ -1,0 +1,55 @@
+.marquee {
+  display: flex;
+  overflow: hidden;
+  user-select: none;
+}
+
+.track {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  animation: scroll var(--marquee-duration) linear infinite;
+}
+
+.marquee:hover .track {
+  animation-play-state: paused;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+}
+
+.separator {
+  width: 0.7em;
+  height: 0.7em;
+  margin-inline: 0.8em;
+  background: currentColor;
+  /* Eight-ray signal burst — the brand glyph. */
+  clip-path: polygon(50% 0%, 59% 29%, 85% 15%, 71% 41%, 100% 50%, 71% 59%, 85% 85%, 59% 71%, 50% 100%, 41% 71%, 15% 85%, 29% 59%, 0% 50%, 29% 41%, 15% 15%, 41% 29%);
+}
+
+@keyframes scroll {
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee {
+    flex-wrap: wrap;
+  }
+
+  .track {
+    flex-wrap: wrap;
+    animation: none;
+  }
+
+  .track[aria-hidden='true'] {
+    display: none;
+  }
+}

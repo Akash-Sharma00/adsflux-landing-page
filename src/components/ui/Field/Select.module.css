@@ -1,0 +1,106 @@
+.root {
+  position: relative;
+}
+
+/* Inherits the editorial underline look from Field's .control. */
+.trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  text-align: left;
+  cursor: pointer;
+}
+
+.value {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.placeholder {
+  color: var(--color-text-muted);
+}
+
+.chevron {
+  flex: none;
+  width: 0.5rem;
+  height: 0.5rem;
+  margin-right: var(--space-2);
+  border-right: 1.5px solid currentColor;
+  border-bottom: 1.5px solid currentColor;
+  transform: translateY(-25%) rotate(45deg);
+  transition: transform var(--duration-base) var(--ease-out-expo);
+}
+
+.trigger[aria-expanded='true'] .chevron {
+  transform: translateY(20%) rotate(-135deg);
+}
+
+/* Sharp frame + offset print shadow; colours follow the surrounding tone. */
+.panel {
+  position: absolute;
+  top: calc(100% + var(--space-2));
+  left: 0;
+  right: 0;
+  z-index: var(--z-dropdown);
+  max-height: min(22rem, 60vh);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  margin: 0;
+  padding: var(--space-2);
+  list-style: none;
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-none);
+  background: var(--color-bg);
+  box-shadow: 6px 6px 0 0 var(--color-shape-2);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-6px);
+  transition:
+    opacity var(--duration-fast) var(--ease-standard),
+    transform var(--duration-base) var(--ease-out-expo),
+    visibility 0s linear var(--duration-base);
+}
+
+.panel[data-open='true'] {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  transition-delay: 0s;
+}
+
+.option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding: var(--space-3) var(--space-4);
+  font-family: var(--font-heading);
+  font-size: var(--text-base);
+  font-weight: var(--weight-medium);
+  color: var(--color-text);
+  cursor: pointer;
+  user-select: none;
+}
+
+.option[data-active='true'] {
+  background: var(--color-highlight);
+  color: var(--color-on-highlight);
+}
+
+/* Selected marker: a small square — sharp, like the frames. */
+.option[aria-selected='true']::after {
+  content: '';
+  flex: none;
+  width: 0.5rem;
+  height: 0.5rem;
+  background: currentColor;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .panel,
+  .chevron {
+    transition: none;
+  }
+}

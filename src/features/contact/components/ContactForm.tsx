@@ -1,11 +1,14 @@
 import { useState, type ChangeEvent, type FormEvent } from 'react'
-import { Button, Field, Input, Select, Textarea } from '@/components/ui'
+import { Button, Field, Input, Select, Textarea, type SelectOption } from '@/components/ui'
 import { liveServices } from '@/config/services'
 import { ContactNotConfiguredError, submitContactForm } from '../api'
 import { BUDGET_OPTIONS } from '../constants'
 import type { ContactFormErrors, ContactFormValues } from '../types'
 import { validateContactForm } from '../validation'
 import styles from './ContactForm.module.css'
+
+const SERVICE_OPTIONS: readonly SelectOption[] = liveServices.map(({ title }) => ({ value: title, label: title }))
+const BUDGET_SELECT_OPTIONS: readonly SelectOption[] = BUDGET_OPTIONS.map((option) => ({ value: option, label: option }))
 
 const EMPTY_VALUES: ContactFormValues = { name: '', email: '', company: '', service: '', budget: '', message: '' }
 
@@ -16,9 +19,12 @@ export function ContactForm() {
   const [errors, setErrors] = useState<ContactFormErrors>({})
   const [status, setStatus] = useState<Status>({ kind: 'idle' })
 
-  const handleChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    const { name, value } = event.target
+  const handleValueChange = (value: string, name: string) => {
     setValues((current) => ({ ...current, [name]: value }))
+  }
+
+  const handleChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    handleValueChange(event.target.value, event.target.name)
   }
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
@@ -70,27 +76,27 @@ export function ContactForm() {
         </Field>
         <Field label="What do you need?">
           {(props) => (
-            <Select {...props} name="service" value={values.service} onChange={handleChange}>
-              <option value="">Choose a service</option>
-              {liveServices.map((service) => (
-                <option key={service.slug} value={service.title}>
-                  {service.title}
-                </option>
-              ))}
-            </Select>
+            <Select
+              {...props}
+              name="service"
+              placeholder="Choose a service"
+              options={SERVICE_OPTIONS}
+              value={values.service}
+              onValueChange={handleValueChange}
+            />
           )}
         </Field>
       </div>
       <Field label="Monthly budget" hint="Helps us recommend the right team.">
         {(props) => (
-          <Select {...props} name="budget" value={values.budget} onChange={handleChange}>
-            <option value="">Select a range</option>
-            {BUDGET_OPTIONS.map((option) => (
-              <option key={option} value={option}>
-                {option}
-              </option>
-            ))}
-          </Select>
+          <Select
+            {...props}
+            name="budget"
+            placeholder="Select a range"
+            options={BUDGET_SELECT_OPTIONS}
+            value={values.budget}
+            onValueChange={handleValueChange}
+          />
         )}
       </Field>
       <Field label="Tell us about the brand and the goal" required error={errors.message}>

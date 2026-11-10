@@ -47,7 +47,7 @@ sites (redirects to `/`); in the page, right-click/long-press save and drag-out 
 (`src/lib/protectMedia.ts`). These deter casual saving only — anything a browser shows can still be captured.
 
 1. Import the GitHub repo at [vercel.com/new](https://vercel.com/new) (settings are read from `vercel.json`; no changes needed).
-2. Add `VITE_CONTACT_ENDPOINT` under Project → Settings → Environment Variables when the form endpoint exists.
+2. Add `VITE_CONTACT_ENDPOINT` under Project → Settings → Environment Variables: the `/exec` URL of the Google Apps Script web app in `scripts/google-sheets-leads.gs` (setup steps are at the top of that file). Leads land in a Google Sheet.
 3. Every push to `main` deploys to production; other branches and PRs get preview URLs.
 4. Add `www.adsflux.in` and `adsflux.in` under Project → Settings → Domains, with the apex redirecting to `www` (the canonical host in `siteConfig.url`).
 

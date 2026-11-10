@@ -55,34 +55,6 @@
   resize: vertical;
 }
 
-.selectWrap {
-  position: relative;
-}
-
-.select {
-  appearance: none;
-  padding-right: var(--space-8);
-  cursor: pointer;
-}
-
-.select option {
-  background: var(--color-bg);
-  color: var(--color-text);
-}
-
-.selectWrap::after {
-  content: '';
-  position: absolute;
-  right: var(--space-2);
-  top: 50%;
-  width: 0.5rem;
-  height: 0.5rem;
-  border-right: 1.5px solid currentColor;
-  border-bottom: 1.5px solid currentColor;
-  transform: translateY(-75%) rotate(45deg);
-  pointer-events: none;
-}
-
 .hint {
   font-size: var(--text-sm);
   color: var(--color-text-muted);

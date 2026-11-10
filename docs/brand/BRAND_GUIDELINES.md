@@ -38,7 +38,7 @@ The direction, **Electric Editorial**, borrows from:
 
 What it is **not**: a generic "digital marketing agency" (no rocket ships, growth-chart clip art or stock handshakes), a SaaS template (no KPI tiles, icon grids or dashboards), or a dark "tech" site.
 
-**Two modes, one studio.** Light mode is Electric Editorial: warm cream paper, cobalt highlights, orange graphic accents. Dark mode is **Midnight Editorial**: the same magazine with the lights down. It is cinematic and premium: midnight paper (not black), warm ivory type, cobalt and orange accents, depth from slate surfaces and hairlines. It is not a neon "tech" dark theme. Layout, type, imagery, motion and copy are identical in both modes; only the tokens change. Visitors get their OS preference by default and can switch with the header toggle.
+**Two modes, one studio.** Light mode is Electric Editorial: warm cream paper, cobalt highlights, orange graphic accents. Dark mode is **Midnight Editorial**: the same magazine with the lights down. It is cinematic and premium: midnight paper (not black), warm ivory type, cobalt and orange accents, depth from slate surfaces and hairlines. It is not a neon "tech" dark theme. Layout, type, imagery, motion and copy are identical in both modes; only the tokens change. Visitors get light mode by default and can switch with the header toggle.
 
 ## 3. Personality
 

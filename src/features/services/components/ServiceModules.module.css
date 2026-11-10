@@ -56,6 +56,10 @@
   align-content: end;
 }
 
+.soon {
+  justify-self: start;
+}
+
 .title {
   font-size: var(--text-2xl);
   font-weight: var(--weight-medium);

@@ -7,7 +7,7 @@
  * `.ts` extensions and must stay free of DOM, React and `@/` alias imports.
  */
 import { routes, servicePath } from './routes.ts'
-import { getServiceBySlug, services, type Service } from './services.ts'
+import { getServiceBySlug, liveServices, type Service } from './services.ts'
 import { siteConfig } from './site.ts'
 
 export type PageSeo = {
@@ -81,10 +81,10 @@ export function getPageSeo(key: PageSeoKey): PageSeo {
   return isServicePageKey(key) ? buildServicePageSeo(getServiceForKey(key)) : staticPageSeo[key]
 }
 
-/** Every page the site has: static pages, then one per service. */
+/** Every page the site has: static pages, then one per launched service. */
 export const pageKeys: readonly PageSeoKey[] = [
   ...(Object.keys(staticPageSeo) as StaticPageKey[]),
-  ...services.map((service) => servicePageKey(service.slug)),
+  ...liveServices.map((service) => servicePageKey(service.slug)),
 ]
 
 /** Social card, 1200 × 630 (`npm run icons`). */
@@ -197,11 +197,11 @@ function buildOrganization(): JsonLdNode {
     description: siteConfig.description,
     ...(siteConfig.email ? { email: siteConfig.email } : {}),
     areaServed: ['India', 'Worldwide'],
-    knowsAbout: services.map((service) => service.title),
+    knowsAbout: liveServices.map((service) => service.title),
     hasOfferCatalog: {
       '@type': 'OfferCatalog',
       name: `${siteConfig.name} services`,
-      itemListElement: services.map((service) => ({
+      itemListElement: liveServices.map((service) => ({
         '@type': 'Offer',
         itemOffered: buildServiceReference(service),
       })),

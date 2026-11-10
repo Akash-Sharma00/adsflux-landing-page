@@ -12,7 +12,7 @@ src/assets/assetRegistry.ts  every real image/video: variants, dimensions, alt, 
 src/styles/breakpoints.ts    breakpoint values for JS (CSS uses the same literals)
 src/lib/motion.ts            motion constants for JS (mirror of the CSS motion tokens)
 src/lib/gsap.ts              loadScrollTrigger(): GSAP + ScrollTrigger, loaded after page load when idle
-src/lib/theme.ts             colour mode store (light/dark): <html data-theme>, localStorage, OS preference
+src/lib/theme.ts             colour mode store (light/dark): <html data-theme>, localStorage, light by default
 src/hooks/useTheme.ts        { theme, setTheme } for React (useSyncExternalStore over lib/theme)
 src/components/ui/           primitives
 src/components/motion/       motion primitives
@@ -114,8 +114,8 @@ Why the CTA stays cobalt in dark mode: Electric `#5268FF` is the dark-mode prima
 
 `<html data-theme="light|dark">` is the **mode**; the six values above are **tones**. They never share an element, so the values never collide. Every tone has a light and a dark rendering, and components don't change: they keep reading `--color-*`.
 
-- **First paint.** An inline script in `index.html` (before CSS and the bundle) reads `localStorage['adsflux-theme']`, else `prefers-color-scheme`, and sets `data-theme`, `style.colorScheme` and `<meta name="theme-color">`. No flash, including on the static per-route HTML the SEO plugin writes.
-- **Runtime.** `src/lib/theme.ts` is a tiny external store (`getTheme`, `setTheme`, `subscribeToTheme`); `useTheme()` wraps it with `useSyncExternalStore`. No provider is needed. With no saved choice the site follows the OS live; a choice is saved; choosing the mode the OS already asks for clears the saved value, so the site follows the system again. Storage and other tabs stay in sync (`storage` event). Blocked storage only means the choice isn't remembered.
+- **First paint.** An inline script in `index.html` (before CSS and the bundle) reads `localStorage['adsflux-theme']`, else defaults to light, and sets `data-theme`, `style.colorScheme` and `<meta name="theme-color">`. No flash, including on the static per-route HTML the SEO plugin writes.
+- **Runtime.** `src/lib/theme.ts` is a tiny external store (`getTheme`, `setTheme`, `subscribeToTheme`); `useTheme()` wraps it with `useSyncExternalStore`. No provider is needed. With no saved choice the site is light (the OS `prefers-color-scheme` is ignored); choosing dark is saved; choosing light clears the saved value, since light is the default. Storage and other tabs stay in sync (`storage` event). Blocked storage only means the choice isn't remembered.
 - **Toggle.** `ThemeToggle` (in `SiteHeader`, every breakpoint, so it also serves the mobile menu): a 44px pill, `aria-pressed` = dark mode, accessible name "Dark mode", half-filled disc that turns 180°.
 - **Transition.** A 280 ms cross-fade via the View Transitions API (`::view-transition-*` in base.css). No per-property colour transitions (they would fight component transitions). Instant under `prefers-reduced-motion` or where unsupported.
 - **`color-scheme`** comes from the tone (`var(--scheme)` for cream/blue), so native controls, scrollbars and autofill match in both modes.

@@ -2,17 +2,16 @@
  * Colour mode (light / dark) — a tiny external store around `<html data-theme>`.
  *
  * First paint is handled by the inline bootstrap script in index.html, which runs before CSS and React and
- * sets the attribute from the saved preference or the OS setting. Keep THEME_STORAGE_KEY and the resolution
+ * sets the attribute from the saved preference, else light. Keep THEME_STORAGE_KEY and the resolution
  * rules in sync with that script.
  *
- * Preference model: no saved value → follow `prefers-color-scheme` live. Choosing a mode saves it; choosing
- * the mode the OS already asks for clears the saved value, so the site follows the system again.
+ * Preference model: no saved value → light (the OS setting is ignored). Choosing dark saves it; choosing
+ * light clears the saved value, since light is the default.
  */
 export type Theme = 'light' | 'dark'
 
 export const THEME_STORAGE_KEY = 'adsflux-theme'
 
-const DARK_QUERY = '(prefers-color-scheme: dark)'
 const REDUCED_MOTION_QUERY = '(prefers-reduced-motion: reduce)'
 
 const isTheme = (value: unknown): value is Theme => value === 'light' || value === 'dark'
@@ -36,7 +35,7 @@ function writeStoredTheme(theme: Theme | null) {
   }
 }
 
-const getSystemTheme = (): Theme => (window.matchMedia(DARK_QUERY).matches ? 'dark' : 'light')
+export const DEFAULT_THEME: Theme = 'light'
 
 /** The mode currently painted (set on <html> by the bootstrap script before first render). */
 export function getTheme(): Theme {
@@ -73,16 +72,15 @@ function applyThemeWithTransition(theme: Theme) {
   else applyTheme(theme)
 }
 
-/** Saves an explicit choice (or clears it when it matches the OS) and applies it. */
+/** Saves an explicit choice (or clears it when it is the default) and applies it. */
 export function setTheme(theme: Theme) {
-  writeStoredTheme(theme === getSystemTheme() ? null : theme)
+  writeStoredTheme(theme === DEFAULT_THEME ? null : theme)
   applyThemeWithTransition(theme)
 }
 
-const resolveTheme = () => readStoredTheme() ?? getSystemTheme()
+const resolveTheme = () => readStoredTheme() ?? DEFAULT_THEME
 
-/** Follows the OS while no choice is saved, and choices made in other tabs. */
-const handleSystemChange = () => applyThemeWithTransition(resolveTheme())
+/** Follows choices made in other tabs. */
 const handleStorage = (event: StorageEvent) => {
   if (event.key === THEME_STORAGE_KEY || event.key === null) applyTheme(resolveTheme())
 }
@@ -90,7 +88,6 @@ const handleStorage = (event: StorageEvent) => {
 /** useSyncExternalStore-compatible subscription. Global listeners attach once, for the first subscriber. */
 export function subscribeToTheme(listener: () => void) {
   if (listeners.size === 0) {
-    window.matchMedia(DARK_QUERY).addEventListener('change', handleSystemChange)
     window.addEventListener('storage', handleStorage)
   }
   listeners.add(listener)
@@ -98,7 +95,6 @@ export function subscribeToTheme(listener: () => void) {
   return () => {
     listeners.delete(listener)
     if (listeners.size === 0) {
-      window.matchMedia(DARK_QUERY).removeEventListener('change', handleSystemChange)
       window.removeEventListener('storage', handleStorage)
     }
   }

@@ -54,7 +54,7 @@ src/features/*, src/pages/* compositions built only from the above
 - In React: `<Section tone="cobalt">` for bands; `data-theme={tone}` on a sub-element for modules
   (`ServiceModules`), placeholders (`PlaceholderArt`), sheets (`MobileMenu`) and the footer. Cream is the page default.
 - **Colour mode** is separate: `<html data-theme="light|dark">`, never on another element. Set before first paint by
-  the inline script in `index.html` (`localStorage['adsflux-theme']` → else `prefers-color-scheme`), then by
+  the inline script in `index.html` (`localStorage['adsflux-theme']` → else light), then by
   `src/lib/theme.ts` (`getTheme`/`setTheme`/`subscribeToTheme`, keep the storage key in sync). React reads it with
   `useTheme()` from `@/hooks/useTheme`; the switch is `ThemeToggle` in the header. Every tone has a dark rendering in
   tokens.css, so components need **no** dark-mode CSS. Never write `[data-theme='dark'] .x {…}` in a module, never

@@ -2,7 +2,7 @@
 
 Marketing site for **Adsflux**, a creative and growth agency for ambitious brands (India + international).
 Positioning: **"We make brands impossible to ignore."** Visual direction: **Electric Editorial** (light) with a
-**Midnight Editorial** dark mode (OS preference by default, header toggle, saved in `localStorage`).
+**Midnight Editorial** dark mode (light by default, header toggle, saved in `localStorage`).
 
 ## Stack
 
@@ -53,7 +53,7 @@ Visual reference of everything: run the app and open **`/brand`**.
 
 ## SEO
 
-Every page renders `<PageHead page="…" />` (from `@/components/layout`); its metadata lives in `src/config/seo.ts` (`getPageSeo`). A new static route needs an entry in `staticPageSeo`; service pages are generated from `src/config/services.ts` (`slug` = URL, `seo.keyword` = `<title>` + `<h1>` lead, `seo.description`). At build, `scripts/vite-plugin-seo.ts` server-renders every page (`src/entry-server.tsx`) into its own HTML file — full content + `<head>` for crawlers and link-preview bots; `main.tsx` hydrates it — and lists indexable pages in `sitemap.xml`. The build fails if a page's content would sit behind a Suspense fallback. Keep components render-pure and SSR-safe (browser APIs only in effects; `useSyncExternalStore` with a server snapshot). Don't render `<title>`/`<meta>` in components. Canonical host: `https://www.adsflux.in` (`siteConfig.url`). `npm run preview` falls back to `index.html` for some routes and can log hydration errors that production (Vercel) won't.
+Every page renders `<PageHead page="…" />` (from `@/components/layout`); its metadata lives in `src/config/seo.ts` (`getPageSeo`). A new static route needs an entry in `staticPageSeo`; service pages are generated from `src/config/services.ts` (`slug` = URL, `seo.keyword` = `<title>` + `<h1>` lead, `seo.description`). Only live services get a page: `isComingSoon: true` entries are listed everywhere with a "Coming soon" tag but have no route, sitemap entry, structured data or contact-form option (currently only UGC & influencer and Creative & video production are live). At build, `scripts/vite-plugin-seo.ts` server-renders every page (`src/entry-server.tsx`) into its own HTML file — full content + `<head>` for crawlers and link-preview bots; `main.tsx` hydrates it — and lists indexable pages in `sitemap.xml`. The build fails if a page's content would sit behind a Suspense fallback. Keep components render-pure and SSR-safe (browser APIs only in effects; `useSyncExternalStore` with a server snapshot). Don't render `<title>`/`<meta>` in components. Canonical host: `https://www.adsflux.in` (`siteConfig.url`). `npm run preview` falls back to `index.html` for some routes and can log hydration errors that production (Vercel) won't.
 
 ## Repo layout
 

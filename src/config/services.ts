@@ -7,6 +7,11 @@ export type Service = {
   capabilities: readonly string[]
   /** Delivered through the Scalvo platform — the service links to it. */
   isOnScalvo?: boolean
+  /**
+   * Not offered yet: listed by name with a "Coming soon" tag, but it has no page (no route, no sitemap entry,
+   * no structured data) and can't be picked in the contact form. Remove the flag to launch it.
+   */
+  isComingSoon?: boolean
   /** Search: the phrase the page targets (its <h1> lead and `<title>`) and the result snippet (120–160 chars). */
   seo: {
     keyword: string
@@ -14,29 +19,8 @@ export type Service = {
   }
 }
 
+/** Launched services first: position sets each service's number and module look (features/services/looks.ts). */
 export const services: readonly Service[] = [
-  {
-    slug: 'digital-marketing-strategy',
-    title: 'Digital marketing strategy',
-    summary: 'Growth plans built on audience truth, not channel habits.',
-    capabilities: ['Market & audience research', 'Channel planning', 'Go-to-market', 'Measurement frameworks'],
-    seo: {
-      keyword: 'Digital marketing strategy agency in India',
-      description:
-        'Digital marketing strategy for ambitious brands in India — audience research, channel planning, go-to-market and measurement, from Adsflux.',
-    },
-  },
-  {
-    slug: 'performance-marketing',
-    title: 'Performance marketing',
-    summary: 'Paid media engineered for profitable, compounding growth.',
-    capabilities: ['Meta & Google Ads', 'Programmatic', 'Conversion optimisation', 'Attribution'],
-    seo: {
-      keyword: 'Performance marketing agency in India',
-      description:
-        'Performance marketing agency in India — Meta and Google Ads, programmatic, conversion optimisation and attribution, run with creative that converts.',
-    },
-  },
   {
     slug: 'ugc-influencer-marketing',
     title: 'UGC & influencer',
@@ -61,10 +45,35 @@ export const services: readonly Service[] = [
     },
   },
   {
+    slug: 'digital-marketing-strategy',
+    title: 'Digital marketing strategy',
+    summary: 'Growth plans built on audience truth, not channel habits.',
+    capabilities: ['Market & audience research', 'Channel planning', 'Go-to-market', 'Measurement frameworks'],
+    isComingSoon: true,
+    seo: {
+      keyword: 'Digital marketing strategy agency in India',
+      description:
+        'Digital marketing strategy for ambitious brands in India — audience research, channel planning, go-to-market and measurement, from Adsflux.',
+    },
+  },
+  {
+    slug: 'performance-marketing',
+    title: 'Performance marketing',
+    summary: 'Paid media engineered for profitable, compounding growth.',
+    capabilities: ['Meta & Google Ads', 'Programmatic', 'Conversion optimisation', 'Attribution'],
+    isComingSoon: true,
+    seo: {
+      keyword: 'Performance marketing agency in India',
+      description:
+        'Performance marketing agency in India — Meta and Google Ads, programmatic, conversion optimisation and attribution, run with creative that converts.',
+    },
+  },
+  {
     slug: 'branding',
     title: 'Branding & brand strategy',
     summary: 'Identities with a point of view — and the system to scale it.',
     capabilities: ['Positioning', 'Naming', 'Visual identity', 'Brand guidelines'],
+    isComingSoon: true,
     seo: {
       keyword: 'Branding & brand strategy agency in India',
       description:
@@ -76,6 +85,7 @@ export const services: readonly Service[] = [
     title: 'Social media management',
     summary: 'Always-on social that builds culture, not just calendars.',
     capabilities: ['Content strategy', 'Community', 'Social-first creative', 'Reporting'],
+    isComingSoon: true,
     seo: {
       keyword: 'Social media marketing agency in India',
       description:
@@ -87,6 +97,7 @@ export const services: readonly Service[] = [
     title: 'SEO & content marketing',
     summary: 'Search visibility and content that earns attention for years.',
     capabilities: ['Technical SEO', 'Content strategy', 'Editorial production', 'Link earning'],
+    isComingSoon: true,
     seo: {
       keyword: 'SEO & content marketing agency in India',
       description:
@@ -99,6 +110,7 @@ export const services: readonly Service[] = [
     summary: 'Faster testing and more variations, directed by human taste.',
     capabilities: ['Creative automation', 'Variant testing', 'AI-assisted production', 'Workflow design'],
     isOnScalvo: true,
+    isComingSoon: true,
     seo: {
       keyword: 'AI-powered creative agency in India',
       description:
@@ -106,6 +118,9 @@ export const services: readonly Service[] = [
     },
   },
 ] as const
+
+/** Services open for briefs now — the ones with a page. */
+export const liveServices: readonly Service[] = services.filter((service) => !service.isComingSoon)
 
 export const serviceAnchorId = (slug: string) => `service-${slug}`
 

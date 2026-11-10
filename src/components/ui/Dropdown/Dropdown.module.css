@@ -92,12 +92,12 @@
   transition: background-color var(--duration-fast) var(--ease-standard);
 }
 
-.link:hover {
+a.link:hover {
   background: var(--color-highlight);
   color: var(--color-on-highlight);
 }
 
-.link:hover .linkDescription {
+a.link:hover .linkDescription {
   color: var(--color-on-highlight);
 }
 
@@ -106,6 +106,25 @@
   font-size: var(--text-sm);
   font-weight: var(--weight-medium);
   color: var(--color-text);
+}
+
+/* An entry with no page yet: listed, muted, no hover. */
+.static .linkLabel {
+  color: var(--color-text-muted);
+}
+
+.tag {
+  margin-left: var(--space-2);
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  font-weight: var(--weight-regular);
+  letter-spacing: var(--tracking-mono);
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+a.link:hover .tag {
+  color: var(--color-on-highlight);
 }
 
 .linkDescription {

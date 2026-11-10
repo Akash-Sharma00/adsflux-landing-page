@@ -1,6 +1,6 @@
 import { useState, type ChangeEvent, type FormEvent } from 'react'
 import { Button, Field, Input, Select, Textarea } from '@/components/ui'
-import { services } from '@/config/services'
+import { liveServices } from '@/config/services'
 import { ContactNotConfiguredError, submitContactForm } from '../api'
 import { BUDGET_OPTIONS } from '../constants'
 import type { ContactFormErrors, ContactFormValues } from '../types'
@@ -72,7 +72,7 @@ export function ContactForm() {
           {(props) => (
             <Select {...props} name="service" value={values.service} onChange={handleChange}>
               <option value="">Choose a service</option>
-              {services.map((service) => (
+              {liveServices.map((service) => (
                 <option key={service.slug} value={service.title}>
                   {service.title}
                 </option>

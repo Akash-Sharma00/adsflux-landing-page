@@ -9,7 +9,7 @@ description: Adsflux's "Electric Editorial" brand system — Paper Cream / Elect
 
 Personality: bold, creative, experimental, confident, contemporary, premium, culturally relevant. The site should feel like an **independent studio / fashion editorial / culture magazine / experimental campaign** — never a generic marketing agency, a SaaS template or a dark tech site.
 
-**Two modes, one studio.** Light = **Electric Editorial** (warm cream, cobalt highlights, orange accents). Dark = **Midnight Editorial** (midnight paper, ivory type, cobalt and ember accents, slate depth; cinematic, never pure black, never neon). Same layout, type, imagery, motion and copy; only tokens change. OS preference by default, header toggle to switch.
+**Two modes, one studio.** Light = **Electric Editorial** (warm cream, cobalt highlights, orange accents). Dark = **Midnight Editorial** (midnight paper, ivory type, cobalt and ember accents, slate depth; cinematic, never pure black, never neon). Same layout, type, imagery, motion and copy; only tokens change. Light by default, header toggle to switch (choice saved).
 
 Full specs: `docs/brand/BRAND_GUIDELINES.md` (brand, colour, type, voice), `docs/brand/DESIGN_SYSTEM.md` (tokens, components, motion), `docs/brand/LOGO_GUIDELINES.md`. Live reference: `/brand`. CSS mechanics: the `frontend-design-system` skill.
 

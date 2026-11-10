@@ -5,8 +5,11 @@ import styles from './Dropdown.module.css'
 
 export type DropdownItem = {
   label: string
-  href: string
+  /** Omit for an entry that isn't available yet: it renders as plain text, not a link. */
+  href?: string
   description?: string
+  /** Short status beside the label, e.g. "Soon". */
+  tag?: string
 }
 
 export type DropdownProps = {
@@ -73,14 +76,28 @@ export function Dropdown({ label, items, align = 'start', columns = 1, className
         data-open={isOpen}
       >
         <ul className={styles.list}>
-          {items.map((item) => (
-            <li key={item.href}>
-              <AppLink href={item.href} className={styles.link} onClick={() => setIsOpen(false)}>
-                <span className={styles.linkLabel}>{item.label}</span>
+          {items.map((item) => {
+            const content = (
+              <>
+                <span className={styles.linkLabel}>
+                  {item.label}
+                  {item.tag && <span className={styles.tag}>{item.tag}</span>}
+                </span>
                 {item.description && <span className={styles.linkDescription}>{item.description}</span>}
-              </AppLink>
-            </li>
-          ))}
+              </>
+            )
+            return (
+              <li key={item.label}>
+                {item.href === undefined ? (
+                  <span className={cn(styles.link, styles.static)}>{content}</span>
+                ) : (
+                  <AppLink href={item.href} className={styles.link} onClick={() => setIsOpen(false)}>
+                    {content}
+                  </AppLink>
+                )}
+              </li>
+            )
+          })}
         </ul>
       </div>
     </div>

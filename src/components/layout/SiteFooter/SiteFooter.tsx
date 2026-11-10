@@ -60,9 +60,15 @@ export function SiteFooter() {
               <ul className={styles.links}>
                 {group.links.map((link) => (
                   <li key={link.label}>
-                    <AppLink href={link.href} className={styles.link}>
-                      {link.label}
-                    </AppLink>
+                    {link.href === undefined ? (
+                      <span className={styles.pending}>
+                        {link.label} <span className={styles.soon}>{link.tag}</span>
+                      </span>
+                    ) : (
+                      <AppLink href={link.href} className={styles.link}>
+                        {link.label}
+                      </AppLink>
+                    )}
                   </li>
                 ))}
               </ul>

@@ -43,11 +43,21 @@
   transition: transform var(--duration-base) var(--ease-out-expo);
 }
 
-.link:hover .title {
+/* Coming soon: listed, quieter, no hover. */
+.soon {
+  grid-area: arrow;
+  align-self: center;
+}
+
+.pending .title {
+  color: var(--color-text-muted);
+}
+
+a.link:hover .title {
   color: var(--color-accent-ink);
 }
 
-.link:hover .arrow {
+a.link:hover .arrow {
   transform: translateX(var(--space-1));
 }
 

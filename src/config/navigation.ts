@@ -8,16 +8,26 @@ export type NavLink = {
   description?: string
 }
 
-export type NavItem = NavLink & {
-  /** Present when the item opens a dropdown. */
-  children?: readonly NavLink[]
+/** A listed entry with nothing to link to yet (a coming-soon service): plain text plus a short tag. */
+export type NavPlaceholder = {
+  label: string
+  href?: undefined
+  description?: string
+  tag: string
 }
 
-const serviceLinks: readonly NavLink[] = services.map((service) => ({
-  label: service.title,
-  href: servicePath(service.slug),
-  description: service.summary,
-}))
+export type NavEntry = NavLink | NavPlaceholder
+
+export type NavItem = NavLink & {
+  /** Present when the item opens a dropdown. */
+  children?: readonly NavEntry[]
+}
+
+const serviceLinks: readonly NavEntry[] = services.map((service) =>
+  service.isComingSoon
+    ? { label: service.title, description: service.summary, tag: 'Soon' }
+    : { label: service.title, href: servicePath(service.slug), description: service.summary },
+)
 
 export const mainNav: readonly NavItem[] = [
   { label: 'Services', href: homeAnchor('services'), children: serviceLinks },
@@ -29,7 +39,7 @@ export const mainNav: readonly NavItem[] = [
 
 export const primaryCta: NavLink = { label: 'Start a project', href: homeAnchor('contact') }
 
-export const footerNav: readonly { title: string; links: readonly NavLink[] }[] = [
+export const footerNav: readonly { title: string; links: readonly NavEntry[] }[] = [
   {
     title: 'Studio',
     links: [
@@ -51,6 +61,6 @@ export const footerNav: readonly { title: string; links: readonly NavLink[] }[] 
   },
   {
     title: 'Services',
-    links: serviceLinks.map(({ label, href }) => ({ label, href })),
+    links: serviceLinks.map(({ description: _description, ...link }) => link),
   },
 ]

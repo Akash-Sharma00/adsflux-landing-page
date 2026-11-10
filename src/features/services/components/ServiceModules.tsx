@@ -1,5 +1,5 @@
 import { Stagger, StaggerItem } from '@/components/motion'
-import { AppLink, MediaFrame } from '@/components/ui'
+import { AppLink, Badge, MediaFrame } from '@/components/ui'
 import { servicePath } from '@/config/routes'
 import { scalvoLinks } from '@/config/scalvo'
 import { serviceAnchorId, type Service } from '@/config/services'
@@ -38,10 +38,15 @@ export function ServiceModules({ services }: ServiceModulesProps) {
                 artTone={look.artTone}
               />
               <div className={styles.body}>
+                {service.isComingSoon && <Badge className={styles.soon}>Coming soon</Badge>}
                 <h3 className={styles.title}>
-                  <AppLink href={servicePath(service.slug)} className={styles.titleLink}>
-                    {service.title}
-                  </AppLink>
+                  {service.isComingSoon ? (
+                    service.title
+                  ) : (
+                    <AppLink href={servicePath(service.slug)} className={styles.titleLink}>
+                      {service.title}
+                    </AppLink>
+                  )}
                 </h3>
                 <p className={styles.summary}>{service.summary}</p>
                 <ul className={styles.capabilities} aria-label={`${service.title} capabilities`}>
@@ -49,7 +54,7 @@ export function ServiceModules({ services }: ServiceModulesProps) {
                     <li key={capability}>{capability}</li>
                   ))}
                 </ul>
-                {service.isOnScalvo && (
+                {service.isOnScalvo && !service.isComingSoon && (
                   <AppLink href={scalvoLinks.overview.href} className={styles.platformLink}>
                     Runs on {scalvoLinks.overview.label} →
                   </AppLink>

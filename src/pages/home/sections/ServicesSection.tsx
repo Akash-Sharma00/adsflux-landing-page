@@ -12,10 +12,10 @@ export function ServicesSection() {
           eyebrow="Services"
           title={
             <>
-              Eight ways we make brands <em>impossible to ignore.</em>
+              Two ways to be <em>impossible to ignore</em> — today.
             </>
           }
-          description="Strategy sets the direction. Creative earns the attention. Performance turns it into growth."
+          description="UGC video and creative production are open for briefs now. The rest of the studio is coming soon."
         />
         <ServiceModules services={services} />
       </Container>

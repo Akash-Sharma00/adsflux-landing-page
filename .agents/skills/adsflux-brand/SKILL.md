@@ -22,7 +22,7 @@ Full specs: `docs/brand/BRAND_GUIDELINES.md` (brand, colour, type, voice), `docs
 5. **Type:** Instrument Serif (display, 400 roman + italic only) · Space Grotesk (section headings/UI, 500/700) · DM Sans (body 400/500/600, base 17px) · DM Mono (labels/metadata, uppercase, 0.06em). Only via `--font-display/-heading/-body/-mono`. **Serif for expressive display moments and `<em>` accents; grotesk for section headings at moderate sizes.** Never set oversized geometric sans everywhere.
 6. **Shape:** sharp frames (radius 0) for images, modules, panels; pill controls for buttons, tags, chips. **No rounded cards, no glassmorphism, no blurred drop shadows** (use `--shadow-offset`).
 7. **Never retype or redraw the logo.** Use `<Wordmark />` / `<Monogram />` or `public/brand/*.svg`. The burst colour comes from the tone.
-8. **Authentic imagery only.** Real campaign work from `@/assets/assetRegistry`, or `PlaceholderArt` where none exists. Never stock photos or generic AI-generated illustrations. Each asset is used once on the site.
+8. **Authentic imagery only.** Real campaign work from `@/assets/assetRegistry`, or `PlaceholderArt` where none exists. Never generic AI-generated illustrations. Stock photography only as the licensed CC0 stand-ins in `src/assets/stockImages.ts` (service modules + SAMPLE case studies, owner-approved): never as client portraits, never captioned as real work, no visible third-party logos. Each asset is used once on the site.
 9. **Never present sample content as real.** Showcase, work, testimonials and pricing are SAMPLE; outcomes only with verified data.
 
 ## 2. Tones at a glance
@@ -88,7 +88,7 @@ Import from `@/components/ui`, `@/components/motion`, `@/components/sections`, a
 - No Lenis (deliberate). No scroll-jacking.
 - **Respect reduced motion:** `MotionConfig reducedMotion="user"` handles `m.*` transforms; GSAP components check `usePrefersReducedMotion()` and render static; CSS loops (`Marquee`, `Stamp`, `Burst spin`) must stop in a `prefers-reduced-motion` block; videos don't autoplay (their play/sound controls stay).
 - **Gotchas:** never put `whileInView` on an element that starts fully clipped (inside an `overflow: hidden` mask or `clip-path: inset(100%…)`): observe the visible parent and drive children via variants (see `TextReveal` and `ImageReveal`, whose observer is the outer unclipped element).
-- Budget: initial JS ≤ 120 KB gzip (currently ~122 KB — over). Don't add animation libraries.
+- Budget: initial JS ≤ 120 KB gzip (currently ~124 KB — over). Don't add animation libraries.
 
 ## 8. Responsive & accessibility
 

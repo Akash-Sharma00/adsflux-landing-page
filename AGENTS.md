@@ -16,7 +16,7 @@ self-hosted fonts at stable /fonts/ URLs (Instrument Serif, Space Grotesk, DM Sa
 |---|---|
 | `npm run dev` | Dev server (`/` home, `/brand` live brand reference) |
 | `npm run check` | Typecheck + lint — **must pass with zero warnings before you finish** |
-| `npm run build` | Typecheck + production build; prints gzip sizes (initial JS budget ≤ 120 KB; currently ~122 KB as a single `index` chunk — already over, so code-split anything new and trim before adding) |
+| `npm run build` | Typecheck + production build; prints gzip sizes (initial JS budget ≤ 120 KB; currently ~124 KB as a single `index` chunk — already over, so code-split anything new and trim before adding) |
 | `npm run preview` | Serve the build |
 | Deploy | Push to `main` — Vercel builds and deploys (config in `vercel.json`, see README → Deploy) |
 | `npm run assets` | Regenerate optimized image variants + `src/assets/generated/imageManifest.ts` from `assets/originals/` |
@@ -49,7 +49,7 @@ Visual reference of everything: run the app and open **`/brand`**.
 6. **Motion:** `m.*` not `motion.*`; GSAP only via `loadScrollTrigger()`; always respect reduced motion; no Lenis.
 7. **Dependencies point downward:** `app → pages → features → components/hooks → lib/config/styles`. Features never import each other. `@/` alias, named exports only.
 8. **Content truthfulness:** `src/features/showcase|work|testimonials|pricing/content.ts` is **SAMPLE**. Never present it as real client work; never invent metrics, quotes or names. Case-study outcomes only with verified data.
-9. **Imagery:** real assets via the pipeline and `src/assets/assetRegistry.ts` (see `docs/assets/ASSET_INVENTORY.md`), or `PlaceholderArt`. Never stock or generic AI illustrations. Never hand-place image files or edit `assets/originals/`.
+9. **Imagery:** real assets via the pipeline and `src/assets/assetRegistry.ts` (see `docs/assets/ASSET_INVENTORY.md`), or `PlaceholderArt`. Never generic AI illustrations. Stock only as the documented, licensed stand-ins in `src/assets/stockImages.ts` (services + SAMPLE work; never as client portraits or captioned as real work). Never hand-place image files or edit `assets/originals/`.
 
 ## SEO
 

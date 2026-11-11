@@ -1,11 +1,16 @@
-import { Stagger, StaggerItem } from '@/components/motion'
+import { Parallax, Stagger, StaggerItem } from '@/components/motion'
 import { AppLink, Badge, MediaFrame } from '@/components/ui'
 import { servicePath } from '@/config/routes'
 import { scalvoLinks } from '@/config/scalvo'
 import { serviceAnchorId, type Service } from '@/config/services'
 import { cn } from '@/lib/cn'
 import { lookForIndex } from '../looks'
+import { imageForService } from '../serviceImages'
 import styles from './ServiceModules.module.css'
+
+/** Small previews are a fixed 6–10rem square; wide/full previews take roughly a third of the grid. */
+const SMALL_PREVIEW_SIZES = '160px'
+const LARGE_PREVIEW_SIZES = '(min-width: 768px) 33vw, 160px'
 
 type ServiceModulesProps = {
   services: readonly Service[]
@@ -20,20 +25,30 @@ export function ServiceModules({ services }: ServiceModulesProps) {
     <Stagger as="ol" className={styles.grid}>
       {services.map((service, index) => {
         const look = lookForIndex(index)
+        const isLarge = look.size === 'wide' || look.size === 'full'
         return (
           <StaggerItem
             as="li"
             key={service.slug}
             id={serviceAnchorId(service.slug)}
-            className={cn(styles.module, styles[look.size], look.tone === 'cream' && styles.outlined)}
+            className={cn(
+              styles.module,
+              styles[look.size],
+              look.tone === 'cream' && styles.outlined,
+              look.tone === 'cobalt' && styles.liftAccent,
+            )}
           >
             <article data-theme={look.tone} className={cn(styles.inner, 'media-hover')}>
-              <span className={styles.number} aria-hidden="true">
-                {String(index + 1).padStart(2, '0')}
-              </span>
+              <Parallax distance={-40} className={styles.numberDrift}>
+                <span className={styles.number} aria-hidden="true">
+                  {String(index + 1).padStart(2, '0')}
+                </span>
+              </Parallax>
               <MediaFrame
                 className={styles.preview}
-                ratio={look.size === 'wide' || look.size === 'full' ? '4/3' : '1/1'}
+                ratio={isLarge ? '4/3' : '1/1'}
+                image={imageForService(service.slug)}
+                sizes={isLarge ? LARGE_PREVIEW_SIZES : SMALL_PREVIEW_SIZES}
                 art={look.art}
                 artTone={look.artTone}
               />

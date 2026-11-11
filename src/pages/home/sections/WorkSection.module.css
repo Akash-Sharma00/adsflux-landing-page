@@ -1,0 +1,4 @@
+/* Reserves roughly the loaded height (heading + three case studies) so anchors below don't jump while the chunk arrives. */
+.fallback {
+  min-height: 150rem;
+}

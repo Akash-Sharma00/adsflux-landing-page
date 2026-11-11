@@ -27,7 +27,9 @@ export function PhilosophySection() {
       </h2>
 
       <Container size="xl" className={styles.body}>
-        <Burst className={styles.burst} rays={12} spin />
+        <Parallax distance={-120} rotate={90} className={styles.burst}>
+          <Burst className={styles.burstGraphic} rays={12} spin />
+        </Parallax>
         <ScrollHighlightText
           className={styles.creed}
           text="Nobody wakes up wanting to see an ad. So we make work people choose to watch — and build the systems that turn that attention into growth you can measure."

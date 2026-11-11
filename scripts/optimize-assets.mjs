@@ -39,6 +39,21 @@ const posterJob = (id, name) => ({
   manifest: 'videoPosterManifest',
 })
 
+/**
+ * Licensed CC0 stock photo (assets/originals/stock/, provenance in assets/manifest.json → "stock"). Stand-in imagery
+ * for the service modules and the SAMPLE case studies until real photography exists. Own manifest
+ * (src/assets/stockImages.ts) so it is easy to remove in one place. Sources are 960px wide at most.
+ */
+const stockJob = (id, name, widths, crop) => ({
+  id,
+  source: `assets/originals/stock/${name}.jpg`,
+  group: 'stock',
+  name,
+  widths,
+  crop,
+  manifest: 'stockImageManifest',
+})
+
 /** One entry per derivative set. `crop` is in source pixels (applied before resizing). */
 const JOBS = [
   {
@@ -98,6 +113,21 @@ const JOBS = [
   scalvoJob('scalvoApprovalDark', 'scalvo-approval-card-dark', [260, 482]),
   scalvoJob('scalvoProgressLight', 'scalvo-progress-card-light', [240, 450]),
   scalvoJob('scalvoProgressDark', 'scalvo-progress-card-dark', [240, 450]),
+  // Stock stand-ins — service modules (square or 4:3 frames).
+  stockJob('stockCreatorPhone', 'creator-phone-sunglasses', [480, 960]),
+  stockJob('stockCinematographer', 'cinematographer-on-set', [480, 960]),
+  stockJob('stockPlanningWhiteboard', 'planning-whiteboard', [480, 960]),
+  stockJob('stockLaptopTopDown', 'laptop-top-down', [480, 960]),
+  stockJob('stockSketchingWireframes', 'sketching-app-wireframes', [480, 960]),
+  stockJob('stockFilmingOnPhone', 'filming-on-phone', [480, 960], { left: 0, top: 160, width: 960, height: 960 }),
+  stockJob('stockWritingNotebook', 'writing-in-notebook', [480, 960]),
+  stockJob('stockFilmCameraPhone', 'film-camera-and-smartphone', [480, 960]),
+  // Stock stand-ins — SAMPLE case studies.
+  stockJob('stockSerumPeach', 'serum-dropper-peach', [640, 960]),
+  stockJob('stockSerumPortrait', 'serum-dropper-portrait', [360, 720], { left: 120, top: 0, width: 720, height: 1280 }),
+  stockJob('stockPhoneViolet', 'phone-in-hand-violet', [512], { left: 240, top: 0, width: 512, height: 640 }),
+  stockJob('stockHandsPhone', 'hands-scrolling-phone', [320, 640], { left: 160, top: 0, width: 640, height: 640 }),
+  stockJob('stockHeadphonesMono', 'studio-headphones-mono', [640, 960]),
 ]
 
 const toHex = ({ r, g, b }) => '#' + [r, g, b].map((v) => v.toString(16).padStart(2, '0')).join('')

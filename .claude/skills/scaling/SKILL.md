@@ -13,7 +13,7 @@ appears — this file says what to reach for when it does.
 
 | Metric (mobile, 4G)            | Budget        |
 | ------------------------------ | ------------- |
-| Initial JS (gzip)              | ≤ 120 KB (currently ~122 KB in one `index` chunk — over; trim before adding more) |
+| Initial JS (gzip)              | ≤ 120 KB (currently ~124 KB in one `index` chunk — over; trim before adding more) |
 | Initial CSS (gzip)             | ≤ 20 KB       |
 | LCP                            | ≤ 2.5 s       |
 | CLS                            | ≤ 0.1         |

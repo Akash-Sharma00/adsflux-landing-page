@@ -76,6 +76,10 @@
   width: clamp(5rem, 3.5rem + 4vw, 8rem);
 }
 
+.stampGraphic {
+  width: 100%;
+}
+
 .caption {
   display: flex;
   flex-wrap: wrap;

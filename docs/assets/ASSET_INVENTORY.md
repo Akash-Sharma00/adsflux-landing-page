@@ -75,13 +75,22 @@ Captured on 2026-11-07 from the hero mock-up on https://www.scalvo.io/ (headless
 
 Registered in `src/assets/scalvoImages.ts` (generated manifest `scalvoImageManifest.ts`), not `assetRegistry.ts`, so the metadata ships only with the code-split section. Animated in `src/pages/home/sections/ScalvoScreens.tsx`: pieces slide in, cards float, and the dark layers wipe in piece by piece every ~4 s while on screen. A Light/Dark toggle stops the auto-switch; reduced motion never auto-switches.
 
+### Licensed stock stand-ins (services + SAMPLE work)
+
+Added 2026-11-11 at the owner's request, so these sections don't read as empty. 13 CC0 photos from StockSnap (fetched through the Openverse API, 960px max), originals in `assets/originals/stock/`, provenance (source page, creator, licence, sha1) in `assets/manifest.json` → `"stock"`, registered in `src/assets/stockImages.ts` (own manifest). They are **not** Adsflux or client work. Never caption them as a project, client or result, and never use stock faces as client portraits. Photos with visible brand logos were rejected.
+
+| Section | Images |
+|---|---|
+| Services (8 modules) | One per service, mapped by slug in `src/features/services/serviceImages.ts` |
+| Selected Work (SAMPLE) | Skincare hero + detail, fintech hero + detail, electronics hero (`src/features/work/content.ts`). The section is code-split (`WorkCaseStudies`) to keep the stock metadata out of the main chunk where possible |
+
+Replace them with real campaign photography as it arrives: swap the entry in `serviceImages.ts` / `content.ts`, then delete the unused stock files, jobs and manifest entries.
+
 ### Sections still using placeholder art (on purpose)
 
 | Section | Why |
 |---|---|
-| Services | No service-specific imagery. The hero collage already covers the services visually |
-| Selected Work | All six assets are already placed (one placement each), and case studies need confirmed client information. **Needs at least 3 more campaign images** |
-| Testimonials | No real client portraits or logos. Stock photography isn't allowed |
+| Testimonials | No real client portraits. Stock faces next to quotes would present strangers as endorsing Adsflux |
 
 ## Videos
 

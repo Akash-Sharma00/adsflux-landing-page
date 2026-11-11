@@ -12,17 +12,22 @@ export type ParallaxProps = {
   distance?: number
   /** y: vertical drift (default). x: horizontal drift — for opposing headline lines. */
   axis?: 'x' | 'y'
+  /**
+   * Degrees of rotation across the same pass, scrubbed with the drift — for decorative graphics (bursts, stamps)
+   * only, never text or imagery. Composes with a CSS spin, which animates the separate `rotate` property.
+   */
+  rotate?: number
   className?: string
 }
 
 /** Scroll-linked drift (GSAP ScrollTrigger, scrubbed, lazy-loaded). Static under reduced motion. */
-export function Parallax({ children, distance = 60, axis = 'y', className }: ParallaxProps) {
+export function Parallax({ children, distance = 60, axis = 'y', rotate = 0, className }: ParallaxProps) {
   const ref = useRef<HTMLDivElement>(null)
   const prefersReducedMotion = usePrefersReducedMotion()
 
   useEffect(() => {
     const element = ref.current
-    if (!element || prefersReducedMotion || distance === 0) return
+    if (!element || prefersReducedMotion || (distance === 0 && rotate === 0)) return
 
     let isCancelled = false
     let revert: (() => void) | undefined
@@ -32,9 +37,10 @@ export function Parallax({ children, distance = 60, axis = 'y', className }: Par
       const context = gsap.context(() => {
         gsap.fromTo(
           element,
-          { [axis]: -distance / 2 },
+          { [axis]: -distance / 2, rotation: -rotate / 2 },
           {
             [axis]: distance / 2,
+            rotation: rotate / 2,
             ease: 'none',
             scrollTrigger: { trigger: element, start: 'top bottom', end: 'bottom top', scrub: true },
           },
@@ -47,7 +53,7 @@ export function Parallax({ children, distance = 60, axis = 'y', className }: Par
       isCancelled = true
       revert?.()
     }
-  }, [prefersReducedMotion, distance, axis])
+  }, [prefersReducedMotion, distance, axis, rotate])
 
   return (
     <div ref={ref} className={className}>

@@ -90,7 +90,9 @@ export function ScalvoScreens() {
             </m.div>
           </Parallax>
         ))}
-        <Stamp className={styles.stamp} text="Scalvo • Brief • Review • Approve • " />
+        <Parallax distance={-70} rotate={-60} className={styles.stamp}>
+          <Stamp className={styles.stampGraphic} text="Scalvo • Brief • Review • Approve • " />
+        </Parallax>
       </m.div>
 
       <figcaption className={styles.caption}>

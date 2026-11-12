@@ -15,13 +15,27 @@ export const siteConfig = {
    * them public; empty fields are left out. Country is ISO 3166-1 alpha-2.
    */
   address: { locality: '', region: '', country: 'IN' },
+  /** WhatsApp chat: the floating button, footer and contact section, and `telephone` in structured data. */
+  whatsapp: {
+    display: '+91 97680 31600',
+    /** International format, digits only (wa.me and structured data). */
+    number: '919768031600',
+    /** Pre-filled first message. */
+    greeting: 'Hi Adsflux, I’d like to talk about a project.',
+  },
   /** Public contact email — set before launch. Rendered only when present. */
   email: '',
-  /** Social profiles. Leave href empty until the profile exists — empty ones render as "soon". */
+  /**
+   * Social profiles, shown with each platform's official logo. Leave href empty until the profile exists —
+   * empty ones render greyed out as "soon".
+   */
   socials: [
-    { label: 'Instagram', href: '' },
-    { label: 'LinkedIn', href: '' },
-    { label: 'YouTube', href: '' },
-    { label: 'Behance', href: '' },
+    { label: 'Instagram', platform: 'instagram', href: 'https://www.instagram.com/adsflux.in' },
+    { label: 'LinkedIn', platform: 'linkedin', href: '' },
+    { label: 'YouTube', platform: 'youtube', href: '' },
+    { label: 'Behance', platform: 'behance', href: '' },
   ],
 } as const
+
+/** Opens a WhatsApp chat with Adsflux (app on phones, WhatsApp Web on desktop), greeting pre-filled. */
+export const whatsappHref = `https://wa.me/${siteConfig.whatsapp.number}?text=${encodeURIComponent(siteConfig.whatsapp.greeting)}`

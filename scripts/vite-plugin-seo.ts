@@ -21,7 +21,7 @@ import { pathToFileURL } from 'node:url'
 import { build, type Plugin } from 'vite'
 import { homeAnchor, servicePath } from '../src/config/routes.ts'
 import { liveServices, services } from '../src/config/services.ts'
-import { siteConfig } from '../src/config/site.ts'
+import { siteConfig, whatsappHref } from '../src/config/site.ts'
 import {
   buildHeadTags,
   getAbsoluteUrl,
@@ -148,6 +148,7 @@ function renderLlmsTxt(): string {
     '',
     `- ${link('Start a project', homeAnchor('contact'))}: the enquiry form on the home page.`,
     ...(siteConfig.email ? [`- Email: ${siteConfig.email}`] : []),
+    `- WhatsApp: ${siteConfig.whatsapp.display} (${whatsappHref})`,
     '',
   ].join('\n')
 }

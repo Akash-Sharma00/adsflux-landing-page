@@ -1,6 +1,7 @@
-import { AppLink, ButtonLink, Container, Monogram, Wordmark } from '@/components/ui'
+import { AppLink, ButtonLink, Container, Monogram, PlatformLogo, Wordmark } from '@/components/ui'
 import { footerNav, primaryCta } from '@/config/navigation'
-import { siteConfig } from '@/config/site'
+import { siteConfig, whatsappHref } from '@/config/site'
+import { cn } from '@/lib/cn'
 import styles from './SiteFooter.module.css'
 
 const currentYear = new Date().getFullYear()
@@ -32,6 +33,10 @@ export function SiteFooter() {
                 Send us a brief
               </AppLink>
             )}
+            <AppLink href={whatsappHref} className={styles.whatsapp} aria-label={`WhatsApp ${siteConfig.whatsapp.display} (opens in a new tab)`}>
+              <PlatformLogo platform="whatsapp" className={styles.whatsappLogo} />
+              {siteConfig.whatsapp.display}
+            </AppLink>
             <p className={styles.meta}>{siteConfig.markets}</p>
           </div>
 
@@ -41,12 +46,16 @@ export function SiteFooter() {
               {siteConfig.socials.map((social) => (
                 <li key={social.label}>
                   {social.href ? (
-                    <AppLink href={social.href} className={styles.link}>
+                    <AppLink href={social.href} className={cn(styles.link, styles.socialLink)}>
+                      <PlatformLogo platform={social.platform} />
                       {social.label} ↗
                     </AppLink>
                   ) : (
-                    <span className={styles.pending}>
-                      {social.label} <span className={styles.soon}>soon</span>
+                    <span className={cn(styles.pending, styles.socialPending)}>
+                      <PlatformLogo platform={social.platform} />
+                      <span>
+                        {social.label} <span className={styles.soon}>soon</span>
+                      </span>
                     </span>
                   )}
                 </li>

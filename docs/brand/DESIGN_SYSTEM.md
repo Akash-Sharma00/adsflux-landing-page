@@ -223,6 +223,7 @@ Import primitives from `@/components/ui`, motion from `@/components/motion`, sec
 | `Dropdown` | Navigation disclosure | `label`, `items` ({label, href, description?}), `align` start·end (start), `columns` 1·2 (1) |
 | `Wordmark` | Breakout logo (frame + signal block + "adsflux") | `title` ('Adsflux'; pass `''` when decorative) + SVG props |
 | `Monogram` | Breakout mark on a tile | `variant` cobalt·cream·orange (cobalt), `title` |
+| `PlatformLogo` | A third-party platform's official logo (`public/platforms/<platform>.svg`, as `<img alt="">`, no JS cost): `instagram`·`linkedin`·`youtube`·`behance`·`whatsapp`. The one exception to the two-palette rule: shown in the owner's colours, never recoloured, only next to a link to that platform | `platform` + img props |
 
 `MediaFrame` details: `videoSrc` takes precedence over `src` and renders `AutoplayVideo` (looping, `playsInline`, `preload="none"`; autoplays muted only while ≥ 25% visible; play/pause + sound pill controls bottom-right; sound is opt-in and only one video is audible at a time; a viewer's pause sticks; never autoplays under reduced motion). `priority` loads an image eagerly with `fetchpriority="high"`; everything else is lazy.
 
@@ -248,6 +249,7 @@ Import primitives from `@/components/ui`, motion from `@/components/motion`, sec
 | `SiteHeader` | Sticky, opaque `--color-bg`, hairline border after 8px of scroll. Wordmark (signal block steps out on hover), mono-indexed nav `01 Services ▾ · 02 Showcase · 03 Work · 04 Philosophy` (Services is a two-column `Dropdown`), `ThemeToggle` at every width, small pill CTA from 640px, "Menu" pill below 1024px |
 | `ThemeToggle` | Light/dark switch (see *Colour mode*). Lives in the header only; the header stays visible above the mobile menu sheet |
 | `MobileMenu` | Full-screen **cobalt** sheet (`data-theme="cobalt"`), clip-path wipe down, serif links with `(01)` indexes, large CTA + markets line. Locks page scroll; Escape and navigation close it |
+| `WhatsAppButton` | Floating round button, bottom-right on every page (rendered by `RootLayout`): the official WhatsApp logo (`PlatformLogo`), 3.5rem / 4rem from 768px, hard offset shadow in the text colour. Opens `whatsappHref` (`src/config/site.ts`: number + pre-filled greeting). The footer's bottom padding clears it |
 | `SiteFooter` | **Soft-blue** signature (`data-theme="blue"`): large wordmark + manifesto + CTA, then Contact, Social ("soon" until URLs exist), Studio and Services nav, colophon with monogram and "Back to top" |
 | `ScrollManager` | Scroll to top on new path; scroll to `#hash` targets (retries a frame for lazy routes) |
 

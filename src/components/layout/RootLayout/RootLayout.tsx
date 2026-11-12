@@ -3,9 +3,10 @@ import { Outlet } from 'react-router'
 import { ScrollManager } from '../ScrollManager'
 import { SiteFooter } from '../SiteFooter'
 import { SiteHeader } from '../SiteHeader'
+import { WhatsAppButton } from '../WhatsAppButton'
 import styles from './RootLayout.module.css'
 
-/** App shell shared by every route: skip link, header, main landmark, footer. */
+/** App shell shared by every route: skip link, header, main landmark, footer, floating WhatsApp button. */
 export function RootLayout() {
   return (
     <div id="top" className={styles.shell}>
@@ -19,6 +20,7 @@ export function RootLayout() {
         </Suspense>
       </main>
       <SiteFooter />
+      <WhatsAppButton />
       <ScrollManager />
     </div>
   )

@@ -1,6 +1,7 @@
 .footer {
   padding-top: var(--section-space-md);
-  padding-bottom: var(--space-8);
+  /* Clears the floating WhatsApp button (4rem + its offset), so "Back to top" is never covered. */
+  padding-bottom: calc(4rem + var(--space-6) + var(--space-6));
 }
 
 /* Signature: wordmark + manifesto + CTA, set like a magazine masthead. */
@@ -58,6 +59,33 @@
   font-size: var(--text-2xl);
   font-style: italic;
   line-height: 1.1;
+}
+
+.whatsapp {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  justify-self: start;
+  font-family: var(--font-heading);
+  font-weight: var(--weight-medium);
+}
+
+.whatsappLogo {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+/* Social rows: official platform logo + label. Profiles not live yet keep a greyed-out logo. */
+.socialLink,
+.socialPending {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.socialPending img {
+  filter: grayscale(1);
+  opacity: 0.45;
 }
 
 .meta {

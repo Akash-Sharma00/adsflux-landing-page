@@ -1,7 +1,7 @@
 import { Reveal, TextReveal } from '@/components/motion'
-import { Burst, Container, Eyebrow, Section } from '@/components/ui'
+import { AppLink, Burst, Container, Eyebrow, PlatformLogo, Section } from '@/components/ui'
 import { homeSections } from '@/config/routes'
-import { siteConfig } from '@/config/site'
+import { siteConfig, whatsappHref } from '@/config/site'
 import { ContactForm } from '@/features/contact'
 import styles from './ContactSection.module.css'
 
@@ -35,6 +35,12 @@ export function ContactSection() {
                 {siteConfig.email}
               </a>
             )}
+            <AppLink href={whatsappHref} className={styles.whatsapp} aria-label={`WhatsApp us on ${siteConfig.whatsapp.display} (opens in a new tab)`}>
+              <PlatformLogo platform="whatsapp" className={styles.whatsappLogo} />
+              <span>
+                Or WhatsApp us <span className={styles.whatsappNumber}>{siteConfig.whatsapp.display}</span>
+              </span>
+            </AppLink>
             <ol className={styles.steps}>
               {NEXT_STEPS.map((step, index) => (
                 <li key={step}>

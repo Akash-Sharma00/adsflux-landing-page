@@ -56,6 +56,25 @@
   font-style: italic;
 }
 
+.whatsapp {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  justify-self: start;
+  font-family: var(--font-heading);
+  font-size: var(--text-lg);
+  font-weight: var(--weight-medium);
+}
+
+.whatsappLogo {
+  width: 2rem;
+  height: 2rem;
+}
+
+.whatsappNumber {
+  white-space: nowrap;
+}
+
 .steps {
   display: grid;
   gap: var(--space-3);

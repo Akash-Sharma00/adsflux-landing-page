@@ -219,6 +219,7 @@ function buildOrganization(): JsonLdNode {
     slogan: siteConfig.positioning,
     description: siteConfig.description,
     ...(siteConfig.email ? { email: siteConfig.email } : {}),
+    telephone: `+${siteConfig.whatsapp.number}`,
     areaServed: ['India', 'Worldwide'],
     knowsAbout: liveServices.map((service) => service.title),
     hasOfferCatalog: {

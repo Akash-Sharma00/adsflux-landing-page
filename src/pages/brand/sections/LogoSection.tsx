@@ -6,9 +6,9 @@ import { SpecHeading } from './SpecHeading'
 import styles from './LogoSection.module.css'
 
 const WORDMARK_TILES: readonly { tone: SectionTone; caption: string; className?: string }[] = [
-  { tone: 'cream', caption: 'On cream — ink letters, orange burst', className: styles.tileLead },
-  { tone: 'cobalt', caption: 'On cobalt — cream letters, orange burst', className: styles.tileSide },
-  { tone: 'ink', caption: 'On ink — cream letters, orange burst', className: styles.tileSide },
+  { tone: 'cream', caption: 'On cream — ink frame and letters, orange block', className: styles.tileLead },
+  { tone: 'cobalt', caption: 'On cobalt — cream frame and letters, orange block', className: styles.tileSide },
+  { tone: 'ink', caption: 'On ink — cream frame and letters, orange block', className: styles.tileSide },
 ]
 
 const MONOGRAMS: readonly { variant: MonogramVariant; use: string }[] = [
@@ -23,10 +23,10 @@ export function LogoSection() {
       id="logo"
       title={
         <>
-          A wordmark with a <em>signal.</em>
+          A frame you <em>can’t contain.</em>
         </>
       }
-      description="Instrument Serif “Ads” roman + “flux” italic, drawn as outlines, with the orange burst. Colors follow the tone automatically."
+      description="Breakout: an orange signal block breaking out of a sharp frame, then “adsflux” in Space Grotesk Bold, drawn as outlines. Colors follow the tone automatically."
     >
       <div className={styles.tiles}>
         {WORDMARK_TILES.map((tile) => (

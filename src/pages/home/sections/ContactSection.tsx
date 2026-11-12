@@ -16,12 +16,12 @@ export function ContactSection() {
         <h2 className={styles.headline}>
           <span className="visually-hidden">Have something worth making noise about?</span>
           <span aria-hidden="true">
-            <TextReveal as="span" text="Have something worth" className={styles.line} />
+            <TextReveal as="span" text="Have something worth" hasScreenReaderCopy={false} className={styles.line} />
             <span className={styles.line}>
               <em>
-                <TextReveal as="span" text="making noise" delay={0.2} />
+                <TextReveal as="span" text="making noise" delay={0.2} hasScreenReaderCopy={false} />
               </em>{' '}
-              <TextReveal as="span" text="about?" delay={0.35} />
+              <TextReveal as="span" text="about?" delay={0.35} hasScreenReaderCopy={false} />
               <Burst className={styles.burst} spin />
             </span>
           </span>

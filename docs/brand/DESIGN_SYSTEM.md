@@ -71,7 +71,7 @@ Flow: **tokens → primitives → compositions**. Never skip a level.
 | `--color-cta-bg` / `-text` | Cobalt / Cream | Cobalt / Cream | Ink / Cream | Cream / Ink | Ink / Cream | Orange / Ink |
 | `--color-cta-bg-hover` / `-text-hover` | Orange / Ink | Ink / Cream | Cobalt / Cream | Orange / Ink | Cobalt / Cream | Cream / Ink |
 | `--color-logo-mark` | Ink | Ink | Ink | Cream | Ink | Cream |
-| `--color-logo-burst` | Orange | Orange | Cobalt | Orange | Ink | Orange |
+| `--color-logo-signal` | Orange | Orange | Cobalt | Orange | Ink | Orange |
 | `--color-danger` | `#B42318` | `#B42318` | Ink (`#B42318` is only 3.70:1 on peach) | `#FFD2C4` | Ink | Orange |
 | `--texture-opacity` | 0.35 | 0.25 | 0.30 | 0.18 | 0.25 | 0.12 |
 | `color-scheme` | light | light | light | dark | light | dark |
@@ -90,7 +90,7 @@ Flow: **tokens → primitives → compositions**. Never skip a level.
 | `--color-focus` | Electric ink | Electric ink | Peach | Cream | Midnight | Ember |
 | `--color-cta-bg` / `-text` | Cobalt / Cream | Cobalt / Cream | Cream / Midnight | Cream / Midnight | Midnight / Cream | Ember / Ink |
 | `--color-cta-bg-hover` / `-text-hover` | Ember / Midnight | Cream / Midnight | Cobalt / Cream | Ember / Midnight | Cobalt / Cream | Cream / Ink |
-| `--color-logo-mark` / `-burst` | Cream / Ember | Cream / Ember | Cream / Ember | Cream / Ember | Midnight / Midnight | Cream / Ember |
+| `--color-logo-mark` / `-signal` | Cream / Ember | Cream / Ember | Cream / Ember | Cream / Ember | Midnight / Midnight | Cream / Ember |
 | `--texture-blend` / `-opacity` | screen / 0.10 | screen / 0.10 | screen / 0.10 | multiply / 0.18 | multiply / 0.20 | screen / 0.08 |
 | `color-scheme` | dark | dark | dark | dark | light | dark |
 
@@ -190,7 +190,7 @@ All sizes from `lg` upward are fluid `clamp()` values. **Don't add breakpoints j
 |---|---|---|
 | `--duration-fast` 150ms | `DURATION.fast` | Colour/opacity on hover, press |
 | `--duration-base` 280ms | `DURATION.base` | Buttons, chips, borders |
-| `--duration-slow` 600ms | `DURATION.slow` | Arrow/burst rotation, menu wipe, collage lift |
+| `--duration-slow` 600ms | `DURATION.slow` | Arrow/burst rotation, logo block nudge, menu wipe, collage lift |
 | `--duration-reveal` 1000ms | `DURATION.reveal` | Entrances, media zoom |
 | `--ease-out-expo` | `EASE_OUT_EXPO`, `GSAP_EASE` (`expo.out`) | Entrances, arrows, reveals |
 | `--ease-standard` | `EASE_STANDARD` | Everything else |
@@ -221,8 +221,8 @@ Import primitives from `@/components/ui`, motion from `@/components/motion`, sec
 | `PlaceholderArt` | Art-directed stand-in for photography (used by `MediaFrame`) | `variant` sun·arch·stripes·halftone·burst·stack, `tone` (any of the six), `label`, `meta`, `isVideo` |
 | `Field` + `Input` / `Textarea` / `Select` | Accessible form field, editorial underline inputs | `label`, `hint`, `error`, `required`; render-prop child `{(p) => <Input {...p} />}` |
 | `Dropdown` | Navigation disclosure | `label`, `items` ({label, href, description?}), `align` start·end (start), `columns` 1·2 (1) |
-| `Wordmark` | Logo | `title` ('Adsflux'; pass `''` when decorative) + SVG props |
-| `Monogram` | Logo tile | `variant` cobalt·cream·orange (cobalt), `title` |
+| `Wordmark` | Breakout logo (frame + signal block + "adsflux") | `title` ('Adsflux'; pass `''` when decorative) + SVG props |
+| `Monogram` | Breakout mark on a tile | `variant` cobalt·cream·orange (cobalt), `title` |
 
 `MediaFrame` details: `videoSrc` takes precedence over `src` and renders `AutoplayVideo` (looping, `playsInline`, `preload="none"`; autoplays muted only while ≥ 25% visible; play/pause + sound pill controls bottom-right; sound is opt-in and only one video is audible at a time; a viewer's pause sticks; never autoplays under reduced motion). `priority` loads an image eagerly with `fetchpriority="high"`; everything else is lazy.
 
@@ -245,7 +245,7 @@ Import primitives from `@/components/ui`, motion from `@/components/motion`, sec
 |---|---|
 | `CtaSection` (`@/components/sections`) | Typography-led closing block: serif statement (use `<em>`), one primary + optional secondary `ButtonLink`, spinning 12-ray burst. `title`, `eyebrow`, `description`, `primaryAction`, `secondaryAction`, `tone` cobalt·orange·peach·blue (cobalt), `id`. Always `spacing="lg"` + texture |
 | `RootLayout` | Skip link → `SiteHeader` → `main#main` with `<Suspense>` → `SiteFooter` → `ScrollManager` |
-| `SiteHeader` | Sticky, opaque `--color-bg`, hairline border after 8px of scroll. Wordmark (burst rotates 45° on hover), mono-indexed nav `01 Services ▾ · 02 Showcase · 03 Work · 04 Philosophy` (Services is a two-column `Dropdown`), `ThemeToggle` at every width, small pill CTA from 640px, "Menu" pill below 1024px |
+| `SiteHeader` | Sticky, opaque `--color-bg`, hairline border after 8px of scroll. Wordmark (signal block steps out on hover), mono-indexed nav `01 Services ▾ · 02 Showcase · 03 Work · 04 Philosophy` (Services is a two-column `Dropdown`), `ThemeToggle` at every width, small pill CTA from 640px, "Menu" pill below 1024px |
 | `ThemeToggle` | Light/dark switch (see *Colour mode*). Lives in the header only; the header stays visible above the mobile menu sheet |
 | `MobileMenu` | Full-screen **cobalt** sheet (`data-theme="cobalt"`), clip-path wipe down, serif links with `(01)` indexes, large CTA + markets line. Locks page scroll; Escape and navigation close it |
 | `SiteFooter` | **Soft-blue** signature (`data-theme="blue"`): large wordmark + manifesto + CTA, then Contact, Social ("soon" until URLs exist), Studio and Services nav, colophon with monogram and "Back to top" |
@@ -318,7 +318,7 @@ Data for nav and footer comes from `@/config/navigation` (`mainNav`, `primaryCta
 | Scroll storytelling | `<ScrollHighlightText>` for one manifesto passage |
 | Ticker | `<Marquee items>` inside an orange band |
 | Video creatives | `MediaFrame videoSrc + poster` |
-| Hover | CSS transitions with motion tokens: arrow chip and logo burst turn 45°, underline thickens, media zooms 1.045 (`.media-hover`), collage pieces lift with an offset shadow, service numbers turn italic |
+| Hover | CSS transitions with motion tokens: arrow chip turns 45°, logo signal block steps out, underline thickens, media zooms 1.045 (`.media-hover`), collage pieces lift with an offset shadow, service numbers turn italic |
 | Ambient | `Burst spin` and `Stamp` rotate slowly (24s / 22s loops). One or two per view |
 
 **Technology**

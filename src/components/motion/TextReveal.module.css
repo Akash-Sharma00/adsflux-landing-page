@@ -7,7 +7,47 @@
   vertical-align: top;
 }
 
+/* The word's text comes from data-word, so the sentence appears once in the markup (the screen-reader copy). */
 .word {
   display: inline-block;
+  /* 125% clears the mask's descender padding so no glyph tops peek through before the reveal. */
+  transform: translateY(125%);
+}
+
+.word::before {
+  content: attr(data-word);
+}
+
+/* Word position → stagger. Masks are the only element siblings, so nth-of-type is the word index. */
+.mask:nth-of-type(2) { --word-index: 1; }
+.mask:nth-of-type(3) { --word-index: 2; }
+.mask:nth-of-type(4) { --word-index: 3; }
+.mask:nth-of-type(5) { --word-index: 4; }
+.mask:nth-of-type(6) { --word-index: 5; }
+.mask:nth-of-type(7) { --word-index: 6; }
+.mask:nth-of-type(8) { --word-index: 7; }
+.mask:nth-of-type(n + 9) { --word-index: 8; }
+
+.isPlaying .word {
   will-change: transform;
+  animation: word-rise var(--duration-reveal) var(--ease-out-expo) both;
+  animation-delay: calc(var(--reveal-delay, 0s) + var(--word-index, 0) * var(--reveal-step, 0.06s));
+}
+
+@keyframes word-rise {
+  from {
+    transform: translateY(125%);
+  }
+
+  to {
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .word,
+  .isPlaying .word {
+    transform: none;
+    animation: none;
+  }
 }

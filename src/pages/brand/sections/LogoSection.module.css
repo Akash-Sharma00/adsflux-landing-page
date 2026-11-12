@@ -44,7 +44,7 @@
 
 /* One-color version: the burst takes the letter color. */
 .monoMark {
-  --color-logo-burst: var(--color-logo-mark);
+  --color-logo-signal: var(--color-logo-mark);
 
   width: min(100%, 16rem);
   height: auto;

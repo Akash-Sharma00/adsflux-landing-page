@@ -22,7 +22,7 @@ self-hosted fonts at stable /fonts/ URLs (Instrument Serif, Space Grotesk, DM Sa
 | `npm run assets` | Regenerate optimized image variants + `src/assets/generated/imageManifest.ts` from `assets/originals/` |
 | `npm run videos` | Cut the showcase reels (12 s muted 720×1280 H.264, ≤ 4 MB each, HDR → SDR) from `assets/originals/video/` into `public/assets/video/` + poster frames; then `npm run assets` for the posters. Needs ffmpeg |
 | `python3 scripts/derive-hero-cutout.py` | Regenerate `assets/derived/adsflux-services-cutout.png` + per-piece clip outlines from the collage original (needs numpy, opencv-python-headless, pillow); then `npm run assets` |
-| `python3 scripts/build-logo.py` | Regenerate the wordmark outlines (`src/components/ui/Logo/geometry.ts` + `public/brand/*-wordmark-*.svg`) from the Instrument Serif font files (needs fonttools); then `npm run icons` |
+| `python3 scripts/build-logo.py` | Regenerate the Breakout logo (`src/components/ui/Logo/geometry.ts`, all `public/brand/*.svg`, `public/favicon.svg`) from the Space Grotesk font file (needs fonttools + brotli); then `npm run icons` |
 | `npm run icons` | Regenerate the social card `public/og/adsflux-og.png` + PNG logo/apple-touch icons from the logo SVGs |
 | `npm run fonts` | Regenerate `public/fonts/` + `src/styles/fonts.css` (after upgrading a `@fontsource` package) |
 
@@ -79,4 +79,4 @@ docs/brand/         brand guidelines, design system, logo guidelines
 
 ## Before launch
 
-Review the service-page copy (`src/pages/service/serviceContent.ts`); redirect the apex domain to `www.adsflux.in` in Vercel; verify the domain in Google Search Console and submit `/sitemap.xml`; set `siteConfig.email` and social URLs in `src/config/site.ts`; confirm Scalvo ships a dark theme (the Scalvo mock-up's dark layers are rendered from Scalvo's CSS tokens, `src/assets/scalvoImages.ts`); set `VITE_CONTACT_ENDPOINT`; replace all SAMPLE content with approved work; hosting is Vercel (`vercel.json`): it serves `dist/<route>/index.html` per route and `dist/404.html` for unknown URLs — keep it that way (no SPA catch-all rewrite).
+Review the service-page copy (`src/pages/service/serviceContent.ts`); redirect the apex domain to `www.adsflux.in` in Vercel; verify the domain in Google Search Console and submit `/sitemap.xml`; set `siteConfig.email` and social URLs in `src/config/site.ts`; confirm Scalvo ships a dark theme (the Scalvo mock-up's dark layers are rendered from Scalvo's CSS tokens, `src/assets/scalvoImages.ts`); set `VITE_CONTACT_ENDPOINT`; optionally set `VITE_GA_MEASUREMENT_ID` / `VITE_META_PIXEL_ID` (analytics, `scripts/vite-plugin-analytics.ts`) and the city/state in `siteConfig.address`; add SPF + DMARC DNS records for the domain; replace all SAMPLE content with approved work; hosting is Vercel (`vercel.json`): it serves `dist/<route>/index.html` per route and `dist/404.html` for unknown URLs — keep it that way (no SPA catch-all rewrite).

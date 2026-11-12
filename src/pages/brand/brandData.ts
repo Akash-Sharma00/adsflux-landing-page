@@ -217,14 +217,14 @@ export const typeScale: readonly TypeStep[] = [
 export const logoDos = [
   'Use the outlined SVG — it never depends on font loading.',
   'Let the tone pick the colors: ink on light tones, cream on cobalt and ink.',
-  'Keep clear space of at least the height of the “a” on every side.',
-  'Below 72px wide, switch to the monogram tile.',
+  'Keep clear space of at least the signal block’s width on every side.',
+  'Below 96px wide, switch to the monogram tile.',
 ] as const
 
 export const logoDonts = [
-  'Retype “Adsflux” in Instrument Serif or any other font.',
-  'Stretch, skew, rotate or re-space the letters.',
-  'Recolor the burst outside the tone pairs shown here.',
+  'Retype “adsflux” in Space Grotesk or any other font.',
+  'Stretch, skew, rotate or re-space the letters, or move the block back inside the frame.',
+  'Recolor the signal block outside the tone pairs shown here.',
   'Add effects — shadows, glows, outlines, gradients.',
   'Place it on busy imagery; use a solid band or the monogram.',
 ] as const
@@ -263,7 +263,7 @@ export const artSamples: readonly ArtSample[] = [
 export const motionTokens = [
   { token: '--duration-fast', value: '150ms', use: 'Hover color, underline' },
   { token: '--duration-base', value: '280ms', use: 'Buttons, dropdown panel' },
-  { token: '--duration-slow', value: '600ms', use: 'Arrow spin, burst turn, lift' },
+  { token: '--duration-slow', value: '600ms', use: 'Arrow spin, logo nudge, lift' },
   { token: '--duration-reveal', value: '1000ms', use: 'Entrances, image wipes' },
   { token: '--ease-out-expo', value: 'cubic-bezier(0.16, 1, 0.3, 1)', use: 'Everything that arrives' },
   { token: '--ease-standard', value: 'cubic-bezier(0.2, 0, 0, 1)', use: 'State changes' },

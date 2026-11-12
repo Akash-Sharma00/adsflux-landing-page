@@ -1,17 +1,17 @@
 """
-Outlines the wordmark from the Instrument Serif font files (never live text).
-  python3 scripts/build-logo.py            (needs fonttools: pip install fonttools)
+Builds the Adsflux "Breakout" logo: every vector logo file comes from here (never hand-edit them).
+  python3 scripts/build-logo.py            (needs fonttools + brotli: pip install fonttools brotli)
   python3 scripts/build-logo.py --check    (prints the geometry, writes nothing)
 
-Construction (see docs/brand/LOGO_GUIDELINES.md):
-  - ROMAN part in Instrument Serif 400 roman, ITALIC part in 400 italic, 1000-unit em at scale 0.1 on a y=100
-    baseline; tracking -1.5 between glyphs, the font's own kerning, +1.0 where roman turns italic.
-  - An eight-ray signal burst (outer radius 12, inner 4.2) whose top sits on the cap height, 5.5 units right of
-    the last letter's ink.
-Writes the WORDMARK_* constants in src/components/ui/Logo/geometry.ts (the monogram is left as is) and the four
-wordmark SVGs in public/brand/. Then run `npm run icons` to re-render the PNG exports.
+Construction (see docs/brand/LOGO_GUIDELINES.md), in a 50-unit mark:
+  - FRAME: a square outline (40 × 40, stroke 7) whose top-right corner is cut open.
+  - SIGNAL: a solid 24 × 24 block breaking out through that corner, 3 units clear of the frame.
+  - WORDMARK: the mark, then "adsflux" in Space Grotesk Bold, outlined from the font file. The letters sit on
+    the frame's bottom edge; their ascender height matches the frame's top edge. 14 units between mark and text.
+  - MONOGRAM: the mark alone, centred on a 64 × 64 tile.
+Writes src/components/ui/Logo/geometry.ts, public/brand/adsflux-{wordmark,monogram}-*.svg and public/favicon.svg.
+Then run `npm run icons` to re-render the PNG exports (social card, 512 px monogram, apple-touch icon).
 """
-import math
 import re
 import sys
 from pathlib import Path
@@ -20,37 +20,65 @@ from fontTools.pens.boundsPen import BoundsPen
 from fontTools.pens.svgPathPen import SVGPathPen
 from fontTools.pens.transformPen import TransformPen
 from fontTools.ttLib import TTFont
+from fontTools.varLib import instancer
 
-ROMAN = 'Ads'
-ITALIC = 'flux'
-NAME = ROMAN + ITALIC
+NAME = 'Adsflux'
+TEXT = 'adsflux'
 SLUG = NAME.lower()
 
 ROOT = Path(__file__).resolve().parent.parent
-FONTS = ROOT / 'node_modules/@fontsource/instrument-serif/files'
+FONT = ROOT / 'node_modules/@fontsource-variable/space-grotesk/files/space-grotesk-latin-wght-normal.woff2'
 GEOMETRY = ROOT / 'src/components/ui/Logo/geometry.ts'
 TOKENS = ROOT / 'src/styles/tokens.css'
 
-SCALE = 0.1
-BASELINE = 100
-TRACKING = -1.5
-STYLE_SWITCH_GAP = 1.0
-BURST_OUTER, BURST_INNER, BURST_GAP = 12, 4.2, 5.5
-CAP_TOP = BASELINE - 73  # cap height 730 units
-PAD_X, VIEW_Y, VIEW_H = 1.8, 23, 80
+WEIGHT = 700
+MARK_SIZE = 50
+FRAME_TOP, FRAME_RIGHT, FRAME_STROKE = 10, 40, 7
+SIGNAL_LEFT, SIGNAL_SIZE = 26, 24
+BASELINE = MARK_SIZE  # letters stand on the frame's bottom edge
+TEXT_GAP = 14
+TRACKING = -0.03  # × font size
+PAD = 2
+TILE = 64
 
-# Variant → (letters colour token, burst colour token). Mirrors LOGO_GUIDELINES.md "Assets".
+# Variant → (mark colour token, signal colour token). Mirrors LOGO_GUIDELINES.md "Assets".
 WORDMARK_SVGS = {
     'ink': ('ink', 'orange'),
     'cream': ('cream', 'orange'),
     'cobalt': ('cobalt', 'orange'),
     'mono-ink': ('ink', 'ink'),
 }
+# Variant → (tile, mark, signal).
+MONOGRAM_SVGS = {
+    'cobalt': ('cobalt', 'cream', 'orange'),
+    'cream': ('cream', 'ink', 'orange'),
+    'orange': ('orange', 'ink', 'ink'),
+}
 
 
 def fmt(value: float) -> str:
-    text = f'{value:.2f}'
-    return text[:-3] if text.endswith('.00') else text
+    text = f'{value:.2f}'.rstrip('0').rstrip('.')
+    return '0' if text in ('-0', '') else text
+
+
+def polygon(points, dx=0.0, dy=0.0) -> str:
+    return 'M' + 'L'.join(f'{fmt(x + dx)} {fmt(y + dy)}' for x, y in points) + 'Z'
+
+
+def frame_path(dx=0.0, dy=0.0) -> str:
+    """The frame, open at the top-right where the signal breaks out (3 units of clearance)."""
+    s, top, right = FRAME_STROKE, FRAME_TOP, FRAME_RIGHT
+    cut_x, cut_y = SIGNAL_LEFT - 3, SIGNAL_SIZE + 3
+    return polygon(
+        [(0, top), (cut_x, top), (cut_x, top + s), (s, top + s), (s, MARK_SIZE - s), (right - s, MARK_SIZE - s),
+         (right - s, cut_y), (right, cut_y), (right, MARK_SIZE), (0, MARK_SIZE)],
+        dx, dy,
+    )
+
+
+def signal_path(dx=0.0, dy=0.0) -> str:
+    x0, size = SIGNAL_LEFT, SIGNAL_SIZE
+    return polygon([(x0, 0), (x0 + size, 0), (x0 + size, size), (x0, size)], dx, dy)
 
 
 def kerning(font: TTFont, left: str, right: str) -> int:
@@ -78,70 +106,82 @@ def kerning(font: TTFont, left: str, right: str) -> int:
 
 
 def outline_letters():
-    fonts = {style: TTFont(FONTS / f'instrument-serif-latin-400-{style}.woff') for style in ('normal', 'italic')}
-    runs = [('normal', ch) for ch in ROMAN] + [('italic', ch) for ch in ITALIC]
-    pen_x, paths, right_edge, previous = 0.0, [], 0.0, None
-    for style, char in runs:
-        font = fonts[style]
-        glyph_set, glyph = font.getGlyphSet(), font.getBestCmap()[ord(char)]
-        if previous is not None:
-            prev_style, prev_glyph = previous
-            pen_x += TRACKING
-            if prev_style == style:
-                pen_x += kerning(font, prev_glyph, glyph) * SCALE
-            else:
-                pen_x += STYLE_SWITCH_GAP
-        svg_pen = SVGPathPen(glyph_set, ntos=fmt)
-        glyph_set[glyph].draw(TransformPen(svg_pen, (SCALE, 0, 0, -SCALE, pen_x, BASELINE)))
-        paths.append(svg_pen.getCommands())
-        bounds_pen = BoundsPen(glyph_set)
-        glyph_set[glyph].draw(bounds_pen)
-        if bounds_pen.bounds:
-            right_edge = max(right_edge, pen_x + bounds_pen.bounds[2] * SCALE)
-        pen_x += font['hmtx'][glyph][0] * SCALE
-        previous = (style, glyph)
-    return ''.join(paths), right_edge
+    """'adsflux' outlined at the size where the ascender of 'd' reaches the frame's top edge. → (d, right edge)."""
+    font = instancer.instantiateVariableFont(TTFont(FONT), {'wght': WEIGHT})
+    glyphs, cmap, hmtx = font.getGlyphSet(), font.getBestCmap(), font['hmtx']
+    ascender = BoundsPen(glyphs)
+    glyphs[cmap[ord('d')]].draw(ascender)
+    size = (BASELINE - FRAME_TOP) / ascender.bounds[3] * font['head'].unitsPerEm
+    scale = size / font['head'].unitsPerEm
+
+    # Start so the first letter's ink (not its side bearing) begins exactly TEXT_GAP after the mark.
+    first = BoundsPen(glyphs)
+    glyphs[cmap[ord(TEXT[0])]].draw(first)
+    pen, bounds = SVGPathPen(glyphs, fmt), BoundsPen(glyphs)
+    cursor, previous = MARK_SIZE + TEXT_GAP - first.bounds[0] * scale, None
+    for char in TEXT:
+        glyph = cmap[ord(char)]
+        if previous:
+            cursor += kerning(font, previous, glyph) * scale + TRACKING * size
+        for target in (pen, bounds):
+            glyphs[glyph].draw(TransformPen(target, (scale, 0, 0, -scale, cursor, BASELINE)))
+        cursor += hmtx[glyph][0] * scale
+        previous = glyph
+    return pen.getCommands(), bounds.bounds
 
 
-def burst(cx: float, cy: float) -> str:
-    points = []
-    for i in range(16):
-        radius = BURST_OUTER if i % 2 == 0 else BURST_INNER
-        angle = -math.pi / 2 + i * math.pi / 8
-        points.append(f'{cx + radius * math.cos(angle):.2f} {cy + radius * math.sin(angle):.2f}')
-    return 'M' + 'L'.join(points) + 'Z'
+def svg(viewbox: str, body: str) -> str:
+    return (
+        f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="{viewbox}" role="img" aria-label="{NAME}">'
+        f'<title>{NAME}</title>{body}</svg>\n'
+    )
 
 
 def main():
-    letters, right_edge = outline_letters()
-    cx = right_edge + BURST_GAP + BURST_OUTER
-    cy = CAP_TOP + 0.7 + BURST_OUTER
-    burst_path = burst(cx, cy)
-    view_min_x = -3
-    view_width = math.ceil(cx + BURST_OUTER + PAD_X - view_min_x)
-    viewbox = f'{view_min_x} {VIEW_Y} {view_width} {VIEW_H}'
-    print(f'{NAME}: ink right edge {right_edge:.2f}, burst centre ({cx:.2f}, {cy:.2f}), viewBox "{viewbox}"')
+    letters, (_, _, right, _) = outline_letters()
+    width = right
+    wordmark_viewbox = f'{-PAD} {-PAD} {fmt(width + PAD * 2)} {MARK_SIZE + PAD * 2}'
+    wordmark_mark = frame_path() + letters
+    wordmark_signal = signal_path()
+    inset = (TILE - MARK_SIZE) / 2
+    monogram_frame = frame_path(inset, inset)
+    monogram_signal = signal_path(inset, inset)
+
     if '--check' in sys.argv:
+        print('viewBox', wordmark_viewbox, '· aspect', round((width + PAD * 2) / (MARK_SIZE + PAD * 2), 3))
         return
 
-    source = GEOMETRY.read_text()
-    source = re.sub(r'Outlined Instrument Serif geometry for the \w+ logo \([^)]*\)',
-                    f'Outlined Instrument Serif geometry for the {NAME} logo ("{ROMAN}" roman + "{ITALIC}" italic + signal burst)',
-                    source)
-    source = re.sub(r'Generated once from the font files', 'Generated from the font files by scripts/build-logo.py', source)
-    source = re.sub(r'WORDMARK_VIEWBOX = "[^"]*"', f'WORDMARK_VIEWBOX = "{viewbox}"', source)
-    source = re.sub(r'WORDMARK_LETTERS = "[^"]*"', f'WORDMARK_LETTERS = "{letters}"', source)
-    source = re.sub(r'WORDMARK_BURST = "[^"]*"', f'WORDMARK_BURST = "{burst_path}"', source)
-    GEOMETRY.write_text(source)
+    GEOMETRY.write_text(
+        '/**\n'
+        ' * Adsflux "Breakout" logo geometry: the frame, the signal block breaking out of its corner, and "adsflux"\n'
+        ' * outlined from Space Grotesk Bold. Generated by scripts/build-logo.py (mirrored in public/brand/*.svg and\n'
+        ' * public/favicon.svg). Do not hand-edit.\n'
+        ' */\n'
+        f'export const WORDMARK_VIEWBOX = "{wordmark_viewbox}"\n'
+        '/** Frame + letters (mark colour). */\n'
+        f'export const WORDMARK_MARK = "{wordmark_mark}"\n'
+        '/** The block (signal colour). */\n'
+        f'export const WORDMARK_SIGNAL = "{wordmark_signal}"\n\n'
+        '/** 64 × 64 tile: the mark alone, centred. */\n'
+        f'export const MONOGRAM_FRAME = "{monogram_frame}"\n'
+        f'export const MONOGRAM_SIGNAL = "{monogram_signal}"\n'
+    )
 
     tokens = TOKENS.read_text()
     color = lambda name: re.search(rf'--brand-{name}:\s*(#[0-9A-Fa-f]{{6}})', tokens).group(1)
-    for variant, (mark, spark) in WORDMARK_SVGS.items():
-        svg = (f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="{viewbox}" role="img" aria-label="{NAME}">'
-               f'<title>{NAME}</title><path fill="{color(mark)}" d="{letters}"/>'
-               f'<path fill="{color(spark)}" d="{burst_path}"/></svg>')
-        (ROOT / f'public/brand/{SLUG}-wordmark-{variant}.svg').write_text(svg)
-    print(f'Wrote {GEOMETRY.relative_to(ROOT)} and public/brand/{SLUG}-wordmark-*.svg — now run `npm run icons`.')
+    for variant, (mark, signal) in WORDMARK_SVGS.items():
+        body = f'<path fill="{color(mark)}" d="{wordmark_mark}"/><path fill="{color(signal)}" d="{wordmark_signal}"/>'
+        (ROOT / f'public/brand/{SLUG}-wordmark-{variant}.svg').write_text(svg(wordmark_viewbox, body))
+    for variant, (tile, mark, signal) in MONOGRAM_SVGS.items():
+        body = (
+            f'<rect width="{TILE}" height="{TILE}" fill="{color(tile)}"/>'
+            f'<path fill="{color(mark)}" d="{monogram_frame}"/><path fill="{color(signal)}" d="{monogram_signal}"/>'
+        )
+        content = svg(f'0 0 {TILE} {TILE}', body)
+        (ROOT / f'public/brand/{SLUG}-monogram-{variant}.svg').write_text(content)
+        if variant == 'cobalt':
+            (ROOT / 'public/favicon.svg').write_text(content)
+    print(f'Wrote {GEOMETRY.relative_to(ROOT)}, public/brand/{SLUG}-*.svg and public/favicon.svg — now run `npm run icons`.')
 
 
 if __name__ == '__main__':

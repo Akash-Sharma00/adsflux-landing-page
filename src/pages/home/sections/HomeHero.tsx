@@ -15,7 +15,7 @@ export function HomeHero() {
   return (
     <Section spacing="none" texture className={styles.hero}>
       <Container size="xl" className={styles.inner}>
-        <Reveal className={styles.masthead}>
+        <Reveal trigger="mount" className={styles.masthead}>
           <span className="label">(Adsflux) Creative &amp; growth agency</span>
           <span className="label">{siteConfig.markets}</span>
           <span className="label">Strategy · Story · Performance</span>
@@ -27,21 +27,21 @@ export function HomeHero() {
               {siteConfig.heroLead} {siteConfig.heroPunch}
             </span>
             <span aria-hidden="true">
-              <TextReveal as="span" text={siteConfig.heroLead} trigger="mount" className={styles.lead} />
+              <TextReveal as="span" text={siteConfig.heroLead} trigger="mount" hasScreenReaderCopy={false} className={styles.lead} />
               <span className={styles.punch}>
-                <TextReveal as="span" text="Great creative" trigger="mount" delay={0.2} className={styles.punchLine} />
-                <TextReveal as="span" text="makes people" trigger="mount" delay={0.32} className={styles.punchLine} />
+                <TextReveal as="span" text="Great creative" trigger="mount" delay={0.2} hasScreenReaderCopy={false} className={styles.punchLine} />
+                <TextReveal as="span" text="makes people" trigger="mount" delay={0.32} hasScreenReaderCopy={false} className={styles.punchLine} />
                 <em className={styles.punchLine}>
-                  <TextReveal as="span" text="care." trigger="mount" delay={0.45} className={styles.care} />
+                  <TextReveal as="span" text="care." trigger="mount" delay={0.45} hasScreenReaderCopy={false} className={styles.care} />
                 </em>
               </span>
             </span>
           </h1>
 
-          <Reveal delay={0.6}>
+          <Reveal trigger="mount" delay={0.6}>
             <p className={styles.supporting}>{siteConfig.supportingMessage}</p>
           </Reveal>
-          <Reveal delay={0.7} className={styles.actions}>
+          <Reveal trigger="mount" delay={0.7} className={styles.actions}>
             <ButtonLink href={primaryCta.href} size="lg" withArrow>
               {primaryCta.label}
             </ButtonLink>

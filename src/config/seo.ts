@@ -24,6 +24,9 @@ export type PageSeo = {
   socialDescription?: string
 }
 
+/** Matches `<html lang>` in index.html. */
+const SITE_LANGUAGE = 'en-IN'
+
 const TITLE_SUFFIX = ` — ${siteConfig.name}`
 
 const staticPageSeo = {
@@ -92,7 +95,7 @@ const ogImage = {
   path: '/og/adsflux-og.png',
   width: 1200,
   height: 630,
-  alt: 'The Adsflux wordmark in cream on Electric Cobalt.',
+  alt: 'The Adsflux logo — a cream frame with an orange block breaking out of it, and the word adsflux — on Electric Cobalt.',
 } as const
 
 /** Square raster logo for structured data (search engines want a raster ≥ 112 px). */
@@ -147,7 +150,13 @@ export function buildHeadTags(pageKey: PageSeoKey): HeadTag[] {
   ]
 
   if (pageUrl) {
-    tags.push({ tag: 'link', attributes: { rel: 'canonical', href: pageUrl } }, meta('property', 'og:url', pageUrl))
+    tags.push(
+      { tag: 'link', attributes: { rel: 'canonical', href: pageUrl } },
+      // One English (India) version per page, also the default for every other locale.
+      { tag: 'link', attributes: { rel: 'alternate', hreflang: SITE_LANGUAGE, href: pageUrl } },
+      { tag: 'link', attributes: { rel: 'alternate', hreflang: 'x-default', href: pageUrl } },
+      meta('property', 'og:url', pageUrl),
+    )
   }
   if (imageUrl) {
     tags.push(
@@ -184,15 +193,29 @@ function buildStructuredData(pageKey: PageSeoKey): JsonLdNode[] | null {
   return null
 }
 
+function buildPostalAddress(): JsonLdNode {
+  const { locality, region, country } = siteConfig.address
+  return {
+    '@type': 'PostalAddress',
+    ...(locality ? { addressLocality: locality } : {}),
+    ...(region ? { addressRegion: region } : {}),
+    addressCountry: country,
+  }
+}
+
+/** The studio: an Organization and, as an agency serving clients, a ProfessionalService (a LocalBusiness type). */
 function buildOrganization(): JsonLdNode {
   const logoUrl = getAbsoluteUrl(logoImagePath)
+  const imageUrl = getAbsoluteUrl(ogImage.path)
   const sameAs = siteConfig.socials.flatMap((social) => (social.href ? [social.href] : []))
   return {
-    '@type': 'Organization',
+    '@type': ['Organization', 'ProfessionalService'],
     ...(organizationId && { '@id': organizationId }),
     name: siteConfig.name,
     ...(homeUrl && { url: homeUrl }),
     ...(logoUrl && { logo: logoUrl }),
+    ...(imageUrl && { image: imageUrl }),
+    address: buildPostalAddress(),
     slogan: siteConfig.positioning,
     description: siteConfig.description,
     ...(siteConfig.email ? { email: siteConfig.email } : {}),

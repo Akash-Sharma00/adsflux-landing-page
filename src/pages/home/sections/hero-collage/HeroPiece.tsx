@@ -1,13 +1,24 @@
 import type { CSSProperties } from 'react'
 import { heroImages } from '@/assets/assetRegistry'
-import { HERO_CUTOUT_PIECES, HERO_CUTOUT_SIZE } from '@/assets/generated/heroCutoutPieces'
+import { HERO_CUTOUT_PIECES, HERO_CUTOUT_SIZE, type HeroCutoutPiece } from '@/assets/generated/heroCutoutPieces'
 import { MediaFrame } from '@/components/ui'
 import type { PieceMotion } from './pieces'
 import styles from './HeroCollage.module.css'
 
 const IMAGE = heroImages.servicesCollage
-/** Same file, no alt: only the primary piece is announced. */
-const DECORATIVE_IMAGE = { ...IMAGE, alt: '' }
+/**
+ * Alt text for the copies of the same file that show one card each. Their wrapper is aria-hidden, so screen
+ * readers still announce only the primary piece; the alt is for search engines and image search.
+ */
+const PIECE_ALT: Record<HeroCutoutPiece, string> = {
+  phone: IMAGE.alt,
+  socialMedia: 'Adsflux service card: social media.',
+  ugcInfluencers: 'Adsflux service card: UGC and influencers.',
+  performanceAds: 'Adsflux service card: performance ads.',
+  creativeProduction: 'Adsflux service card: creative production.',
+  brandStrategy: 'Adsflux service card: brand strategy.',
+  analyticsGrowth: 'Adsflux service card: analytics and growth.',
+}
 const SIZES = '(min-width: 1024px) 64vw, 100vw'
 
 const toPercent = (value: number, total: number) => `${((value / total) * 100).toFixed(2)}%`
@@ -40,7 +51,7 @@ export function HeroPiece({ motion, clipId, isPrimary }: HeroPieceProps) {
     <div className={styles.depth} style={style} aria-hidden={isPrimary ? undefined : true}>
       <div className={styles.settle}>
         <div className={styles.float} style={{ clipPath: `url(#${clipId})` }}>
-          <MediaFrame ratio="3/2" image={isPrimary ? IMAGE : DECORATIVE_IMAGE} sizes={SIZES} priority />
+          <MediaFrame ratio="3/2" image={isPrimary ? IMAGE : { ...IMAGE, alt: PIECE_ALT[motion.piece] }} sizes={SIZES} priority />
         </div>
       </div>
     </div>

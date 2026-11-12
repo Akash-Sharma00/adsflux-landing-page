@@ -15,9 +15,9 @@ export function HoverDemos() {
         </div>
       </DemoCell>
 
-      <DemoCell title="Burst turn" meta="Wordmark inside a link · 45°">
+      <DemoCell title="Breakout nudge" meta="Wordmark inside a link · signal block steps out">
         <div className={styles.center}>
-          <a href="#motion" className={styles.logoLink} aria-label="Adsflux — hover to turn the burst">
+          <a href="#motion" className={styles.logoLink} aria-label="Adsflux — hover to nudge the signal block">
             <Wordmark className={styles.wordmark} title="" />
           </a>
         </div>

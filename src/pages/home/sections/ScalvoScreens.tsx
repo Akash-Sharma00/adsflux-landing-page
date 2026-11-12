@@ -81,7 +81,8 @@ export function ScalvoScreens() {
         {PIECES.map((piece) => (
           <Parallax key={piece.name} distance={piece.depth} className={cn(styles.piece, piece.className)}>
             <m.div variants={pieceVariants} custom={piece.from}>
-              <div className={styles.float}>
+              {/* The workspace's alt describes the whole mock-up, so the two cards are hidden from screen readers. */}
+              <div className={styles.float} aria-hidden={piece.name === 'workspace' ? undefined : true}>
                 <MediaFrame image={piece.layer.light} ratio="intrinsic" sizes={piece.sizes} />
                 <div className={styles.dark} aria-hidden="true">
                   <MediaFrame image={piece.layer.dark} ratio="intrinsic" sizes={piece.sizes} />

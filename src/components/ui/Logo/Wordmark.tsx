@@ -1,6 +1,6 @@
 import type { SVGAttributes } from 'react'
 import { cn } from '@/lib/cn'
-import { WORDMARK_BURST, WORDMARK_LETTERS, WORDMARK_VIEWBOX } from './geometry'
+import { WORDMARK_MARK, WORDMARK_SIGNAL, WORDMARK_VIEWBOX } from './geometry'
 import styles from './Logo.module.css'
 
 export type WordmarkProps = SVGAttributes<SVGSVGElement> & {
@@ -9,9 +9,9 @@ export type WordmarkProps = SVGAttributes<SVGSVGElement> & {
 }
 
 /**
- * The Adsflux wordmark: Instrument Serif "Ads" roman + "flux" italic, with the orange signal burst.
- * Outlined vectors (not live text), so it renders identically everywhere. Colors follow the tone via
- * --color-logo-mark / --color-logo-burst. Size with height or CSS; never stretch.
+ * The Adsflux "Breakout" logo: a frame with the signal block breaking out of its corner, then "adsflux" in
+ * Space Grotesk Bold. Outlined vectors (not live text), so it renders identically everywhere. Colors follow
+ * the tone via --color-logo-mark / --color-logo-signal. Size with height or CSS; never stretch.
  */
 export function Wordmark({ title = 'Adsflux', className, ...props }: WordmarkProps) {
   const isDecorative = title === ''
@@ -26,8 +26,8 @@ export function Wordmark({ title = 'Adsflux', className, ...props }: WordmarkPro
       focusable="false"
       {...props}
     >
-      <path className={styles.mark} d={WORDMARK_LETTERS} />
-      <path className={styles.burst} d={WORDMARK_BURST} />
+      <path className={styles.mark} d={WORDMARK_MARK} />
+      <path className={styles.signal} d={WORDMARK_SIGNAL} />
     </svg>
   )
 }

@@ -9,16 +9,14 @@
   fill: var(--color-logo-mark);
 }
 
-.burst {
-  fill: var(--color-logo-burst);
-  transform-box: fill-box;
-  transform-origin: center;
+.signal {
+  fill: var(--color-logo-signal);
   transition: transform var(--duration-slow) var(--ease-out-expo);
 }
 
-/* The burst turns when the logo is hovered inside a link — a small signature interaction. */
-a:hover > .wordmark .burst {
-  transform: rotate(45deg);
+/* The block breaks a little further out of the frame when the logo is hovered inside a link (viewBox units). */
+a:hover > .wordmark .signal {
+  transform: translate(3px, -3px);
 }
 
 .monogram {
@@ -32,11 +30,11 @@ a:hover > .wordmark .burst {
   fill: var(--brand-cobalt);
 }
 
-.cobalt .letter {
+.cobalt .frame {
   fill: var(--brand-cream);
 }
 
-.cobalt .monogramBurst {
+.cobalt .monogramSignal {
   fill: var(--brand-orange);
 }
 
@@ -44,11 +42,11 @@ a:hover > .wordmark .burst {
   fill: var(--brand-cream);
 }
 
-.cream .letter {
+.cream .frame {
   fill: var(--brand-ink);
 }
 
-.cream .monogramBurst {
+.cream .monogramSignal {
   fill: var(--brand-orange);
 }
 
@@ -56,7 +54,7 @@ a:hover > .wordmark .burst {
   fill: var(--brand-orange);
 }
 
-.orange .letter,
-.orange .monogramBurst {
+.orange .frame,
+.orange .monogramSignal {
   fill: var(--brand-ink);
 }

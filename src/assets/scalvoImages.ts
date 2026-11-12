@@ -25,21 +25,26 @@ const toImage = (entry: ManifestEntry, alt: string): ResponsiveImage => ({
 
 export type ScalvoLayer = { light: ResponsiveImage; dark: ResponsiveImage }
 
-/** Only the light workspace carries alt text — it describes the whole composition; the other layers repeat it. */
+const WORKSPACE_ALT =
+  'Scalvo’s campaign workspace: a campaign with creator submissions marked agency review, changes requested and approved, a brand-review card with Approve and Request changes buttons, and a progress card reading 18 of 24 approved. Illustrative example data.'
+const APPROVAL_ALT = 'Scalvo brand-review card with Approve and Request changes buttons. Illustrative example data.'
+const PROGRESS_ALT = 'Scalvo progress card reading 18 of 24 approved. Illustrative example data.'
+
+/**
+ * Every layer has alt text (for search engines), but only the light workspace is announced: it describes the
+ * whole composition, so ScalvoScreens hides the dark layers and the two cards from screen readers.
+ */
 export const scalvoLayers = {
   workspace: {
-    light: toImage(
-      scalvoImageManifest.scalvoWorkspaceLight,
-      'Scalvo’s campaign workspace: a campaign with creator submissions marked agency review, changes requested and approved, a brand-review card with Approve and Request changes buttons, and a progress card reading 18 of 24 approved. Illustrative example data.',
-    ),
-    dark: toImage(scalvoImageManifest.scalvoWorkspaceDark, ''),
+    light: toImage(scalvoImageManifest.scalvoWorkspaceLight, WORKSPACE_ALT),
+    dark: toImage(scalvoImageManifest.scalvoWorkspaceDark, WORKSPACE_ALT),
   },
   approval: {
-    light: toImage(scalvoImageManifest.scalvoApprovalLight, ''),
-    dark: toImage(scalvoImageManifest.scalvoApprovalDark, ''),
+    light: toImage(scalvoImageManifest.scalvoApprovalLight, APPROVAL_ALT),
+    dark: toImage(scalvoImageManifest.scalvoApprovalDark, APPROVAL_ALT),
   },
   progress: {
-    light: toImage(scalvoImageManifest.scalvoProgressLight, ''),
-    dark: toImage(scalvoImageManifest.scalvoProgressDark, ''),
+    light: toImage(scalvoImageManifest.scalvoProgressLight, PROGRESS_ALT),
+    dark: toImage(scalvoImageManifest.scalvoProgressDark, PROGRESS_ALT),
   },
 } as const satisfies Record<string, ScalvoLayer>

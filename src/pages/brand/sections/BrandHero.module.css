@@ -28,7 +28,7 @@
   height: auto;
 }
 
-/* Sits in the space right of the "e", clear of the burst. */
+/* Sits below the wordmark's right end, clear of the logo. */
 .stamp {
   position: absolute;
   right: 0;

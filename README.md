@@ -54,6 +54,6 @@ sites (redirects to `/`); in the page, right-click/long-press save and drag-out 
 ## Before launch
 
 - Replace the **sample** showcase, case studies, testimonials and pricing (`src/features/*/content.ts`) with real, approved content. Real campaign creatives are already placed (hero + showcase); see [docs/assets/ASSET_INVENTORY.md](docs/assets/ASSET_INVENTORY.md) for the workflow, open attribution questions and two copy errors baked into supplied creatives.
-- Set `siteConfig.email` and the social URLs in `src/config/site.ts` (socials show "soon" until set; they also feed the Organization `sameAs` in structured data), and set `VITE_CONTACT_ENDPOINT`.
+- Set `siteConfig.email` and the social URLs in `src/config/site.ts` (socials show "soon" until set; they also feed the Organization `sameAs` in structured data), and set `VITE_CONTACT_ENDPOINT`. Optional analytics: `VITE_GA_MEASUREMENT_ID` (GA4) and `VITE_META_PIXEL_ID` (Meta Pixel), loaded after page load; unset = off.
 - SEO is built in (`src/config/seo.ts`, see AGENTS.md → SEO): pre-rendered pages, one keyword-targeted page per service under `/services/`, canonical URLs on `https://www.adsflux.in`, Open Graph, JSON-LD (Organization, WebSite, Service, BreadcrumbList), `sitemap.xml` and `robots.txt`. Review the service-page copy in `src/pages/service/serviceContent.ts`.
 - After the first deploy: verify the domain in [Google Search Console](https://search.google.com/search-console) (DNS, Domain property), submit `https://www.adsflux.in/sitemap.xml`, and request indexing for the home and service pages.

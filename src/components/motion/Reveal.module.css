@@ -1,0 +1,33 @@
+/* trigger="mount": same fade + lift as the in-view Reveal (32px = REVEAL_DISTANCE), driven by CSS from the first paint. */
+.mount {
+  animation: reveal-rise var(--duration-reveal) var(--ease-out-expo) var(--reveal-delay, 0s) both;
+}
+
+@keyframes reveal-rise {
+  from {
+    opacity: 0;
+    transform: translateY(32px);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Reduced motion keeps the fade, drops the travel (as MotionConfig reducedMotion="user" does for m.*). */
+@keyframes reveal-fade {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mount {
+    animation-name: reveal-fade;
+  }
+}

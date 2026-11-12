@@ -95,7 +95,7 @@ Six colours per mode: the light palette below and the Midnight Editorial dark pa
 |---|---|---|
 | **Paper Cream** | `#F5F0E7` | Primary background. Most of every page is cream. |
 | **Electric Cobalt** | `#263BDB` | Major moments: primary CTAs, selected full-bleed sections (philosophy, contact), the mobile menu, accent ink on light tones. |
-| **Signal Orange** | `#FF633E` | Controlled secondary accent: fills, stickers, chips, the burst, one ticker band. **Never text** on cream or cobalt. |
+| **Signal Orange** | `#FF633E` | Controlled secondary accent: fills, stickers, chips, the logo's signal block, the burst, one ticker band. **Never text** on cream or cobalt. |
 | **Ink Black** | `#171717` | Typography and contrast. At most **one ink band per page**. |
 | **Soft Blue** | `#DCE5FF` | Supporting compositions: bands, modules, the footer. |
 | **Dusty Peach** | `#E8B8A5` | Supporting compositions: modules, placeholder art, warm moments. |
@@ -223,7 +223,7 @@ Every section is set in one of six **tones**. A tone is a full colour scheme (ba
 - **Sharp frames, pill controls.** Images, modules, panels and menus have square corners (radius 0). Buttons, tags, chips and dots are pills. Nothing in between. **No rounded cards.**
 - **Offset "print" shadow** (`--shadow-offset`): a solid block offset behind a lifted image, like a misregistered print. No blurred drop shadows except the dropdown overlay.
 - **Paper texture**: a subtle paper-fibre overlay on selected sections (the `texture` prop). Never on every section.
-- **The signal burst**: the eight-ray star from the logo, used as a graphic accent (headline punctuation, ticker separator, CTA corner, stamp centre). Decorative only.
+- **The signal burst**: an eight-ray star, used as a graphic accent (headline punctuation, ticker separator, CTA corner, stamp centre). Decorative only.
 - **The stamp**: a circular rotating text sticker with a burst in the middle. One per view at most.
 - **Hairline rules and mono indexes**: `(01) Services`, masthead rows, numbered lists.
 - **No** glassmorphism, frosted panels, glows, neon, gradients, 3D blobs or floating icon decorations.

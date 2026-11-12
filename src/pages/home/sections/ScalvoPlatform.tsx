@@ -81,12 +81,11 @@ export function ScalvoPlatform() {
                 {String(index + 1).padStart(2, '0')}
               </span>
               <div className={styles.featureBody}>
-                <h3 className={styles.featureTitle}>
-                  {feature.title}
-                  {feature.status === 'soon' && (
-                    <Badge variant="solid">Coming soon</Badge>
-                  )}
-                </h3>
+                {/* The badge sits beside the heading, not in it, so "Coming soon" isn't read as a topic of the page. */}
+                <div className={styles.featureHeading}>
+                  <h3 className={styles.featureTitle}>{feature.title}</h3>
+                  {feature.status === 'soon' && <Badge variant="solid">Coming soon</Badge>}
+                </div>
                 <p className={styles.featureText}>{feature.body}</p>
               </div>
             </StaggerItem>

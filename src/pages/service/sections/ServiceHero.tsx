@@ -69,10 +69,10 @@ export function ServiceHero({ service, detail, position }: ServiceHeroProps) {
             </span>
           </h1>
 
-          <Reveal delay={0.4}>
+          <Reveal trigger="mount" delay={0.4}>
             <p className={styles.intro}>{detail.intro}</p>
           </Reveal>
-          <Reveal delay={0.5} className={styles.actions}>
+          <Reveal trigger="mount" delay={0.5} className={styles.actions}>
             <ButtonLink href={primaryCta.href} size="lg" withArrow>
               {primaryCta.label}
             </ButtonLink>
@@ -82,7 +82,7 @@ export function ServiceHero({ service, detail, position }: ServiceHeroProps) {
           </Reveal>
         </div>
 
-        <Reveal delay={0.2} className={styles.visual}>
+        <Reveal trigger="mount" delay={0.2} className={styles.visual}>
           <div data-theme={look.tone} className={cn(styles.panel, look.tone === 'cream' && styles.outlined)} aria-hidden="true">
             <span className={styles.number}>{number}</span>
             <MediaFrame ratio="4/5" art={look.art} artTone={look.artTone} className={styles.art} />

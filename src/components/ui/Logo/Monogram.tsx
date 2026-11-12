@@ -1,6 +1,6 @@
 import type { SVGAttributes } from 'react'
 import { cn } from '@/lib/cn'
-import { MONOGRAM_BURST, MONOGRAM_LETTER } from './geometry'
+import { MONOGRAM_FRAME, MONOGRAM_SIGNAL } from './geometry'
 import styles from './Logo.module.css'
 
 export type MonogramVariant = 'cobalt' | 'cream' | 'orange'
@@ -11,7 +11,7 @@ export type MonogramProps = SVGAttributes<SVGSVGElement> & {
   title?: string
 }
 
-/** The "A✳" monogram tile. Carries its own background, so it works on any surface. */
+/** The Breakout mark on a square tile. Carries its own background, so it works on any surface. */
 export function Monogram({ variant = 'cobalt', title = 'Adsflux', className, ...props }: MonogramProps) {
   return (
     <svg
@@ -23,8 +23,8 @@ export function Monogram({ variant = 'cobalt', title = 'Adsflux', className, ...
       {...props}
     >
       <rect className={styles.tile} width="64" height="64" />
-      <path className={styles.letter} d={MONOGRAM_LETTER} />
-      <path className={styles.monogramBurst} d={MONOGRAM_BURST} />
+      <path className={styles.frame} d={MONOGRAM_FRAME} />
+      <path className={styles.monogramSignal} d={MONOGRAM_SIGNAL} />
     </svg>
   )
 }

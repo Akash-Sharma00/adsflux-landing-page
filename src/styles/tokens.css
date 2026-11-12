@@ -260,7 +260,7 @@
   --color-cta-text-hover: var(--accent-foreground);
 
   --color-logo-mark: var(--foreground);
-  --color-logo-burst: var(--accent);
+  --color-logo-signal: var(--accent);
 
   --color-danger: var(--danger);
 
@@ -290,7 +290,7 @@
   --color-cta-bg-hover: var(--foreground); /* ink pill on blue · ivory pill on slate */
   --color-cta-text-hover: var(--background);
   --color-logo-mark: var(--foreground);
-  --color-logo-burst: var(--accent);
+  --color-logo-signal: var(--accent);
   --color-danger: var(--danger);
   --texture-blend: var(--grain-blend);
   --texture-opacity: var(--texture-opacity-surface);
@@ -318,7 +318,7 @@
   --color-cta-bg-hover: var(--brand-cobalt);
   --color-cta-text-hover: var(--brand-cream);
   --color-logo-mark: var(--brand-ink);
-  --color-logo-burst: var(--brand-cobalt);
+  --color-logo-signal: var(--brand-cobalt);
   --color-danger: var(--brand-ink); /* #B42318 is 3.70:1 on peach — errors use ink + the message text */
   --texture-blend: multiply;
   --texture-opacity: 0.3;
@@ -346,7 +346,7 @@
   --color-cta-bg-hover: var(--brand-cobalt);
   --color-cta-text-hover: var(--brand-cream);
   --color-logo-mark: var(--brand-cream);
-  --color-logo-burst: var(--brand-ember);
+  --color-logo-signal: var(--brand-ember);
   --color-danger: var(--status-danger-on-dark);
   --texture-blend: screen;
   --texture-opacity: 0.1;
@@ -374,7 +374,7 @@
   --color-cta-bg-hover: var(--brand-orange);
   --color-cta-text-hover: var(--brand-ink);
   --color-logo-mark: var(--brand-cream);
-  --color-logo-burst: var(--brand-orange);
+  --color-logo-signal: var(--brand-orange);
   --color-danger: var(--status-danger-on-dark);
   --texture-blend: multiply;
   --texture-opacity: 0.18;
@@ -402,7 +402,7 @@
   --color-cta-bg-hover: var(--brand-ember);
   --color-cta-text-hover: var(--brand-midnight);
   --color-logo-mark: var(--brand-cream);
-  --color-logo-burst: var(--brand-ember);
+  --color-logo-signal: var(--brand-ember);
   --color-danger: var(--status-danger-on-dark);
   --texture-blend: multiply;
   --texture-opacity: 0.18;
@@ -430,7 +430,7 @@
   --color-cta-bg-hover: var(--brand-cobalt);
   --color-cta-text-hover: var(--brand-cream);
   --color-logo-mark: var(--brand-ink);
-  --color-logo-burst: var(--brand-ink);
+  --color-logo-signal: var(--brand-ink);
   --color-danger: var(--brand-ink);
   --texture-blend: multiply;
   --texture-opacity: 0.25;
@@ -458,7 +458,7 @@
   --color-cta-bg-hover: var(--brand-cobalt);
   --color-cta-text-hover: var(--brand-cream);
   --color-logo-mark: var(--brand-midnight);
-  --color-logo-burst: var(--brand-midnight);
+  --color-logo-signal: var(--brand-midnight);
   --color-danger: var(--brand-midnight);
   --texture-blend: multiply;
   --texture-opacity: 0.2;
@@ -486,7 +486,7 @@
   --color-cta-bg-hover: var(--brand-cream);
   --color-cta-text-hover: var(--brand-ink);
   --color-logo-mark: var(--brand-cream);
-  --color-logo-burst: var(--brand-orange);
+  --color-logo-signal: var(--brand-orange);
   --color-danger: var(--brand-orange);
   --texture-blend: multiply;
   --texture-opacity: 0.12;
@@ -514,7 +514,7 @@
   --color-cta-bg-hover: var(--brand-cream);
   --color-cta-text-hover: var(--brand-ink);
   --color-logo-mark: var(--brand-cream);
-  --color-logo-burst: var(--brand-ember);
+  --color-logo-signal: var(--brand-ember);
   --color-danger: var(--brand-ember);
   --texture-blend: screen;
   --texture-opacity: 0.08;
